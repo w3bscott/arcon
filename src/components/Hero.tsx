@@ -1,5 +1,14 @@
-import React from 'react';
-import Link from 'next/link';
+"use client";
+
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowDownRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { HeroPreview } from "./HeroPreview";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface HeroProps {
   badgeText: string;
@@ -13,11 +22,12 @@ export interface HeroProps {
   installCommand: string;
 }
 
-const defaultProps: HeroProps = {
+const DEFAULT_PROPS: HeroProps = {
   badgeText: "New Release",
   badgeHref: "#",
   title: "Build Faster on Arc",
-  description: "Pre-built UI components wired directly to the Arc SDK.\nInstall, connect, and ship production ready interfaces faster.",
+  description:
+    "Pre-built UI components wired directly to the Arc SDK.\nInstall, connect, and ship production ready interfaces faster.",
   primaryButtonText: "Browse Components",
   primaryButtonHref: "#",
   secondaryButtonText: "View Github",
@@ -36,122 +46,191 @@ const Hero = (props: Partial<HeroProps>) => {
     secondaryButtonText,
     secondaryButtonHref,
     installCommand,
-  } = { ...defaultProps, ...props };
+  } = { ...DEFAULT_PROPS, ...props };
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const dashboardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const pin = pinRef.current;
+    const content = contentRef.current;
+    const dashboard = dashboardRef.current;
+
+    if (!section || !pin || !content || !dashboard) return;
+
+    const ctx = gsap.context(() => {
+      // Dashboard starts hidden and pushed back behind the content
+      gsap.set(dashboard, {
+      opacity: 0.99,
+      y: 325,
+      scale: 0.5,
+      // z: 0,
+    });
+
+      // Initial states for HeroPreview internal staggered elements
+      gsap.set(".preview-before", { opacity: 1});
+      gsap.set(".preview-before-label", { opacity: 1 });
+      gsap.set(".preview-after", { opacity: 0.3});
+      gsap.set(".preview-after-label", { opacity: 0 });
+      gsap.set(".preview-after-card", { boxShadow: "none" });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top-=86 top",
+          end: "+=100%",
+          scrub: true,
+          pin: pin,
+          markers: true
+        },
+      });
+
+      // Content block: recede backwards in 3D (0–30%)
+      tl.to(content, {
+        z: -800,
+        scale: 0.8,
+        ease: "none",
+        duration: 0.6,
+      }, 0);
+
+      // Content block: fade out (10–25%)
+      tl.to(content, {
+        opacity: 0,
+        ease: "none",
+        duration: 0.5,
+      }, 0.1);
+
+      tl.to(dashboard, {
+        opacity: 1,
+        y: -80,
+        scale: 1,
+        // z: 40,
+        duration: 0.3,
+      }, 0.1);
+
+      // --- Inner HeroPreview Stagger Animations ---
+
+      // 1. "Before" code container scales down, drops y, fades out (40% to 60%)
+      tl.to(".preview-before", { opacity: 0.3, duration: 0.15, ease: "power1.inOut" }, 0.5);
+      // tl.to(".preview-before-label", { opacity: 0, duration: 0.15, ease: "power1.inOut" }, 0.4);
+
+      // 2. Metrics count up from 0 to target values (45% to 65%)
+      const metrics = { val1: 0, val2: 0 };
+      tl.to(metrics, {
+        val1: 100,
+        val2: 10,
+        duration: 0.15,
+        ease: "none",
+        onUpdate: () => {
+          const el1 = section.querySelector(".metric-1-val");
+          if (el1) el1.textContent = Math.floor(metrics.val1).toString();
+          const el2 = section.querySelector(".metric-2-val");
+          if (el2) el2.textContent = Math.floor(metrics.val2).toString();
+        }
+      }, 0.4);
+
+      // 3. "After" code container scales up, resets y, fades in (50% to 70%)
+      tl.to(".preview-after", {opacity: 1, y: 0, duration: 0.15, ease: "power1.inOut" }, 0.4);
+      // tl.to(".preview-after-label", { opacity: 1, duration: 0.15, ease: "power1.inOut" }, 0.3);
+
+      // 4. "After" card gains focus elevation (50% to 70%)
+      tl.to(".preview-after-card", { boxShadow: "0 25px 50px -12px rgba(255,255,255,0.1)", duration: 0.2 }, 0.6);
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="relative overflow-hidden bg-[#fafafa]">
-      {/* Background gradient/blur effects to match the subtle glow in the image */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white rounded-full blur-[100px] opacity-50 pointer-events-none" />
+    <section
+      ref={sectionRef}
+      className="relative bg-[#fafafa]"
+    >
+      {/* Pin wrapper — this gets pinned during scroll */}
+      <div
+        ref={pinRef}
+        className="relative overflow-hidden min-h-[750px] h-[85vh]"
+        style={{ 
+          perspective: "1200px",
+          perspectiveOrigin: "50% 50%",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Background ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-white rounded-full blur-[100px] opacity-50 pointer-events-none" />
 
-      <section className="relative pt-24 pb-32 px-4 max-w-7xl mx-auto flex flex-col items-center text-center">
-        {/* Badge */}
-        <Link
-          href={badgeHref!}
-          className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-white border border-gray-200 rounded-full text-gray-800 hover:bg-gray-50 transition-colors mb-8"
-        >
-          {badgeText}
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L11 11M11 11V3M11 11H3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </Link>
-
-        {/* Heading */}
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-black mb-6 max-w-4xl">
-          {title}
-        </h1>
-
-        {/* Description */}
-        <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl whitespace-pre-line">
-          {description}
-        </p>
-
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-12">
-          <Link
-            href={secondaryButtonHref!}
-            className="px-6 py-3 text-sm font-medium bg-white border border-gray-200 text-black rounded-lg hover:bg-gray-50 transition-colors"
+        <div 
+          className="relative h-full px-4 max-w-7xl mx-auto flex flex-col items-center justify-start pt-20"        style={{
+          transformStyle: "preserve-3d",
+        }}>
+          {/* Hero copy — recedes as a single block */}
+          <div
+            ref={contentRef}
+            className="flex flex-col items-center"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            {secondaryButtonText}
-          </Link>
-          <Link
-            href={primaryButtonHref!}
-            className="px-6 py-3 text-sm font-medium bg-[#111111] text-white rounded-lg hover:bg-black transition-colors shadow-sm"
+            {/* Badge */}
+            <Link
+              href={badgeHref}
+              className="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium bg-white border border-gray-200 rounded-full text-gray-800 hover:bg-gray-50 transition-colors mb-8"
+            >
+              {badgeText}
+              <ArrowDownRight className="w-3 h-3" strokeWidth={2} />
+            </Link>
+
+            {/* Heading */}
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-black mb-6 max-w-4xl">
+              {title}
+            </h1>
+
+            {/* Description */}
+            <p className="text-lg md:text-center md:text-xl text-gray-500 mb-10 max-w-2xl whitespace-pre-line">
+              {description}
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-12">
+              <Link
+                href={secondaryButtonHref}
+                className="px-6 py-3 text-sm font-medium bg-white border border-gray-200 text-black rounded-xl hover:bg-gray-50 transition-colors"
+              >
+                {secondaryButtonText}
+              </Link>
+              <Link
+                href={primaryButtonHref}
+                className="px-6 py-3 text-sm font-medium bg-[#111111] text-white rounded-xl hover:bg-black transition-colors shadow-sm"
+              >
+                {primaryButtonText}
+              </Link>
+            </div>
+
+            {/* Install Command */}
+            <div className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-mono text-gray-600 bg-white/6 border border-gray-200/5 rounded-full shadow-sm w-auto">
+              {installCommand}
+            </div>
+          </div>
+
+          {/* Dashboard Preview — reveals as content recedes */}
+          <div
+            ref={dashboardRef}
+            className="absolute hidden md:block inset-x-0 top-1/2 -translate-y-1/2 w-full max-w-5xl mx-auto flex items-center justify-center"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            {primaryButtonText}
-          </Link>
-        </div>
-
-        {/* Install Command */}
-        <div className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-mono text-gray-600 bg-white border border-gray-200 rounded-lg shadow-sm mb-20 w-auto">
-          {installCommand}
-        </div>
-
-        {/* Mockup Graphic Area */}
-        <div className="relative w-full max-w-5xl mx-auto aspect-[16/9] bg-[#fdfdfd] border border-gray-100/50 shadow-2xl shadow-gray-200/50 rounded-2xl overflow-hidden flex items-center justify-center p-8 md:p-16">
-          {/* Subtle grid background to match the "wired" theme */}
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA0MCAwIEwgMCAwIDAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2YwZjBmMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50"></div>
-          
-          <div className="relative w-full h-full flex flex-col items-center justify-center gap-8">
-            {/* The main credit card UI floating in center */}
-            <div className="z-10 w-[380px] h-[220px] bg-white rounded-2xl shadow-xl border border-gray-100 flex flex-col justify-between p-6 relative">
-              <div className="flex justify-between items-start">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gray-800">
-                  <rect x="2" y="5" width="20" height="14" rx="2" />
-                  <path d="M2 10h20" />
-                </svg>
-                <div className="font-bold text-xl italic tracking-tighter">VISA</div>
-              </div>
-              <div className="space-y-4">
-                <div className="font-mono text-lg tracking-widest text-gray-800">
-                  5367 4567 8901 2345
-                </div>
-                <div className="flex justify-between text-sm text-gray-500 uppercase tracking-wider">
-                  <div>
-                    <div className="text-[10px]">Cardholder Name</div>
-                    <div className="text-gray-800 font-medium">Méschac Irung</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[10px]">Exp</div>
-                    <div className="text-gray-800 font-medium">12/25</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Simulated connection nodes and code blocks */}
-            <div className="absolute top-[10%] left-[20%] text-[10px] text-gray-400 font-mono tracking-widest leading-relaxed">
-              EXPERIENCE<br/>SEAMLESS<br/>PAYMENTS.
-            </div>
-
-            <div className="absolute top-[30%] right-[15%] w-64 bg-white/80 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-lg text-xs font-mono text-gray-600">
-              <div className="flex text-pink-500"><span className="text-gray-400 mr-2">1</span> const axios = require('axios');</div>
-              <div className="flex"><span className="text-gray-400 mr-2">2</span></div>
-              <div className="flex text-pink-500"><span className="text-gray-400 mr-2">3</span> const response = await axios.post('https:/...', {'{'}</div>
-              <div className="flex"><span className="text-gray-400 mr-2">4</span>   key: 'value',</div>
-              <div className="flex"><span className="text-gray-400 mr-2">5</span>   anotherKey: 'anotherValue',</div>
-              <div className="flex"><span className="text-gray-400 mr-2">6</span> {'}'});</div>
-            </div>
-
-            {/* Connecting lines SVG (Decorative) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
-              <path d="M 50% 20% L 50% 40%" stroke="#e5e7eb" strokeWidth="2" strokeDasharray="4 4" fill="none" />
-              <path d="M 30% 50% L 40% 50%" stroke="#e5e7eb" strokeWidth="2" strokeDasharray="4 4" fill="none" />
-              <path d="M 60% 50% L 70% 50%" stroke="#e5e7eb" strokeWidth="2" strokeDasharray="4 4" fill="none" />
-              <path d="M 50% 60% L 50% 80%" stroke="#e5e7eb" strokeWidth="2" strokeDasharray="4 4" fill="none" />
-              
-              {/* API Node */}
-              <rect x="calc(50% - 24px)" y="15%" width="48" height="24" rx="12" fill="white" stroke="#e5e7eb" strokeWidth="1" />
-              <text x="50%" y="calc(15% + 16px)" textAnchor="middle" fontSize="10" fontFamily="monospace" fill="#6b7280">API</text>
-              
-              {/* App Connected Node */}
-              <rect x="calc(50% - 60px)" y="80%" width="120" height="28" rx="14" fill="white" stroke="#e5e7eb" strokeWidth="1" />
-              <circle cx="calc(50% - 40px)" cy="calc(80% + 14px)" r="4" fill="#22c55e" />
-              <text x="calc(50% + 4px)" y="calc(80% + 18px)" textAnchor="middle" fontSize="10" fontFamily="sans-serif" fill="#6b7280" fontWeight="500">App Connected</text>
-            </svg>
+            {/* <Image
+              src="/arcon-hero.png"
+              alt="Arc UI Component Architecture"
+              width={1200}
+              height={800}
+              className="w-full h-auto rounded-2xl shadow-2xl shadow-gray-200/50 border border-gray-100/50"
+              priority
+            /> */}
+            <HeroPreview />
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

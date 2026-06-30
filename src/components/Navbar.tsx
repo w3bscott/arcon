@@ -1,5 +1,8 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Cuboid, FolderGit2 } from 'lucide-react';
 
 export interface NavbarProps {
   logoText: string;
@@ -19,39 +22,41 @@ const defaultProps: NavbarProps = {
   ],
   loginText: "Login",
   loginHref: "#",
-  githubText: "GitHub",
+  githubText: "Components",
   githubHref: "#",
 };
 
 const Navbar = (props: Partial<NavbarProps>) => {
   const { logoText, links, loginText, loginHref, githubText, githubHref } = { ...defaultProps, ...props };
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className="flex items-center justify-between px-8 py-4 w-full max-w-7xl mx-auto">
+    <div className={`sticky top-0 z-50 w-full transition-all duration-300 px-4 ${isScrolled ? 'pt-3' : 'pt-0'}`}>
+      <nav 
+        className={`flex items-center justify-between px-8 py-4 mx-auto w-full transition-all duration-300 ${
+          isScrolled 
+            ? 'bg-white/85 backdrop-blur-md shadow-xsm border border-gray-200 rounded-2xl max-w-5xl' 
+            : 'bg-transparent border border-transparent rounded-none max-w-7xl'
+        }`}
+      >
       {/* Logo */}
-      <div className="flex items-center gap-2">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 22V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 12L22 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 12L2 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 7V17" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M7 9.5V19.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M17 9.5V19.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+      <div className="flex items-center gap-2 text-foreground">
+        <Cuboid className="w-6 h-6" strokeWidth={2} />
         <span className="font-bold text-xl tracking-tight">{logoText}</span>
       </div>
 
       {/* Links (Center) */}
-      <div className="hidden md:flex items-center gap-8 bg-gray-50/80 px-6 py-2 rounded-full border border-gray-100">
+      <div className="hidden md:flex items-center gap-8 px-6 py-2 ">
         {links?.map((link, i) => (
-          <Link key={i} href={link.href} className="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+          <Link key={i} href={link.href} className="text-sm font-medium text-gray-800 hover:text-black transition-colors">
             {link.label}
           </Link>
         ))}
@@ -59,17 +64,16 @@ const Navbar = (props: Partial<NavbarProps>) => {
 
       {/* Right Actions */}
       <div className="flex items-center gap-6">
-        <Link href={loginHref!} className="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+        <Link href={loginHref!} className="text-sm font-medium text-gray-800 hover:text-black transition-colors">
           {loginText}
         </Link>
-        <Link href={githubHref!} className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+        <Link href={githubHref!} className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
           {githubText}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-          </svg>
+          {/* <FolderGit2 className="w-4 h-4" /> */}
         </Link>
       </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 
