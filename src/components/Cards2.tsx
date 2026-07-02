@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -202,7 +203,7 @@ const Cards2 = (props: Partial<CardsProps>) => {
         </svg>
 
         {cardLayouts.map((layoutClass, index) => {
-          const image = images[index] || { src: "", alt: `Placeholder ${index + 1}` };
+          const image = images[index] || defaultProps.images[index];
 
           return (
             <div
@@ -211,10 +212,12 @@ const Cards2 = (props: Partial<CardsProps>) => {
               className={`${layoutClass} bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden relative group`}
               style={{ zIndex: 1 }}
             >
-              <img
+              <Image
                 src={image.src}
                 alt={image.alt}
-                className="absolute inset-0 w-full h-full object-cover bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors"
+                fill
+                sizes="(min-width: 768px) 25vw, 100vw"
+                className="object-cover bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors"
               />
             </div>
           );

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -31,31 +32,37 @@ const Cards = (props: Partial<CardsProps>) => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>('.card-item');
-      
-      cards.forEach((card) => {
-        gsap.fromTo(card, 
-          { 
-            y: 150,
-            opacity: 0
-          },
-          {
-            y: 0,
-            opacity: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top bottom",
-              end: "top 75%",
-              scrub: 1,
-            }
-          }
-        );
-      });
-    }, containerRef);
+    const mm = gsap.matchMedia();
 
-    return () => ctx.revert();
+    mm.add("(min-width: 768px)", () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray<HTMLElement>('.card-item');
+      
+        cards.forEach((card) => {
+          gsap.fromTo(card, 
+            { 
+              y: 150,
+              opacity: 0
+            },
+            {
+              y: 0,
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "top 75%",
+                scrub: 1,
+              }
+            }
+          );
+        });
+      }, containerRef);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
   }, []);
 
   // The specific layout classes that create the exact masonry look
@@ -72,20 +79,22 @@ const Cards = (props: Partial<CardsProps>) => {
   ];
 
   return (
-    <section ref={containerRef} className="w-full max-w-7xl mx-auto px-4 pb-32 bg-[#fafafa] overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[100px] w-full relative">
+    <section ref={containerRef} className="w-full max-h-[500px] md:max-h-none max-w-7xl mx-auto px-4 pb-32 bg-[#fafafa] overflow-hidden">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 auto-rows-[100px] w-full relative">
         {cardLayouts.map((layoutClass, index) => {
-          const image = images[index] || { src: "", alt: `Placeholder ${index + 1}` };
+          const image = images[index] || defaultProps.images[index];
           
           return (
             <div
               key={index}
-              className={`card-item ${layoutClass} bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden relative group`}
+              className={`card-item ${layoutClass} bg-white rounded-xl md:rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden relative group`}
             >
-              <img
+              <Image
                 src={image.src}
                 alt={image.alt}
-                className="absolute inset-0 w-full h-full object-cover bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors"
+                fill
+                sizes="(min-width: 768px) 25vw, 50vw"
+                className="object-cover bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors"
               />
             </div>
           );
@@ -96,8 +105,3 @@ const Cards = (props: Partial<CardsProps>) => {
 };
 
 export { Cards };
-
-
-
-
-

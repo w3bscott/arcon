@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowDownRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -61,7 +60,10 @@ const Hero = (props: Partial<HeroProps>) => {
 
     if (!section || !pin || !content || !dashboard) return;
 
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      const ctx = gsap.context(() => {
       // Dashboard starts hidden and pushed back behind the content
       gsap.set(dashboard, {
       opacity: 0.99,
@@ -84,7 +86,6 @@ const Hero = (props: Partial<HeroProps>) => {
           end: "+=100%",
           scrub: true,
           pin: pin,
-          markers: true
         },
       });
 
@@ -138,9 +139,12 @@ const Hero = (props: Partial<HeroProps>) => {
 
       // 4. "After" card gains focus elevation (50% to 70%)
       tl.to(".preview-after-card", { boxShadow: "0 25px 50px -12px rgba(255,255,255,0.1)", duration: 0.2 }, 0.6);
-    }, sectionRef);
+      }, sectionRef);
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
@@ -151,7 +155,7 @@ const Hero = (props: Partial<HeroProps>) => {
       {/* Pin wrapper — this gets pinned during scroll */}
       <div
         ref={pinRef}
-        className="relative overflow-hidden min-h-[750px] h-[85vh]"
+        className="relative overflow-hidden min-h-[560px] h-auto md:min-h-[750px] md:h-[85vh]"
         style={{ 
           perspective: "1200px",
           perspectiveOrigin: "50% 50%",
@@ -162,7 +166,7 @@ const Hero = (props: Partial<HeroProps>) => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-white rounded-full blur-[100px] opacity-50 pointer-events-none" />
 
         <div 
-          className="relative h-full px-4 max-w-7xl mx-auto flex flex-col items-center justify-start pt-20"        style={{
+          className="relative h-full px-4 max-w-7xl mx-auto flex flex-col items-center justify-start pt-14 pb-16 md:pt-20 md:pb-0"        style={{
           transformStyle: "preserve-3d",
         }}>
           {/* Hero copy — recedes as a single block */}
@@ -174,40 +178,40 @@ const Hero = (props: Partial<HeroProps>) => {
             {/* Badge */}
             <Link
               href={badgeHref}
-              className="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium bg-white border border-gray-200 rounded-full text-gray-800 hover:bg-gray-50 transition-colors mb-8"
+              className="inline-flex items-center gap-1 px-3 py-1 text-xs md:text-sm font-medium bg-white border border-gray-200 rounded-full text-gray-800 hover:bg-gray-50 transition-colors mb-6 md:mb-8"
             >
               {badgeText}
               <ArrowDownRight className="w-3 h-3" strokeWidth={2} />
             </Link>
 
             {/* Heading */}
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-black mb-6 max-w-4xl">
+            <h1 className="text-[2rem] leading-[0.98] text-center md:text-7xl font-bold tracking-tight text-black mb-5 md:mb-6 md:max-w-[11ch] md:max-w-4xl">
               {title}
             </h1>
 
             {/* Description */}
-            <p className="text-lg md:text-center md:text-xl text-gray-500 mb-10 max-w-2xl whitespace-pre-line">
+            <p className="text-base leading-7 text-center md:text-xl md:leading-8 text-gray-500 mb-8 md:mb-10 max-w-[32rem] md:max-w-2xl whitespace-pre-line">
               {description}
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-4 mb-8 md:mb-12 w-full sm:w-auto max-w-xs sm:max-w-none">
               <Link
                 href={secondaryButtonHref}
-                className="px-6 py-3 text-sm font-medium bg-white border border-gray-200 text-black rounded-xl hover:bg-gray-50 transition-colors"
+                className="px-5 md:px-6 py-3 text-sm font-medium bg-white border border-gray-200 text-black rounded-xl hover:bg-gray-50 transition-colors text-center"
               >
                 {secondaryButtonText}
               </Link>
               <Link
                 href={primaryButtonHref}
-                className="px-6 py-3 text-sm font-medium bg-[#111111] text-white rounded-xl hover:bg-black transition-colors shadow-sm"
+                className="px-5 md:px-6 py-3 text-sm font-medium bg-[#111111] text-white rounded-xl hover:bg-black transition-colors shadow-sm text-center"
               >
                 {primaryButtonText}
               </Link>
             </div>
 
             {/* Install Command */}
-            <div className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-mono text-gray-600 bg-white/6 border border-gray-200/5 rounded-full shadow-sm w-auto">
+            <div className="inline-flex items-center justify-center px-3 md:px-4 py-2.5 text-[11px] sm:text-xs md:text-sm font-mono text-gray-600 bg-white/6 border border-gray-200/5 rounded-full shadow-sm w-full max-w-[22rem] md:w-auto md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
               {installCommand}
             </div>
           </div>

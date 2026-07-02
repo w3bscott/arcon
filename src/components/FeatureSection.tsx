@@ -92,22 +92,25 @@ const FeatureSection = (props: Partial<FeatureSectionProps>) => {
   useEffect(() => {
     if (!features?.length) return;
 
-    const ctx = gsap.context(() => {
-      features.forEach((_, i) => {
-        const card  = cardRefs.current[i];
-        const image = imageRefs.current[i];
-        if (!card || !image) return;
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      const ctx = gsap.context(() => {
+        features.forEach((_, i) => {
+          const card  = cardRefs.current[i];
+          const image = imageRefs.current[i];
+          if (!card || !image) return;
 
         /* ── Tween ──────────────────────────────────────────────────── */
 
-        const tween = gsap.fromTo(
-          image,
-          { height: 0 },
-          {
-            height: IMAGE_HEIGHT,
-            duration: 0.55,
-            ease: "power2.out",
-            paused: true,
+          const tween = gsap.fromTo(
+            image,
+            { height: 0 },
+            {
+              height: IMAGE_HEIGHT,
+              duration: 0.55,
+              ease: "power2.out",
+              paused: true,
             // onComplete: () => {
             //   // Card fully open — play trigger no longer needed
             //   playTrigger.kill();
@@ -117,31 +120,31 @@ const FeatureSection = (props: Partial<FeatureSectionProps>) => {
             //   // so the card can animate again on next scroll down
             //   playTrigger = createPlayTrigger();
             // },
-          }
-        );
+            }
+          );
 
-        ScrollTrigger.create({
-  trigger: card,
-  start: i === 0
-    ? "top 30%"
-    : i === 1
-    ? "top 10%"
-    : "top -20%",
+          ScrollTrigger.create({
+            trigger: card,
+            start: i === 0
+              ? "top 30%"
+              : i === 1
+              ? "top 10%"
+              : "top -20%",
 
-  onEnter: () => {
-    setActiveDot(i);
-    if (!tween.isActive()) tween.play();
-  },
+            onEnter: () => {
+              setActiveDot(i);
+              if (!tween.isActive()) tween.play();
+            },
 
-  onEnterBack: () => {
-    setActiveDot(i);
-    if (!tween.isActive()) tween.play();
-  },
+            onEnterBack: () => {
+              setActiveDot(i);
+              if (!tween.isActive()) tween.play();
+            },
 
-  onLeaveBack: () => {
-    if (!tween.isActive()) tween.reverse();
-  },
-});
+            onLeaveBack: () => {
+              if (!tween.isActive()) tween.reverse();
+            },
+          });
 
         /* ── Play trigger factory ───────────────────────────────────── */
         // Extracted into a function so it can be recreated after a reverse
@@ -177,10 +180,13 @@ const FeatureSection = (props: Partial<FeatureSectionProps>) => {
         //   onEnter:     () => setActiveDot(i),
         //   onEnterBack: () => setActiveDot(i),
         // });
-      });
-    }, containerRef);
+        });
+      }, containerRef);
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
   }, [features, setActiveDot]);
 
   /* ── Render ─────────────────────────────────────────────────────────── */
@@ -188,19 +194,19 @@ const FeatureSection = (props: Partial<FeatureSectionProps>) => {
   return (
     <section
       ref={containerRef}
-      className={`w-full bg-black py-48 ${className}`}
+      className={`w-full bg-black py-24 md:py-48 ${className}`}
     >
       <div className="w-full max-w-7xl mx-auto px-4">
 
         {/* Header */}
-        <div className="flex flex-col items-center gap-6 mb-20">
-          <h2 className="text-5xl font-semibold text-center text-gray-100 leading-none tracking-tight">
+        <div className="flex flex-col items-center gap-4 md:gap-6 mb-14 md:mb-20">
+          <h2 className="text-[2.15rem] md:text-5xl font-semibold text-center text-gray-100 leading-[1.05] md:leading-none tracking-tight">
             {heading?.split("\n").map((line, i) => (
               <span key={i} className="block">{line}</span>
             ))}
           </h2>
 
-          <p className="text-lg text-gray-300 text-center max-w-[682px] leading-7">
+          <p className="text-base md:text-lg text-gray-300 text-center max-w-[682px] leading-7">
             {subheading}
           </p>
 
@@ -231,16 +237,16 @@ const FeatureSection = (props: Partial<FeatureSectionProps>) => {
           </div>
 
           {/* Feature cards */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-5 md:gap-6">
             {features?.map((feature, i) => (
               <div
                 key={i}
                 ref={(el) => { cardRefs.current[i] = el; }}
-                className={`flex ${feature.align === "right" ? "justify-end" : "justify-start"}`}
+                className={`flex justify-start ${feature.align === "right" ? "md:justify-end" : "md:justify-start"}`}
               >
-                <div className={`bg-white ${i === 0 ? "mt-16" : "mt-20"} border border-gray-100 rounded-2xl p-6 w-full max-w-[437px] shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)]`}>
+                <div className={`bg-white ${i === 0 ? "mt-8 md:mt-16" : "mt-5 md:mt-20"} border border-gray-100 rounded-xl md:rounded-2xl p-5 md:p-6 w-full md:max-w-[437px] shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)]`}>
 
-                  <p className="text-lg font-semibold text-gray-900 leading-7 mb-4">
+                  <p className="text-base md:text-lg font-semibold text-gray-900 leading-6 md:leading-7 mb-4">
                     {feature.title}
                   </p>
 
@@ -249,10 +255,10 @@ const FeatureSection = (props: Partial<FeatureSectionProps>) => {
                     ref={(el) => { imageRefs.current[i] = el; }}
                     className="w-full flex items-center justify-center overflow-hidden"
                   >
-                   <BoxScanIllustration className="h-[179px] w-[181px]" />
+                   <BoxScanIllustration className="h-[150px] w-[152px] md:h-[179px] md:w-[181px]" />
                   </div>
 
-                  <p className="text-base text-gray-500 leading-6 mt-4">
+                  <p className="text-sm md:text-base text-gray-500 leading-6 mt-4">
                     {feature.description}
                   </p>
 

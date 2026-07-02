@@ -1,6 +1,5 @@
-import React from 'react';
 import Link from 'next/link';
-import { Cuboid, Monitor, ExternalLink, Copy } from 'lucide-react';
+import { Cuboid, Monitor, ExternalLink } from 'lucide-react';
 import { Footer } from './Footer';
 
 export interface CTAFramework {
@@ -57,10 +56,6 @@ const defaultProps: CTAProps = {
 
 const CTA = (props: Partial<CTAProps>) => {
   const {
-    heading,
-    subheading,
-    command,
-    frameworks,
     featureHeading,
     featureDescription,
     primaryButtonText,
@@ -74,10 +69,10 @@ const CTA = (props: Partial<CTAProps>) => {
     <section className="w-full max-w-7xl mx-auto px-4 pb-12">
       <div className="relative">
         {/* 4 Corner Dots */}
-        <div className="absolute -top-[-10%] -left-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-[-1] md:z-10" />
-        <div className="absolute -top-[-10%] -right-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-[-1] md:z-10" />
-        <div className="absolute -bottom-[-42.8%] -left-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-[-1] md:z-10" />
-        <div className="absolute -bottom-[-42.8%] -right-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-[-1] md:z-10" />
+        <div className="absolute hidden md:block -top-[-10%] -left-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-10" />
+        <div className="absolute hidden md:block -top-[-10%] -right-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-10" />
+        <div className="absolute hidden md:block -bottom-[-42.8%] -left-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-10" />
+        <div className="absolute hidden md:block -bottom-[-42.8%] -right-3 w-6 h-6 rounded-full bg-black border border-7 border-[#fafafa] z-10" />
 
         {/* Outer Border */}
         <div className="border border-gray-200 rounded-none overflow-hidden border-t-transparent">
@@ -118,33 +113,33 @@ const CTA = (props: Partial<CTAProps>) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2">
             {/* Left Column */}
-            <div className="px-8 md:px-16 py-16 flex flex-col justify-between">
+            <div className="px-5 md:px-16 py-10 md:py-16 flex flex-col justify-between">
               {/* Icon */}
-              <div className="mb-8">
-                <Cuboid className="w-16 h-16 text-foreground" strokeWidth={1} />
+              <div className="mb-6 md:mb-8">
+                <Cuboid className="w-12 h-12 md:w-16 md:h-16 text-foreground" strokeWidth={1} />
               </div>
 
               {/* Heading & Description */}
-              <div className="mb-8">
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-4 max-w-md">
+              <div className="mb-7 md:mb-8">
+                <h3 className="text-xl leading-7 md:text-3xl md:leading-tight font-bold tracking-tight text-foreground mb-3 md:mb-4 max-w-md">
                   {featureHeading}
                 </h3>
-                <p className="text-gray-500 text-sm whitespace-pre-line max-w-sm">
+                <p className="text-gray-500 text-sm leading-6 whitespace-pre-line max-w-sm">
                   {featureDescription}
                 </p>
               </div>
 
               {/* Buttons */}
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-4">
                 <Link
                   href={primaryButtonHref!}
-                  className="px-5 py-2.5 text-sm font-medium bg-[#111111] text-white rounded-lg hover:bg-black transition-colors shadow-sm"
+                  className="px-5 py-2.5 text-sm font-medium bg-[#111111] text-white rounded-lg hover:bg-black transition-colors shadow-sm text-center"
                 >
                   {primaryButtonText}
                 </Link>
                 <Link
                   href={secondaryButtonHref!}
-                  className="px-5 py-2.5 text-sm font-medium bg-white text-foreground border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-5 py-2.5 text-sm font-medium bg-white text-foreground border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-center"
                 >
                   {secondaryButtonText}
                 </Link>
@@ -155,10 +150,10 @@ const CTA = (props: Partial<CTAProps>) => {
             <div className="hidden md:block absolute left-1/2 top-auto bottom-0 w-px bg-gray-200 self-stretch" style={{ height: 'calc(-70%)' }} />
 
             {/* Right Column */}
-            <div className="border-t md:border-t-0 md:border-l border-gray-200 px-8 md:px-16 py-16 flex flex-col">
+            <div className="border-t md:border-t-0 md:border-l border-gray-200 px-5 md:px-16 py-10 md:py-16 flex flex-col">
               {/* Icon */}
-              <div className="mb-8">
-                <Cuboid className="w-16 h-16 text-foreground" strokeWidth={1} />
+              <div className="mb-6 md:mb-8">
+                <Cuboid className="w-12 h-12 md:w-16 md:h-16 text-foreground" strokeWidth={1} />
               </div>
 
               {/* Tool List */}
@@ -167,12 +162,12 @@ const CTA = (props: Partial<CTAProps>) => {
                   <Link
                     key={i}
                     href={tool.href}
-                    className="flex items-center gap-4 px-4 py-4 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors group"
+                    className="flex items-center gap-3 md:gap-4 px-3 md:px-4 py-3 md:py-4 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors group"
                   >
                     <Monitor className="w-5 h-5 text-gray-400 shrink-0" />
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-semibold text-foreground">{tool.name}</div>
-                      <div className="text-xs text-gray-500">{tool.description}</div>
+                      <div className="text-xs text-gray-500 leading-5">{tool.description}</div>
                     </div>
                     <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-foreground transition-colors shrink-0" />
                   </Link>

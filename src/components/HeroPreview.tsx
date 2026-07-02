@@ -1,7 +1,5 @@
 "use client";
 
-import { ChevronUp, ArrowRight } from "lucide-react";
-
 /* ── Syntax token colors ────────────────────────────────────────────── */
 const t = {
   comment:  "#8b949e", // Brightened for better contrast in dark mode

@@ -7,28 +7,50 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    let cleanupSmoothScroll: (() => void) | undefined;
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
+    const startSmoothScroll = () => {
+      gsap.registerPlugin(ScrollTrigger);
 
-    lenis.on("scroll", ScrollTrigger.update);
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
 
-    // Synchronize GSAP's ticker with Lenis
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+      lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.lagSmoothing(0);
+      const updateLenis = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+
+      // Synchronize GSAP's ticker with Lenis
+      gsap.ticker.add(updateLenis);
+
+      gsap.ticker.lagSmoothing(0);
+
+      cleanupSmoothScroll = () => {
+        gsap.ticker.remove(updateLenis);
+        lenis.destroy();
+      };
+    };
+
+    const syncSmoothScroll = () => {
+      cleanupSmoothScroll?.();
+      cleanupSmoothScroll = undefined;
+
+      if (mediaQuery.matches) {
+        startSmoothScroll();
+      }
+    };
+
+    syncSmoothScroll();
+    mediaQuery.addEventListener("change", syncSmoothScroll);
 
     return () => {
-      lenis.destroy();
-      gsap.ticker.remove((time) => {
-        lenis.raf(time * 1000);
-      });
+      mediaQuery.removeEventListener("change", syncSmoothScroll);
+      cleanupSmoothScroll?.();
     };
   }, []);
 
