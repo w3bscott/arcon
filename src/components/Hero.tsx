@@ -22,13 +22,13 @@ export interface HeroProps {
 }
 
 const DEFAULT_PROPS: HeroProps = {
-  badgeText: "New Release",
-  badgeHref: "#",
+  badgeText: "Explore Blocks",
+  badgeHref: "/blocks",
   title: "Build Faster on Arc",
   description:
     "Pre-built UI components wired directly to the Arc SDK.\nInstall, connect, and ship production ready interfaces faster.",
-  primaryButtonText: "Browse Components",
-  primaryButtonHref: "#",
+  primaryButtonText: "Browse Blocks",
+  primaryButtonHref: "/blocks",
   secondaryButtonText: "View Github",
   secondaryButtonHref: "#",
   installCommand: "$ npm install @arc-ui/react @circle-fin/app-kit",

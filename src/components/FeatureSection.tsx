@@ -41,7 +41,7 @@ const defaultProps: FeatureSectionProps = {
   subheading:
     "Each component is mapped to a live Arc SDK method. Fully typed, unstyled by default, and ready to drop into any React project.",
   ctaText: "Get started for free",
-  ctaHref: "#",
+  ctaHref: "/docs/getting-started",
   features: [
     {
       title: "Three layers. Framework agnostic.",

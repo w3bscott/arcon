@@ -16,13 +16,13 @@ export interface NavbarProps {
 const defaultProps: NavbarProps = {
   logoText: "arcon",
   links: [
-    { label: "Components", href: "#" },
-    { label: "Architecture", href: "#" },
-    { label: "Docs", href: "#" },
+    { label: "Home", href: "/" },
+    { label: "Blocks", href: "/blocks" },
+    { label: "Docs", href: "/docs" },
   ],
-  loginText: "Login",
-  loginHref: "#",
-  githubText: "Components",
+  loginText: "",
+  loginHref: "/",
+  githubText: "GitHub",
   githubHref: "#",
 };
 
@@ -48,10 +48,10 @@ const Navbar = (props: Partial<NavbarProps>) => {
         }`}
       >
       {/* Logo */}
-      <div className="flex items-center gap-2 text-foreground">
+      <Link href="/" className="flex items-center gap-2 text-foreground">
         <Cuboid className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} />
         <span className="font-bold text-lg md:text-xl tracking-tight">{logoText}</span>
-      </div>
+      </Link>
 
       {/* Links (Center) */}
       <div className="hidden md:flex items-center gap-8 px-6 py-2 ">
@@ -64,9 +64,11 @@ const Navbar = (props: Partial<NavbarProps>) => {
 
       {/* Right Actions */}
       <div className="flex items-center gap-3 md:gap-6">
-        <Link href={loginHref!} className="text-sm font-medium text-gray-800 hover:text-black transition-colors">
-          {loginText}
-        </Link>
+        {loginText ? (
+          <Link href={loginHref!} className="text-sm font-medium text-gray-800 hover:text-black transition-colors">
+            {loginText}
+          </Link>
+        ) : null}
         <Link href={githubHref!} className="flex items-center gap-2 px-3 md:px-4 py-2 text-sm font-medium border border-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
           {githubText}
           {/* <FolderGit2 className="w-4 h-4" /> */}

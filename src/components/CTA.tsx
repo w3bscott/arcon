@@ -43,14 +43,14 @@ const defaultProps: CTAProps = {
   ],
   featureHeading: "Drop in production-ready UI blocks instead of building from scratch",
   featureDescription: "Open-source components designed for Arc App Kits.\nAuthentication, wallets, balances, transfers, and many more.",
-  primaryButtonText: "Browse Components",
-  primaryButtonHref: "#",
+  primaryButtonText: "Browse Blocks",
+  primaryButtonHref: "/blocks",
   secondaryButtonText: "View Github",
   secondaryButtonHref: "#",
   tools: [
-    { name: "Arc", description: "Build real world finance onchain", href: "#" },
-    { name: "Shadcn/ui", description: "Modern UI building blocks", href: "#" },
-    { name: "Tailwind", description: "Best css style library", href: "#" },
+    { name: "Blocks", description: "Browse Arc UI website blocks", href: "/blocks" },
+    { name: "Docs", description: "Read installation and usage guidance", href: "/docs" },
+    { name: "GitHub", description: "Follow the open-source project", href: "#" },
   ],
 };
 
