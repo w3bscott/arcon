@@ -46,6 +46,7 @@ const Hero = (props: Partial<HeroProps>) => {
     secondaryButtonHref,
     installCommand,
   } = { ...DEFAULT_PROPS, ...props };
+  const descriptionLines = description.split("\n");
 
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
@@ -191,7 +192,11 @@ const Hero = (props: Partial<HeroProps>) => {
 
             {/* Description */}
             <p className="text-base leading-7 text-center md:text-xl md:leading-8 text-gray-500 mb-8 md:mb-10 max-w-[32rem] md:max-w-2xl whitespace-pre-line">
-              {description}
+              {descriptionLines.map((line, index) => (
+                <span key={line} className={index > 0 ? "hidden md:block" : "block"}>
+                  {line}
+                </span>
+              ))}
             </p>
 
             {/* Action Buttons */}

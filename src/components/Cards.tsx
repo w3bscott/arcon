@@ -25,6 +25,8 @@ const defaultProps: CardsProps = {
   ],
 };
 
+const mobileHeadline = "Install, connect, and ship production ready interfaces faster.";
+
 const Cards = (props: Partial<CardsProps>) => {
   const { images } = { ...defaultProps, ...props };
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,26 +81,32 @@ const Cards = (props: Partial<CardsProps>) => {
   ];
 
   return (
-    <section ref={containerRef} className="w-full max-h-[500px] md:max-h-none max-w-7xl mx-auto px-4 pb-32 bg-[#fafafa] overflow-hidden">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 auto-rows-[100px] w-full relative">
-        {cardLayouts.map((layoutClass, index) => {
-          const image = images[index] || defaultProps.images[index];
-          
-          return (
-            <div
-              key={index}
-              className={`card-item ${layoutClass} bg-white rounded-xl md:rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden relative group`}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(min-width: 768px) 25vw, 50vw"
-                className="object-cover bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors"
-              />
-            </div>
-          );
-        })}
+    <section ref={containerRef} className="w-full max-w-7xl mx-auto px-4 pb-32 bg-[#fafafa]">
+      <h2 className="md:hidden text-2xl leading-tight font-semibold tracking-tight text-black mb-6 max-w-sm">
+        {mobileHeadline}
+      </h2>
+
+      <div className="max-h-[500px] md:max-h-none overflow-hidden">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 auto-rows-[100px] w-full relative">
+          {cardLayouts.map((layoutClass, index) => {
+            const image = images[index] || defaultProps.images[index];
+            
+            return (
+              <div
+                key={index}
+                className={`card-item ${layoutClass} bg-white rounded-xl md:rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden relative group`}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors"
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
