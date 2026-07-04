@@ -11,6 +11,7 @@ export interface NavbarProps {
   loginHref: string;
   githubText: string;
   githubHref: string;
+  sticky?: boolean;
 }
 
 const defaultProps: NavbarProps = {
@@ -24,22 +25,28 @@ const defaultProps: NavbarProps = {
   loginHref: "/",
   githubText: "GitHub",
   githubHref: "#",
+  sticky: true,
 };
 
 const Navbar = (props: Partial<NavbarProps>) => {
-  const { logoText, links, loginText, loginHref, githubText, githubHref } = { ...defaultProps, ...props };
+  const { logoText, links, loginText, loginHref, githubText, githubHref, sticky } = { ...defaultProps, ...props };
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    if (!sticky) {
+      setIsScrolled(false);
+      return;
+    }
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+    handleScroll(); // Check initial scroll position
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [sticky]);
 
   return (
-    <div className={`sticky top-0 z-50 w-full transition-all duration-300 px-3 md:px-4 ${isScrolled ? 'pt-3' : 'pt-0'}`}>
+    <div className={`${sticky ? 'sticky top-0 z-50' : 'relative'} w-full transition-all duration-300 px-3 md:px-4 ${isScrolled ? 'pt-3' : 'pt-0'}`}>
       <nav 
         className={`flex items-center justify-between px-4 md:px-8 py-3 md:py-4 mx-auto w-full transition-all duration-300 ${
           isScrolled 

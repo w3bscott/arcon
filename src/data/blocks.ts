@@ -20,6 +20,9 @@ export interface BlockMetadata {
   category: BlockCategory;
   status: BlockStatus;
   sdkMethods: string[];
+  installCommand: string;
+  importStatement: string;
+  codeExample: string;
 }
 
 export const blocks: BlockMetadata[] = [
@@ -30,6 +33,9 @@ export const blocks: BlockMetadata[] = [
     category: "Wallet",
     status: "Stable",
     sdkMethods: ["kit.wallet.connect()"],
+    installCommand: "npx arc-ui add wallet-connect-button",
+    importStatement: 'import { WalletConnectButton } from "@/components/arc-ui/wallet-connect-button"',
+    codeExample: '<WalletConnectButton onConnect={handleConnect} connectLabel="Connect Wallet" />',
   },
   {
     name: "BalanceCard",
@@ -38,6 +44,9 @@ export const blocks: BlockMetadata[] = [
     category: "Unified Balance",
     status: "Stable",
     sdkMethods: ["kit.unifiedBalance.getBalances()"],
+    installCommand: "npx arc-ui add balance-card",
+    importStatement: 'import { BalanceCard } from "@/components/arc-ui/balance-card"',
+    codeExample: `<BalanceCard\n  kit={kit}\n  sources={{ walletAddresses: [{ address, blockchain: "Arc_Testnet" }] }}\n  includePending\n/>`,
   },
   {
     name: "TransactionStatus",
@@ -46,6 +55,9 @@ export const blocks: BlockMetadata[] = [
     category: "Transactions",
     status: "Stable",
     sdkMethods: ["kit.transactions.getStatus()"],
+    installCommand: "npx arc-ui add transaction-status",
+    importStatement: 'import { TransactionStatus } from "@/components/arc-ui/transaction-status"',
+    codeExample: `<TransactionStatus\n  sendResult={result}\n  operationType="send"\n  onComplete={() => console.log("done")}\n/>`,
   },
   {
     name: "SendMoneyForm",
@@ -54,6 +66,9 @@ export const blocks: BlockMetadata[] = [
     category: "Payments",
     status: "Stable",
     sdkMethods: ["kit.payments.send()"],
+    installCommand: "npx arc-ui add send-money-form",
+    importStatement: 'import { SendMoneyForm } from "@/components/arc-ui/send-money-form"',
+    codeExample: `<SendMoneyForm\n  kit={kit}\n  chain="Arc_Testnet"\n  onSuccess={(result) => console.log(result)}\n/>`,
   },
   {
     name: "SwapWidget",
@@ -62,6 +77,9 @@ export const blocks: BlockMetadata[] = [
     category: "Swap",
     status: "Stable",
     sdkMethods: ["kit.swap.quote()", "kit.swap.execute()"],
+    installCommand: "npx arc-ui add swap-widget",
+    importStatement: 'import { SwapWidget } from "@/components/arc-ui/swap-widget"',
+    codeExample: `<SwapWidget\n  kit={kit}\n  chain="Arc_Testnet"\n  defaultTokenIn="USDC"\n  defaultTokenOut="EURC"\n/>`,
   },
   {
     name: "BridgeWidget",
@@ -70,6 +88,9 @@ export const blocks: BlockMetadata[] = [
     category: "Bridge",
     status: "Stable",
     sdkMethods: ["kit.bridge.quote()", "kit.bridge.execute()"],
+    installCommand: "npx arc-ui add bridge-widget",
+    importStatement: 'import { BridgeWidget } from "@/components/arc-ui/bridge-widget"',
+    codeExample: `<BridgeWidget\n  kit={kit}\n  defaultFromChain="Arc_Testnet"\n  defaultToChain="Ethereum"\n  onSuccess={(result) => console.log(result)}\n/>`,
   },
 ];
 

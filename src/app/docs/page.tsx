@@ -2,89 +2,105 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ArrowRight, BookOpen, Zap, Package } from "lucide-react";
+import { CodeBlock } from "@/components/blockspage/CodeBlock";
 
 export const metadata: Metadata = {
   title: "Documentation — Arc UI",
-  description:
-    "Learn how to install and use Arc UI blocks in your Arc App Kit project.",
+  description: "Learn how to install and use Arc UI blocks.",
 };
 
-const docSections = [
-  {
-    icon: Zap,
-    title: "Getting Started",
-    description:
-      "Install the Arc UI package and render your first block in minutes.",
-    href: "/docs/getting-started",
-    label: "Read guide",
-  },
-  {
-    icon: Package,
-    title: "Blocks",
-    description:
-      "Browse every available block, their props, SDK methods, and usage examples.",
-    href: "/blocks",
-    label: "Browse blocks",
-  },
-  {
-    icon: BookOpen,
-    title: "Architecture",
-    description:
-      "Understand the three-layer design: core logic, framework adapters, and pre-built blocks.",
-    href: "/docs/getting-started#architecture",
-    label: "Learn more",
-  },
+const setupCode = `import { AppKit } from "@circle-fin/app-kit"
+import { createViemAdapter } from "@circle-fin/adapter-viem-v2"
+
+const adapter = createViemAdapter({ walletClient })
+const kit = new AppKit()`;
+
+const usageCode = `import { BalanceCard } from "@/components/arc-ui/balance-card"
+
+<BalanceCard
+  kit={kit}
+  sources={{ walletAddresses: [{ address, blockchain: "Arc_Testnet" }] }}
+  className="your-styles-here"
+/>`;
+
+const components = [
+  "wallet-connect-button",
+  "balance-card",
+  "transaction-status",
+  "send-money-form",
+  "swap-widget",
+  "bridge-widget",
 ];
 
 export default function DocsPage() {
   return (
     <div className="min-h-screen bg-[#fafafa]">
-      <Navbar />
+      <Navbar sticky={false} />
 
-      <div className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-16 pb-24">
-        {/* Header */}
-        <header className="max-w-2xl mb-16">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-400">
-            Documentation
+      <main className="w-full max-w-[860px] mx-auto px-4 md:px-8 py-16">
+        {/* Architecture Notice */}
+        <section className="mb-12">
+          <h1 className="text-3xl font-bold text-[#09090b] mb-4">Architecture</h1>
+          <p className="text-[#71717a] mb-4 leading-relaxed">
+            Arc UI is built as a <strong>shadcn registry</strong>. Components are distributed through the CLI rather than as precompiled React package components.
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
-            Arc UI Docs
-          </h1>
-          <p className="text-base md:text-lg text-gray-500 leading-7">
-            Everything you need to install, configure, and ship Arc UI blocks
-            in your Arc App Kit project.
+          <p className="text-[#71717a] mb-4 leading-relaxed">
+            The goal is to let developers copy production-ready source code directly into their own projects, where they retain full ownership and customization.
           </p>
-        </header>
+          <ul className="list-disc pl-5 text-[#71717a] space-y-1 mb-4">
+            <li><strong>Arc UI owns:</strong> Component structure, behavior, accessibility, Arc SDK integration, documentation, and registry metadata.</li>
+            <li><strong>You own:</strong> Styling, theme, design tokens, and future customizations.</li>
+          </ul>
+        </section>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {docSections.map((section) => {
-            const Icon = section.icon;
-            return (
-              <Link
-                key={section.href}
-                href={section.href}
-                className="group flex flex-col p-6 bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all duration-200"
-              >
-                <div className="mb-4 w-9 h-9 flex items-center justify-center rounded-lg bg-gray-50 border border-gray-100 group-hover:bg-gray-100 transition-colors">
-                  <Icon className="w-4 h-4 text-gray-600" strokeWidth={1.8} />
-                </div>
-                <h2 className="text-sm font-semibold text-gray-900 mb-2">
-                  {section.title}
-                </h2>
-                <p className="text-xs text-gray-500 leading-5 flex-1 mb-4">
-                  {section.description}
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-gray-900 group-hover:gap-2 transition-all">
-                  {section.label}
-                  <ArrowRight className="w-3 h-3" />
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-[#09090b] mb-4">Getting Started</h2>
+          <div className="mb-4">
+            <CodeBlock code="npx arc-ui init" language="bash" />
+          </div>
+          <p className="text-[#71717a] leading-relaxed">
+            Initialize Arc UI in your project to set up the registry components. Arc UI is an open-source React component library for the Arc App Kits SDK. Components are unstyled by default — bring your own CSS, Tailwind, or any styling solution.
+          </p>
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-[#09090b] mb-4">Setup</h2>
+          <CodeBlock code={setupCode} language="typescript" />
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-[#09090b] mb-4">Usage</h2>
+          <p className="text-[#71717a] mb-4 leading-relaxed">
+            Import any component you have added and pass your kit instance. All components accept a <code>className</code> prop for styling.
+          </p>
+          <CodeBlock code={usageCode} language="tsx" />
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-[#09090b] mb-4">Components</h2>
+          <ul className="flex flex-col gap-3">
+            {components.map((slug) => {
+              const name = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
+              return (
+                <li key={slug}>
+                  <Link 
+                    href={`/blocks/${slug}`}
+                    className="text-[#09090b] hover:underline font-medium"
+                  >
+                    {name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        <footer className="pt-8 border-t border-[#e4e4e7]">
+          <p className="text-sm text-[#71717a]">
+            Full component docs and live previews are available on the <Link href="/blocks" className="text-[#09090b] hover:underline">Blocks page</Link>.
+          </p>
+        </footer>
+      </main>
 
       <Footer />
     </div>
