@@ -129,7 +129,7 @@ interface HeroPreviewProps {
 // Note: Animations are now fully driven by Hero.tsx using class selectors.
 const HeroPreview = ({ className = "" }: HeroPreviewProps) => {
   return (
-    <div className={`bg-gray-200 border border-white/40 rounded-3xl p-4 w-full ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-md border border-white/40 rounded-3xl p-4 w-full ${className}`}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
         {/* ── Row 1 ── */}

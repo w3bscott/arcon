@@ -31,25 +31,26 @@ const defaultProps: NavbarProps = {
 const Navbar = (props: Partial<NavbarProps>) => {
   const { logoText, links, loginText, loginHref, githubText, githubHref, sticky } = { ...defaultProps, ...props };
   const [isScrolled, setIsScrolled] = useState(false);
+  const effectiveScrolled = sticky ? isScrolled : false;
 
   useEffect(() => {
     if (!sticky) {
-      setIsScrolled(false);
       return;
     }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    handleScroll(); // Check initial scroll position
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sticky]);
 
   return (
-    <div className={`${sticky ? 'sticky top-0 z-50' : 'relative'} w-full transition-all duration-300 px-3 md:px-4 ${isScrolled ? 'pt-3' : 'pt-0'}`}>
+    <div className={`${sticky ? 'fixed top-0 left-0 z-50' : 'absolute top-0 left-0 z-50'} w-full transition-all duration-300 px-3 md:px-4 ${effectiveScrolled ? 'pt-3' : 'pt-0'}`}>
       <nav 
         className={`flex items-center justify-between px-4 md:px-8 py-3 md:py-4 mx-auto w-full transition-all duration-300 ${
-          isScrolled 
+          effectiveScrolled
             ? 'bg-white/85 backdrop-blur-md shadow-xsm border border-gray-200 rounded-2xl max-w-5xl' 
             : 'bg-transparent border border-transparent rounded-none max-w-7xl'
         }`}

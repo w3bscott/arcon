@@ -9,11 +9,7 @@ import { HeroPreview } from "./HeroPreview";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CLOUD_FRAME_COUNT = 59;
-const getCloudFrame = (index: number) =>
-  `/cloud-bg/frame-${String(index).padStart(5, "0")}.webp`;
-
-export interface HeroProps {
+export interface Hero2Props {
   badgeText: string;
   badgeHref: string;
   title: string;
@@ -25,7 +21,7 @@ export interface HeroProps {
   installCommand: string;
 }
 
-const DEFAULT_PROPS: HeroProps = {
+const DEFAULT_PROPS: Hero2Props = {
   badgeText: "Explore Blocks",
   badgeHref: "/blocks",
   title: "Build Faster on Arc",
@@ -38,7 +34,7 @@ const DEFAULT_PROPS: HeroProps = {
   installCommand: "$ npm install @arc-ui/react @circle-fin/app-kit",
 };
 
-const Hero = (props: Partial<HeroProps>) => {
+const Hero2 = (props: Partial<Hero2Props>) => {
   const {
     badgeText,
     badgeHref,
@@ -54,95 +50,24 @@ const Hero = (props: Partial<HeroProps>) => {
 
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const pin = pinRef.current;
-    const canvas = canvasRef.current;
-    const ctx2d = canvas?.getContext("2d");
     const content = contentRef.current;
     const dashboard = dashboardRef.current;
 
-    if (!section || !pin || !canvas || !ctx2d || !content || !dashboard) return;
+    if (!section || !pin || !content || !dashboard) return;
 
     const mm = gsap.matchMedia();
-    const imageSeq = { frame: 1 };
-    const images: HTMLImageElement[] = [];
-    let isDisposed = false;
-    let canvasWidth = 0;
-    let canvasHeight = 0;
-
-    const render = () => {
-      const frameIndex = Math.min(
-        CLOUD_FRAME_COUNT - 1,
-        Math.max(0, Math.round(imageSeq.frame) - 1)
-      );
-      const img = images[frameIndex];
-
-      if (!img || !img.complete || !canvasWidth || !canvasHeight) return;
-
-      ctx2d.clearRect(0, 0, canvasWidth, canvasHeight);
-
-      const imageAspect = img.width / img.height;
-      const canvasAspect = canvasWidth / canvasHeight;
-
-      let renderWidth: number;
-      let renderHeight: number;
-      let offsetX: number;
-      let offsetY: number;
-
-      if (canvasAspect > imageAspect) {
-        renderWidth = canvasWidth;
-        renderHeight = canvasWidth / imageAspect;
-        offsetX = 0;
-        offsetY = (canvasHeight - renderHeight) / 2;
-      } else {
-        renderHeight = canvasHeight;
-        renderWidth = canvasHeight * imageAspect;
-        offsetY = 0;
-        offsetX = (canvasWidth - renderWidth) / 2;
-      }
-
-      ctx2d.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
-    };
-
-    const resizeCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const bounds = pin.getBoundingClientRect();
-      canvasWidth = bounds.width || window.innerWidth;
-      canvasHeight = bounds.height || window.innerHeight;
-
-      canvas.width = Math.round(canvasWidth * dpr);
-      canvas.height = Math.round(canvasHeight * dpr);
-      canvas.style.width = `${canvasWidth}px`;
-      canvas.style.height = `${canvasHeight}px`;
-
-      ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
-      render();
-    };
-
-    for (let i = 1; i <= CLOUD_FRAME_COUNT; i += 1) {
-      const img = new Image();
-      img.src = getCloudFrame(i);
-      img.onload = () => {
-        if (!isDisposed && (i === 1 || Math.round(imageSeq.frame) === i)) {
-          render();
-        }
-      };
-      images.push(img);
-    }
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
 
     mm.add("(min-width: 768px)", () => {
       const ctx = gsap.context(() => {
         gsap.set(dashboard, {
           opacity: 0.99,
-          y: "80%",
+          y: 325,
           scale: 0.5,
         });
 
@@ -155,20 +80,12 @@ const Hero = (props: Partial<HeroProps>) => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: "top top",
-            end: "+=80%",
+            start: "top-=86 top",
+            end: "+=100%",
             scrub: true,
             pin: pin,
           },
         });
-
-        tl.to(imageSeq, {
-          frame: CLOUD_FRAME_COUNT,
-          snap: "frame",
-          ease: "none",
-          duration: 1,
-          onUpdate: render,
-        }, 0);
 
         tl.to(content, {
           z: -800,
@@ -185,7 +102,7 @@ const Hero = (props: Partial<HeroProps>) => {
 
         tl.to(dashboard, {
           opacity: 1,
-          y: 44,
+          y: -80,
           scale: 1,
           duration: 0.3,
         }, 0.1);
@@ -213,37 +130,27 @@ const Hero = (props: Partial<HeroProps>) => {
       return () => ctx.revert();
     });
 
-    return () => {
-      isDisposed = true;
-      window.removeEventListener("resize", resizeCanvas);
-      mm.revert();
-    };
+    return () => mm.revert();
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-[#fafafa]"
+      className="relative bg-[#fafafa]"
     >
       <div
         ref={pinRef}
-        className="relative h-screen min-h-screen overflow-hidden"
+        className="relative overflow-hidden min-h-[560px] h-auto md:min-h-[750px] md:h-[85vh]"
         style={{
           perspective: "1200px",
           perspectiveOrigin: "50% 50%",
           transformStyle: "preserve-3d",
         }}
       >
-        <canvas
-          ref={canvasRef}
-          className="absolute opacity-[0.3] inset-0 z-0 h-full w-full pointer-events-none"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 z-[1] bg-white/35 pointer-events-none" />
-        <div className="absolute inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-b from-transparent to-[#fafafa] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-white rounded-full blur-[100px] opacity-50 pointer-events-none" />
 
         <div
-          className="relative z-10 h-full px-4 max-w-7xl mx-auto flex flex-col items-center justify-center pt-20 pb-16 md:pt-24 md:pb-0"
+          className="relative h-full px-4 max-w-7xl mx-auto flex flex-col items-center justify-start pt-14 pb-16 md:pt-20 md:pb-0"
           style={{
             transformStyle: "preserve-3d",
           }}
@@ -265,7 +172,7 @@ const Hero = (props: Partial<HeroProps>) => {
               {title}
             </h1>
 
-            <p className="text-base leading-7 text-center md:text-xl md:leading-8 text-gray-600 mb-8 md:mb-10 max-w-[32rem] md:max-w-2xl whitespace-pre-line">
+            <p className="text-base leading-7 text-center md:text-xl md:leading-8 text-gray-500 mb-8 md:mb-10 max-w-[32rem] md:max-w-2xl whitespace-pre-line">
               {descriptionLines.map((line, index) => (
                 <span key={line} className={index > 0 ? "hidden md:block" : "block"}>
                   {line}
@@ -288,7 +195,7 @@ const Hero = (props: Partial<HeroProps>) => {
               </Link>
             </div>
 
-            <div className="inline-flex items-center justify-center px-3 md:px-4 py-2.5 text-[11px] sm:text-xs md:text-sm font-mono text-gray-600 bg-white/70 border border-gray-200/50 rounded-full shadow-sm w-full max-w-[22rem] md:w-auto md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap backdrop-blur">
+            <div className="inline-flex items-center justify-center px-3 md:px-4 py-2.5 text-[11px] sm:text-xs md:text-sm font-mono text-gray-600 bg-white/6 border border-gray-200/5 rounded-full shadow-sm w-full max-w-[22rem] md:w-auto md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
               {installCommand}
             </div>
           </div>
@@ -306,4 +213,4 @@ const Hero = (props: Partial<HeroProps>) => {
   );
 };
 
-export { Hero };
+export { Hero2 };
