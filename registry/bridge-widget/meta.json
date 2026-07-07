@@ -1,0 +1,11 @@
+{
+  "name": "bridge-widget",
+  "title": "BridgeWidget",
+  "description": "Prepare cross-chain transfer routes for supported assets.",
+  "category": "Bridge",
+  "sdkMethods": [
+    "kit.bridge.quote()",
+    "kit.bridge.execute()"
+  ],
+  "status": "stable"
+}

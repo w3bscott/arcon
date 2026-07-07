@@ -89,7 +89,7 @@ const Cards = (props: Partial<CardsProps>) => {
       <div className="max-h-[500px] md:max-h-none overflow-hidden">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 auto-rows-[100px] w-full relative">
           {cardLayouts.map((layoutClass, index) => {
-            const image = images[index] || defaultProps.images[index];
+            const image = images[index] || defaultProps.images![index] || { src: "/arcon-hero.png", alt: "Placeholder" };
             
             return (
               <div

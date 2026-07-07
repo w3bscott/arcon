@@ -203,7 +203,7 @@ const Cards2 = (props: Partial<CardsProps>) => {
         </svg>
 
         {cardLayouts.map((layoutClass, index) => {
-          const image = images[index] || defaultProps.images[index];
+          const image = images[index] || defaultProps.images![index] || { src: "/arcon-hero.png", alt: "Placeholder" };
 
           return (
             <div

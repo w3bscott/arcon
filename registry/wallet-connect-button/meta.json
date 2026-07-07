@@ -1,0 +1,10 @@
+{
+  "name": "wallet-connect-button",
+  "title": "WalletConnectButton",
+  "description": "Connect a user wallet before entering an Arc App Kit flow.",
+  "category": "Wallet",
+  "sdkMethods": [
+    "kit.wallet.connect()"
+  ],
+  "status": "stable"
+}

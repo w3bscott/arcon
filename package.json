@@ -5,8 +5,17 @@
   "packageManager": "pnpm@10.13.1",
   "scripts": {
     "dev": "pnpm --dir apps/web dev",
-    "build": "pnpm --dir apps/web build",
+    "build": "pnpm -r build",
     "start": "pnpm --dir apps/web start",
-    "lint": "pnpm --dir apps/web lint"
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.2.9",
+    "prettier": "^3.0.0",
+    "vitest": "^2.0.0",
+    "@vitest/ui": "^2.0.0"
   }
 }
