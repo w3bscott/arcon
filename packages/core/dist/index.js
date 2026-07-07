@@ -3,6 +3,10 @@ var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -15,5 +19,19 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 
 // src/index.ts
 var index_exports = {};
+__export(index_exports, {
+  formatAddress: () => formatAddress
+});
 module.exports = __toCommonJS(index_exports);
+
+// src/formatters/index.ts
+function formatAddress(address, startChars = 6, endChars = 4) {
+  if (!address) return "";
+  if (address.length <= startChars + endChars) return address;
+  return `${address.slice(0, startChars)}\u2026${address.slice(-endChars)}`;
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  formatAddress
+});
 //# sourceMappingURL=index.js.map

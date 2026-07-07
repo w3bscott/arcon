@@ -3,57 +3,87 @@
   "homepage": "https://arc-ui.com",
   "items": [
     {
+      "name": "wallet-connect-button",
+      "type": "registry:block",
+      "title": "WalletConnectButton",
+      "description": "Connect a user wallet before entering an Arc App Kit flow.",
+      "dependencies": ["@arc-ui/core", "@circle-fin/app-kit"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/default/wallet-connect-button/index.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "balance-card",
       "type": "registry:block",
+      "title": "BalanceCard",
+      "description": "Display Unified Balance across supported chains.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
-        "balance-card/index.tsx"
+        {
+          "path": "registry/default/balance-card/index.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
       "name": "transaction-status",
       "type": "registry:block",
+      "title": "TransactionStatus",
+      "description": "Track and present transaction lifecycle states.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
-        "transaction-status/index.tsx"
-      ]
-    },
-    {
-      "name": "wallet-connect-button",
-      "type": "registry:block",
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        "wallet-connect-button/index.tsx"
+        {
+          "path": "registry/default/transaction-status/index.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
       "name": "send-money-form",
       "type": "registry:block",
+      "title": "SendMoneyForm",
+      "description": "Collect recipient, amount, and asset details for payments.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
-        "send-money-form/index.tsx"
+        {
+          "path": "registry/default/send-money-form/index.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
       "name": "swap-widget",
       "type": "registry:block",
+      "title": "SwapWidget",
+      "description": "Preview token swap inputs, quotes, and confirmation states.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
-        "swap-widget/index.tsx"
+        {
+          "path": "registry/default/swap-widget/index.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
       "name": "bridge-widget",
       "type": "registry:block",
+      "title": "BridgeWidget",
+      "description": "Prepare cross-chain transfer routes for supported assets.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
-        "bridge-widget/index.tsx"
+        {
+          "path": "registry/default/bridge-widget/index.tsx",
+          "type": "registry:component"
+        }
       ]
     }
   ]
