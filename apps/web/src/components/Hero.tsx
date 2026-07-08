@@ -9,7 +9,7 @@ import { HeroPreview } from "./HeroPreview";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CLOUD_FRAME_COUNT = 59;
+const CLOUD_FRAME_COUNT = 69;
 const getCloudFrame = (index: number) =>
   `/cloud-bg/frame-${String(index).padStart(5, "0")}.webp`;
 
@@ -156,7 +156,7 @@ const Hero = (props: Partial<HeroProps>) => {
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: "+=80%",
+            end: "+=200%",
             scrub: true,
             pin: pin,
           },
@@ -174,29 +174,29 @@ const Hero = (props: Partial<HeroProps>) => {
           z: -800,
           scale: 0.8,
           ease: "none",
-          duration: 0.6,
+          duration: 0.5,
         }, 0);
 
         tl.to(content, {
           opacity: 0,
           ease: "none",
-          duration: 0.5,
+          duration: 0.4,
         }, 0.1);
 
         tl.to(dashboard, {
           opacity: 1,
-          y: 44,
+          y: 54,
           scale: 1,
-          duration: 0.3,
-        }, 0.1);
+          duration: 0.4,
+        }, 0.15);
 
-        tl.to(".preview-before", { opacity: 0.3, duration: 0.15, ease: "power1.inOut" }, 0.5);
+        tl.to(".preview-before", { opacity: 0.3, duration: 0.3, ease: "power1.inOut" }, 0.55);
 
         const metrics = { val1: 0, val2: 0 };
         tl.to(metrics, {
           val1: 100,
           val2: 10,
-          duration: 0.15,
+          duration: 0.2,
           ease: "none",
           onUpdate: () => {
             const el1 = section.querySelector(".metric-1-val");
@@ -204,9 +204,9 @@ const Hero = (props: Partial<HeroProps>) => {
             const el2 = section.querySelector(".metric-2-val");
             if (el2) el2.textContent = Math.floor(metrics.val2).toString();
           },
-        }, 0.4);
+        }, 0.5);
 
-        tl.to(".preview-after", { opacity: 1, y: 0, duration: 0.15, ease: "power1.inOut" }, 0.4);
+        tl.to(".preview-after", { opacity: 1, y: 0, duration: 0.2, ease: "power1.inOut" }, 0.55);
         tl.to(".preview-after-card", { boxShadow: "0 25px 50px -12px rgba(255,255,255,0.1)", duration: 0.2 }, 0.6);
       }, section);
 
@@ -236,7 +236,7 @@ const Hero = (props: Partial<HeroProps>) => {
       >
         <canvas
           ref={canvasRef}
-          className="absolute opacity-[0.3] inset-0 z-0 h-full w-full pointer-events-none"
+          className="absolute opacity-[0.2] inset-0 z-0 h-full w-full pointer-events-none"
           aria-hidden="true"
         />
         <div className="absolute inset-0 z-[1] bg-white/35 pointer-events-none" />
