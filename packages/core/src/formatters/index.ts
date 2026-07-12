@@ -16,3 +16,19 @@ export function formatAddress(
   if (address.length <= startChars + endChars) return address;
   return `${address.slice(0, startChars)}…${address.slice(-endChars)}`;
 }
+
+export function formatBalance(amount?: string): string {
+  if (!amount) return "0.00";
+  const num = parseFloat(amount);
+  return isNaN(num) ? "0.00" : num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 });
+}
+
+export function formatChainName(chain?: string): string {
+  if (!chain) return "";
+  return chain.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+}
+
+export function formatFee(fee?: string, token?: string): string {
+  if (!fee || parseFloat(fee) === 0) return "Free";
+  return `${fee} ${token || ""}`.trim();
+}

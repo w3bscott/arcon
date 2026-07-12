@@ -15,11 +15,11 @@ import {
 } from "@arc-ui/core";
 
 export interface TransactionStatusProps {
-  bridgeResult?: BridgeResult;
-  sendResult?: BridgeStep;
-  spendResult?: SpendResult;
-  txHash?: string;
-  explorerUrl?: string;
+  bridgeResult?: BridgeResult | undefined;
+  sendResult?: BridgeStep | undefined;
+  spendResult?: SpendResult | undefined;
+  txHash?: string | undefined;
+  explorerUrl?: string | undefined;
   operationType?: "send" | "bridge" | "swap" | "spend" | "deposit";
   onComplete?: () => void;
   onError?: (error: unknown) => void;
