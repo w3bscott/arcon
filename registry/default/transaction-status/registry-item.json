@@ -1,0 +1,13 @@
+{
+  "name": "transaction-status",
+  "type": "registry:block",
+  "title": "TransactionStatus",
+  "description": "Track and present transaction lifecycle states.",
+  "dependencies": ["@arc-ui/core"],
+  "files": [
+    {
+      "path": "registry/default/transaction-status/index.tsx",
+      "type": "registry:component"
+    }
+  ]
+}

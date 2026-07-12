@@ -9,4 +9,25 @@
  */
 declare function formatAddress(address: string, startChars?: number, endChars?: number): string;
 
-export { formatAddress };
+type TransactionState = "idle" | "pending" | "success" | "error" | "noop";
+interface BridgeStep {
+    name: string;
+    state: TransactionState;
+    txHash?: string;
+    error?: Error;
+    errorMessage?: string;
+    explorerUrl?: string;
+}
+interface BridgeResult {
+    state: TransactionState;
+    steps: BridgeStep[];
+}
+interface SpendResult {
+    destinationChain: string;
+    txHash?: string;
+    explorerUrl?: string;
+    allocations?: any[];
+    expirationBlock?: any;
+}
+
+export { type BridgeResult, type BridgeStep, type SpendResult, type TransactionState, formatAddress };

@@ -35,7 +35,7 @@
       "type": "registry:block",
       "title": "TransactionStatus",
       "description": "Track and present transaction lifecycle states.",
-      "dependencies": [],
+      "dependencies": ["@arc-ui/core"],
       "registryDependencies": [],
       "files": [
         {
