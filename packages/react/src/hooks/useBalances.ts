@@ -20,7 +20,7 @@ export function useBalances({ refreshInterval, ...storeOptions }: UseBalancesOpt
 
   useEffect(() => {
     // Initial fetch on mount if no data is present
-    store.refetch().catch(() => {});
+    store.refetch().catch(() => { });
   }, [store]);
 
   useEffect(() => {

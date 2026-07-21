@@ -9,16 +9,63 @@ import { StatusBadge } from "@/components/blockspage/StatusBadge";
 import { CodeBlock } from "@/components/blockspage/CodeBlock";
 import { PreviewArea } from "@/components/blockspage/PreviewArea";
 import { InstallChip } from "@/components/blockspage/InstallChip";
+import { getBlockStyle, type StyleVariant } from "@/lib/block-styles";
+import {
+  WalletConnectButton,
+  TransactionStatus,
+  BalanceCard,
+  SendMoneyForm,
+  SwapWidget,
+  BridgeWidget,
+} from "@arc-ui/react";
+import {
+  mockBalanceData,
+  mockSendFormData,
+  mockSwapWidgetData,
+  mockBridgeWidgetData,
+  mockBridgeSuccessResult,
+} from "@/lib/mock-data";
 
 export default function BlockDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ style?: string }>;
 }) {
   const { slug } = use(params);
+  const { style } = use(searchParams);
   const block = getBlockBySlug(slug);
 
   if (!block) notFound();
+
+  const activeStyle = (style || "1") as StyleVariant;
+  const className = getBlockStyle(slug, activeStyle);
+
+  let ComponentPreview = null;
+
+  switch (slug) {
+    case "wallet-connect-button":
+      ComponentPreview = <WalletConnectButton onConnect={async () => {}} className={className} />;
+      break;
+    case "transaction-status":
+      ComponentPreview = <TransactionStatus bridgeResult={mockBridgeSuccessResult} operationType="bridge" className={className} />;
+      break;
+    case "balance-card":
+      ComponentPreview = <BalanceCard data={mockBalanceData} className={className} />;
+      break;
+    case "send-money-form":
+      ComponentPreview = <SendMoneyForm data={mockSendFormData} className={className} />;
+      break;
+    case "swap-widget":
+      ComponentPreview = <SwapWidget data={mockSwapWidgetData} className={className} />;
+      break;
+    case "bridge-widget":
+      ComponentPreview = <BridgeWidget data={mockBridgeWidgetData} className={className} />;
+      break;
+    default:
+      ComponentPreview = <div>Component not found</div>;
+  }
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
@@ -54,9 +101,26 @@ export default function BlockDetailPage({
           </p>
         </div>
 
-        {/* Preview Area */}
+        {/* Preview Area with Style Tabs */}
         <div className="mb-8">
-          <PreviewArea />
+          <div className="flex items-center gap-2 mb-4">
+            {(["1", "2", "3", "4"] as StyleVariant[]).map((s) => (
+              <Link
+                key={s}
+                href={`/blocks/${slug}?style=${s}`}
+                className={`px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
+                  activeStyle === s
+                    ? "bg-gray-900 text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                }`}
+              >
+                Style {s}
+              </Link>
+            ))}
+          </div>
+          <PreviewArea className={className} slug={slug}>
+            {ComponentPreview}
+          </PreviewArea>
         </div>
 
         {/* Install Section */}

@@ -144,7 +144,7 @@ export function SendMoneyForm({
         <p>Recipient: {formatAddress(recipient)}</p>
         <p>Amount: {amount} {token}</p>
         <p>Network fee: {estimate ? formatFee(estimate.fee, token) : "Calculating..."}</p>
-        
+
         <button type="button" onClick={() => setStage("input")}>
           Back
         </button>

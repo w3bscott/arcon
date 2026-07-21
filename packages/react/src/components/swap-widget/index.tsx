@@ -135,7 +135,7 @@ export function SwapWidget({
         <h3>Review Swap</h3>
         <p>Sell: {amountIn} {tokenIn}</p>
         <p>Buy: {estimate ? `${estimate.estimatedOutput} ${tokenOut}` : "Calculating..."}</p>
-        
+
         {estimate && (
           <>
             <ul>
@@ -152,7 +152,7 @@ export function SwapWidget({
             )}
           </>
         )}
-        
+
         <button type="button" onClick={() => setStage("input")}>
           Back
         </button>

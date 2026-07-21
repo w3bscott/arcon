@@ -137,7 +137,7 @@ export function BridgeWidget({
         <p>From: {chainFrom}</p>
         <p>To: {chainTo}</p>
         <p>Amount: {amount} {token}</p>
-        
+
         {estimate && (
           <ul>
             {estimate.fees.map((fee, idx) => (
@@ -147,7 +147,7 @@ export function BridgeWidget({
             ))}
           </ul>
         )}
-        
+
         <button type="button" onClick={() => setStage("input")}>
           Back
         </button>

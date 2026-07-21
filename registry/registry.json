@@ -7,25 +7,13 @@
       "type": "registry:block",
       "title": "WalletConnectButton",
       "description": "Connect a user wallet before entering an Arc App Kit flow.",
-      "dependencies": ["@arc-ui/core", "@circle-fin/app-kit"],
-      "registryDependencies": [],
+      "dependencies": [
+        "@arc-ui/core",
+        "@circle-fin/app-kit"
+      ],
       "files": [
         {
           "path": "registry/default/wallet-connect-button/index.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "balance-card",
-      "type": "registry:block",
-      "title": "BalanceCard",
-      "description": "Display Unified Balance across supported chains.",
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "registry/default/balance-card/index.tsx",
           "type": "registry:component"
         }
       ]
@@ -35,11 +23,27 @@
       "type": "registry:block",
       "title": "TransactionStatus",
       "description": "Track and present transaction lifecycle states.",
-      "dependencies": ["@arc-ui/core"],
-      "registryDependencies": [],
+      "dependencies": [
+        "@arc-ui/core"
+      ],
       "files": [
         {
           "path": "registry/default/transaction-status/index.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "balance-card",
+      "type": "registry:block",
+      "title": "BalanceCard",
+      "description": "Display Unified Balance across supported chains.",
+      "dependencies": [
+        "@arc-ui/core"
+      ],
+      "files": [
+        {
+          "path": "registry/default/balance-card/index.tsx",
           "type": "registry:component"
         }
       ]
@@ -49,8 +53,9 @@
       "type": "registry:block",
       "title": "SendMoneyForm",
       "description": "Collect recipient, amount, and asset details for payments.",
-      "dependencies": [],
-      "registryDependencies": [],
+      "dependencies": [
+        "@arc-ui/core"
+      ],
       "files": [
         {
           "path": "registry/default/send-money-form/index.tsx",
@@ -62,9 +67,10 @@
       "name": "swap-widget",
       "type": "registry:block",
       "title": "SwapWidget",
-      "description": "Preview token swap inputs, quotes, and confirmation states.",
-      "dependencies": [],
-      "registryDependencies": [],
+      "description": "Allow users to swap tokens natively within your app.",
+      "dependencies": [
+        "@arc-ui/core"
+      ],
       "files": [
         {
           "path": "registry/default/swap-widget/index.tsx",
@@ -76,9 +82,10 @@
       "name": "bridge-widget",
       "type": "registry:block",
       "title": "BridgeWidget",
-      "description": "Prepare cross-chain transfer routes for supported assets.",
-      "dependencies": [],
-      "registryDependencies": [],
+      "description": "Move tokens cross-chain via CCTP bridge.",
+      "dependencies": [
+        "@arc-ui/core"
+      ],
       "files": [
         {
           "path": "registry/default/bridge-widget/index.tsx",

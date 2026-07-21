@@ -3,7 +3,10 @@
   "type": "registry:block",
   "title": "WalletConnectButton",
   "description": "Connect a user wallet before entering an Arc App Kit flow.",
-  "dependencies": ["@arc-ui/core", "@circle-fin/app-kit"],
+  "dependencies": [
+    "@arc-ui/core",
+    "@circle-fin/app-kit"
+  ],
   "files": [
     {
       "path": "registry/default/wallet-connect-button/index.tsx",

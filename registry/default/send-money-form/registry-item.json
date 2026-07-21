@@ -1,0 +1,15 @@
+{
+  "name": "send-money-form",
+  "type": "registry:block",
+  "title": "SendMoneyForm",
+  "description": "Collect recipient, amount, and asset details for payments.",
+  "dependencies": [
+    "@arc-ui/core"
+  ],
+  "files": [
+    {
+      "path": "registry/default/send-money-form/index.tsx",
+      "type": "registry:component"
+    }
+  ]
+}

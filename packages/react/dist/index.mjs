@@ -1,3 +1,5 @@
+"use client";
+
 // src/hooks/useBalances.ts
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 import { createBalanceStore } from "@arc-ui/core";
@@ -1047,6 +1049,9 @@ var registry = {
     ]
   }
 };
+
+// src/index.ts
+export * from "@arc-ui/core";
 export {
   BalanceCard,
   BridgeWidget,

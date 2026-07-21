@@ -1,0 +1,15 @@
+{
+  "name": "balance-card",
+  "type": "registry:block",
+  "title": "BalanceCard",
+  "description": "Display Unified Balance across supported chains.",
+  "dependencies": [
+    "@arc-ui/core"
+  ],
+  "files": [
+    {
+      "path": "registry/default/balance-card/index.tsx",
+      "type": "registry:component"
+    }
+  ]
+}

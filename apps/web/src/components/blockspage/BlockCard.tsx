@@ -5,14 +5,23 @@ import { ArrowRight } from "lucide-react";
 
 interface BlockCardProps {
   block: BlockMetadata;
+  preview?: React.ReactNode;
 }
 
-export function BlockCard({ block }: BlockCardProps) {
+export function BlockCard({ block, preview }: BlockCardProps) {
   return (
     <Link
       href={`/blocks/${block.slug}`}
       className="group relative flex flex-col p-5 bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all duration-200"
     >
+      {/* Preview Area */}
+      {preview ? (
+        preview
+      ) : (
+        <div className="w-full h-[160px] bg-gray-50 rounded-lg flex items-center justify-center border border-gray-100 mb-4">
+          <span className="text-gray-300 text-sm">No preview</span>
+        </div>
+      )}
       {/* Category pill */}
       <span className="mb-3 inline-flex self-start px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-gray-400 bg-gray-50 border border-gray-100 rounded-full">
         {block.category}

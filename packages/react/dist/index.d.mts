@@ -1,5 +1,6 @@
 import * as _arc_ui_core from '@arc-ui/core';
 import { BalanceStoreOptions, AppKit, BridgeResult, BridgeStep, SpendResult, Sources, SupportedTokenInput, GetBalancesResult, SendStoreState, SwapResult, SwapStoreState, BridgeStoreState } from '@arc-ui/core';
+export * from '@arc-ui/core';
 import * as react from 'react';
 import { CSSProperties, ReactNode } from 'react';
 

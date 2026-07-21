@@ -1,3 +1,4 @@
+"use client";
 "use strict";
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -15,6 +16,7 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/index.ts
@@ -1048,6 +1050,9 @@ var registry = {
     ]
   }
 };
+
+// src/index.ts
+__reExport(index_exports, require("@arc-ui/core"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   BalanceCard,
@@ -1060,6 +1065,7 @@ var registry = {
   useBalances,
   useBridge,
   useSend,
-  useSwap
+  useSwap,
+  ...require("@arc-ui/core")
 });
 //# sourceMappingURL=index.js.map
