@@ -1,0 +1,10 @@
+{
+  "name": "transaction-status",
+  "title": "TransactionStatus",
+  "description": "Track and present transaction lifecycle states.",
+  "category": "Transactions",
+  "sdkMethods": [
+    "kit.transactions.getStatus()"
+  ],
+  "status": "stable"
+}

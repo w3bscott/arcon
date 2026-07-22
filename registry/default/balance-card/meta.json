@@ -1,0 +1,10 @@
+{
+  "name": "balance-card",
+  "title": "BalanceCard",
+  "description": "Display Unified Balance across supported chains.",
+  "category": "Balances",
+  "sdkMethods": [
+    "kit.unifiedBalance.getBalances()"
+  ],
+  "status": "stable"
+}

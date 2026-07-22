@@ -1,0 +1,11 @@
+{
+  "name": "swap-widget",
+  "title": "SwapWidget",
+  "description": "Preview token swap inputs, quotes, and confirmation states.",
+  "category": "Swap",
+  "sdkMethods": [
+    "kit.swap.quote()",
+    "kit.swap.execute()"
+  ],
+  "status": "stable"
+}

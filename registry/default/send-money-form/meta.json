@@ -1,0 +1,10 @@
+{
+  "name": "send-money-form",
+  "title": "SendMoneyForm",
+  "description": "Collect recipient, amount, and asset details for payments.",
+  "category": "Payments",
+  "sdkMethods": [
+    "kit.payments.send()"
+  ],
+  "status": "stable"
+}
