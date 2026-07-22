@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Scaffolding tool for Arc UI applications",
   "bin": {
-    "create-arc-app": "./dist/index.js"
+    "create-arc-app": "./dist/index.mjs"
   },
   "scripts": {
     "build": "tsup",

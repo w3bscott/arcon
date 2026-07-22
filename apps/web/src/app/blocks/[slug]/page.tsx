@@ -9,22 +9,8 @@ import { StatusBadge } from "@/components/blockspage/StatusBadge";
 import { CodeBlock } from "@/components/blockspage/CodeBlock";
 import { PreviewArea } from "@/components/blockspage/PreviewArea";
 import { InstallChip } from "@/components/blockspage/InstallChip";
+import { BlockPreview } from "@/components/blockspage/BlockPreview";
 import { getBlockStyle, type StyleVariant } from "@/lib/block-styles";
-import {
-  WalletConnectButton,
-  TransactionStatus,
-  BalanceCard,
-  SendMoneyForm,
-  SwapWidget,
-  BridgeWidget,
-} from "@arc-ui/react";
-import {
-  mockBalanceData,
-  mockSendFormData,
-  mockSwapWidgetData,
-  mockBridgeWidgetData,
-  mockBridgeSuccessResult,
-} from "@/lib/mock-data";
 
 export default function BlockDetailPage({
   params,
@@ -41,31 +27,6 @@ export default function BlockDetailPage({
 
   const activeStyle = (style || "1") as StyleVariant;
   const className = getBlockStyle(slug, activeStyle);
-
-  let ComponentPreview = null;
-
-  switch (slug) {
-    case "wallet-connect-button":
-      ComponentPreview = <WalletConnectButton onConnect={async () => {}} className={className} />;
-      break;
-    case "transaction-status":
-      ComponentPreview = <TransactionStatus bridgeResult={mockBridgeSuccessResult} operationType="bridge" className={className} />;
-      break;
-    case "balance-card":
-      ComponentPreview = <BalanceCard data={mockBalanceData} className={className} />;
-      break;
-    case "send-money-form":
-      ComponentPreview = <SendMoneyForm data={mockSendFormData} className={className} />;
-      break;
-    case "swap-widget":
-      ComponentPreview = <SwapWidget data={mockSwapWidgetData} className={className} />;
-      break;
-    case "bridge-widget":
-      ComponentPreview = <BridgeWidget data={mockBridgeWidgetData} className={className} />;
-      break;
-    default:
-      ComponentPreview = <div>Component not found</div>;
-  }
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
@@ -119,7 +80,7 @@ export default function BlockDetailPage({
             ))}
           </div>
           <PreviewArea className={className} slug={slug}>
-            {ComponentPreview}
+            <BlockPreview slug={slug} className={className} />
           </PreviewArea>
         </div>
 
