@@ -3,7 +3,7 @@ import { CopyButton } from "./CopyButton";
 
 interface CodeBlockProps {
   code: string;
-  language?: "tsx" | "bash" | "typescript";
+  language?: "tsx" | "bash" | "typescript" | "css";
   className?: string;
 }
 

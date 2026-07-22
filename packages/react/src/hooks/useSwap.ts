@@ -5,15 +5,8 @@ export function useSwap(kit: AppKit) {
   const store = useMemo(() => createSwapStore(kit), [kit]);
   const state = useSyncExternalStore(store.subscribe, store.getState, store.getState);
 
-  const getEstimate = useCallback(
-    (...args: Parameters<typeof store.getEstimate>) => store.getEstimate(...args),
-    [store]
-  );
-
-  const swap = useCallback(
-    (...args: Parameters<typeof store.swap>) => store.swap(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const swap = store.swap;
 
   const reset = useCallback(() => {
     store.reset();
