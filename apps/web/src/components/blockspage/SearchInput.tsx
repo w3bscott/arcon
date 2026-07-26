@@ -16,7 +16,7 @@ export function SearchInput({
   className = "",
 }: SearchInputProps) {
   return (
-    <div className={`relative flex-1 max-w-sm ${className}`}>
+    <div className={`relative max-w-sm ${className}`}>
       <Search
         className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
         strokeWidth={1.8}

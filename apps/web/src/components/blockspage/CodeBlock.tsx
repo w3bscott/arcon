@@ -28,7 +28,7 @@ export async function CodeBlock({
 
       {/* Code */}
       <div 
-        className="p-6 text-sm font-mono overflow-x-auto leading-[1.6] text-[#e6edf3]"
+        className="p-6 text-sm font-mono overflow-x-auto leading-[1.6] text-[#e6edf3] [&_pre]:!bg-transparent"
         dangerouslySetInnerHTML={{ __html: html }} 
       />
     </div>
