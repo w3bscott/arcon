@@ -1,8 +1,8 @@
 import { use } from "react";
 import { notFound } from "next/navigation";
 import { getBlockBySlug } from "@/data/blocks";
-import { getBlockStyle, type StyleVariant } from "@/lib/block-styles";
 import { BlockPreview } from "@/components/blockspage/BlockPreview";
+import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 
 export default function PreviewPage({
   params,
@@ -17,13 +17,14 @@ export default function PreviewPage({
   const block = getBlockBySlug(slug);
   if (!block) notFound();
 
-  const activeStyle = (style || "1") as StyleVariant;
-  const className = getBlockStyle(slug, activeStyle);
-  const isDark = className.includes("bg-zinc-950") || className.includes("bg-black");
+  const activeStyle = (style || "1") as ShowcaseStyleVariant;
+  const isDark = activeStyle === "3";
 
   return (
-    <div className={`min-h-screen w-full flex items-center justify-center p-8 ${isDark ? 'bg-zinc-950' : 'bg-white'}`}>
-      <BlockPreview slug={slug} className={className} />
+    <div className={`min-h-screen w-full flex items-center justify-center ${isDark ? 'bg-zinc-950' : 'bg-[#fafafa]'}`}>
+      <div className="w-full h-full flex flex-col">
+        <BlockPreview slug={slug} styleVariant={activeStyle} />
+      </div>
     </div>
   );
 }

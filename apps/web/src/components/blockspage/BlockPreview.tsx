@@ -1,51 +1,32 @@
 "use client";
 
-import {
-  BalanceCard,
-  BridgeWidget,
-  SendMoneyForm,
-  SwapWidget,
-  TransactionStatus,
-  WalletConnectButton,
-} from "@arc-ui/react";
-import {
-  mockBalanceData,
-  mockBridgeSuccessResult,
-  mockBridgeWidgetData,
-  mockSendFormData,
-  mockSwapWidgetData,
-} from "@/lib/mock-data";
+import { WalletConnectButtonWrapper } from "../showcase/WalletConnectButtonWrapper";
+import { TransactionStatusWrapper } from "../showcase/TransactionStatusWrapper";
+import { BalanceCardWrapper } from "../showcase/BalanceCardWrapper";
+import { SendMoneyFormWrapper } from "../showcase/SendMoneyFormWrapper";
+import { SwapWidgetWrapper } from "../showcase/SwapWidgetWrapper";
+import { BridgeWidgetWrapper } from "../showcase/BridgeWidgetWrapper";
+import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 
 interface BlockPreviewProps {
   slug: string;
-  className?: string;
+  styleVariant?: ShowcaseStyleVariant;
 }
 
-export function BlockPreview({ slug, className = "" }: BlockPreviewProps) {
+export function BlockPreview({ slug, styleVariant = "1" }: BlockPreviewProps) {
   switch (slug) {
     case "wallet-connect-button":
-      return (
-        <WalletConnectButton
-          onConnect={async () => {}}
-          className={className}
-        />
-      );
+      return <WalletConnectButtonWrapper styleVariant={styleVariant} />;
     case "transaction-status":
-      return (
-        <TransactionStatus
-          bridgeResult={mockBridgeSuccessResult}
-          operationType="bridge"
-          className={className}
-        />
-      );
+      return <TransactionStatusWrapper styleVariant={styleVariant} />;
     case "balance-card":
-      return <BalanceCard data={mockBalanceData} className={className} />;
+      return <BalanceCardWrapper styleVariant={styleVariant} />;
     case "send-money-form":
-      return <SendMoneyForm data={mockSendFormData} className={className} />;
+      return <SendMoneyFormWrapper styleVariant={styleVariant} />;
     case "swap-widget":
-      return <SwapWidget data={mockSwapWidgetData} className={className} />;
+      return <SwapWidgetWrapper styleVariant={styleVariant} />;
     case "bridge-widget":
-      return <BridgeWidget data={mockBridgeWidgetData} className={className} />;
+      return <BridgeWidgetWrapper styleVariant={styleVariant} />;
     default:
       return <div>Component not found</div>;
   }

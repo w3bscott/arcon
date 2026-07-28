@@ -9,7 +9,7 @@ import { StatusBadge } from "@/components/blockspage/StatusBadge";
 import { CodeBlock } from "@/components/blockspage/CodeBlock";
 import { PreviewArea } from "@/components/blockspage/PreviewArea";
 import { BlockPreview } from "@/components/blockspage/BlockPreview";
-import { getBlockStyle, type StyleVariant } from "@/lib/block-styles";
+import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { CopyButton } from "@/components/blockspage/CopyButton";
 
 const STYLE_VARIANTS = ["1", "2", "3"] as const;
@@ -28,9 +28,8 @@ export default function BlockDetailPage({
 
   if (!block) notFound();
 
-  const activeStyle = (style || "1") as StyleVariant;
+  const activeStyle = (style || "1") as ShowcaseStyleVariant;
   const activeTab   = (tab   || "preview") as Tab;
-  const className    = getBlockStyle(slug, activeStyle);
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
@@ -122,8 +121,8 @@ export default function BlockDetailPage({
             {/* Preview / Code body */}
             <div className="w-full">
               {activeTab === "preview" ? (
-                <PreviewArea className={className} slug={slug}>
-                  <BlockPreview slug={slug} className={className} />
+                <PreviewArea styleVariant={activeStyle} slug={slug}>
+                  <BlockPreview slug={slug} styleVariant={activeStyle} />
                 </PreviewArea>
               ) : (
                 <div className="rounded-xl overflow-hidden">

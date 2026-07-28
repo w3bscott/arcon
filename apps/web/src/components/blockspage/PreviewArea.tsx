@@ -1,24 +1,25 @@
 import { SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 
 interface PreviewAreaProps {
   children?: React.ReactNode;
-  className?: string;
+  styleVariant?: ShowcaseStyleVariant;
   slug?: string;
 }
 
-export function PreviewArea({ children, className, slug }: PreviewAreaProps) {
-  // Determine if it's the dark variant (Style 4)
-  const isDark = className?.includes("bg-zinc-950") || className?.includes("bg-black");
+export function PreviewArea({ children, styleVariant = "1", slug }: PreviewAreaProps) {
+  // Determine if it's the dark variant (Style 3)
+  const isDark = styleVariant === "3";
   
   return (
-    <div className={`relative ${isDark ? 'bg-zinc-900' : 'bg-[#fafafa]'} border border-[#e4e4e7] rounded-xl min-h-[320px] flex items-center justify-center p-8 transition-colors duration-200`}>
+    <div className={`relative border border-[#e4e4e7] rounded-xl flex flex-col transition-colors duration-200 overflow-hidden`}>
       {slug && (
         <Link
-          href={`/blocks/${slug}/preview`}
+          href={`/blocks/${slug}/preview?style=${styleVariant}`}
           target="_blank"
-          className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors"
+          className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 transition-colors z-50"
           title="Open isolated preview"
         >
           <SquareArrowOutUpRight className="w-5 h-5" />
@@ -28,9 +29,11 @@ export function PreviewArea({ children, className, slug }: PreviewAreaProps) {
       {children ? (
         children
       ) : (
-        <p className={`font-sans text-sm ${isDark ? 'text-zinc-400' : 'text-[#71717a]'} text-center`}>
-          Live preview — coming in Phase 2
-        </p>
+        <div className={`flex items-center justify-center min-h-[320px] ${isDark ? 'bg-zinc-900' : 'bg-[#fafafa]'}`}>
+          <p className={`font-sans text-sm ${isDark ? 'text-zinc-400' : 'text-[#71717a]'} text-center`}>
+            Live preview — coming in Phase 2
+          </p>
+        </div>
       )}
     </div>
   );
