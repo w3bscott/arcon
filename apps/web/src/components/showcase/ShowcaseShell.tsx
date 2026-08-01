@@ -1,41 +1,47 @@
+"use client";
+
 import React from "react";
-import { showcaseThemes, ShowcaseStyleVariant, transitionEasing, animationDurations } from "@/lib/showcase-theme";
+import { skins, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
 
 interface ShowcaseShellProps {
   children: React.ReactNode;
   styleVariant: ShowcaseStyleVariant;
   className?: string;
-  animateEntrance?: boolean;
 }
 
 export function ShowcaseShell({
   children,
   styleVariant,
   className = "",
-  animateEntrance = true,
 }: ShowcaseShellProps) {
-  const theme = showcaseThemes[styleVariant];
+  const skin = skins[styleVariant];
 
   return (
-    <div className={`w-full min-h-[320px] flex items-center justify-center ${theme.surfaceClass} ${transitionEasing}`}>
-      {styleVariant === "3" && theme.gradientClass && (
-        <div className={theme.gradientClass} />
-      )}
-      
-      <div 
-        className={`
-          relative w-full max-w-md mx-auto 
-          ${theme.cardClass} 
-          ${theme.radiusClass} 
-          ${theme.borderClass} 
-          ${theme.shadowClass} 
-          ${theme.spacingClass}
-          ${theme.textClass}
-          ${animateEntrance ? animationDurations.entrance : ""}
-          ${className}
-        `}
+    <div className={`w-full min-h-[320px] flex items-center justify-center p-8 ${skin.surfaceBg} transition-colors duration-300`}>
+      <div
+        className={[
+          "relative w-[340px] mx-auto overflow-hidden",
+          "animate-[riseIn_0.6s_cubic-bezier(0.16,1,0.3,1)_both]",
+          skin.cardBg,
+          skin.cardBorder,
+          skin.cardShadow,
+          skin.cardRadius,
+          skin.cardPadding,
+          skin.textPrimary,
+          className,
+        ].join(" ")}
       >
-        {children}
+        {/* Decorative glow for Style 3 */}
+        {skin.glowGradient && (
+          <div
+            className="absolute -top-[60%] -left-[20%] w-[240px] h-[240px] pointer-events-none"
+            style={{ background: skin.glowGradient }}
+          />
+        )}
+
+        <div className="relative z-10">
+          {children}
+        </div>
       </div>
     </div>
   );
