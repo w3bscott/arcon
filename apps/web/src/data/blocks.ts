@@ -29,7 +29,7 @@ export const blocks: BlockMetadata[] = [
   {
     name: "WalletConnectButton",
     slug: "wallet-connect-button",
-    description: "Connect a user wallet before entering an Arc App Kit flow.",
+    description: "Connect a user wallet.",
     category: "Wallet",
     status: "Stable",
     sdkMethods: ["kit.wallet.connect()"],

@@ -63,7 +63,7 @@ function BalanceCardVisual({
         </span>
         <span className={`
           flex items-center gap-1.5 text-[11px] font-medium
-          px-2.5 py-1 rounded-full
+          px-1 py-1 rounded-full
           ${skin.livePillBg} ${skin.livePillText}
         `}>
           <span
@@ -72,7 +72,7 @@ function BalanceCardVisual({
           >
             <span className="absolute inset-[-4px] rounded-full animate-[pulse-ring_2s_ease-out_infinite]" />
           </span>
-          Live
+          {/* Live */}
         </span>
       </div>
 
