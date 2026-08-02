@@ -43,7 +43,7 @@ function BalanceCardVisual({
   return (
     <div className="group">
       {/* Refresh button — hover-revealed */}
-      <button
+      {/* <button
         type="button"
         aria-label="Refresh balance"
         className={`
@@ -54,7 +54,7 @@ function BalanceCardVisual({
         `}
       >
         <RefreshCw className="w-3.5 h-3.5" />
-      </button>
+      </button> */}
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
