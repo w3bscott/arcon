@@ -7,7 +7,7 @@ import { CSSProperties, ReactNode } from 'react';
 interface UseBalancesOptions extends BalanceStoreOptions {
     refreshInterval?: number | undefined;
 }
-declare function useBalances({ refreshInterval, ...storeOptions }: UseBalancesOptions): {
+declare function useBalances(options: UseBalancesOptions): {
     status: "idle" | "loading" | "success" | "error";
     data: _arc_ui_core.GetBalancesResult | undefined;
     error: Error | undefined;

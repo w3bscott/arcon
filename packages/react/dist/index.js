@@ -39,10 +39,18 @@ module.exports = __toCommonJS(index_exports);
 // src/hooks/useBalances.ts
 var import_react = require("react");
 var import_core = require("@arc-ui/core");
-function useBalances({ refreshInterval, ...storeOptions }) {
+function useBalances(options) {
+  const { kit, sources, token, networkType, includePending, refreshInterval } = options;
+  const storeOptions = (0, import_react.useMemo)(() => ({
+    kit,
+    sources,
+    token,
+    networkType,
+    includePending
+  }), [kit, sources, token, networkType, includePending]);
   const store = (0, import_react.useMemo)(
     () => (0, import_core.createBalanceStore)(storeOptions),
-    [storeOptions.kit, storeOptions.sources, storeOptions.token, storeOptions.includePending, storeOptions.networkType]
+    [storeOptions]
   );
   const state = (0, import_react.useSyncExternalStore)(store.subscribe, store.getState, store.getState);
   const refetch = (0, import_react.useCallback)(() => {
@@ -74,14 +82,8 @@ var import_core2 = require("@arc-ui/core");
 function useSend(kit) {
   const store = (0, import_react2.useMemo)(() => (0, import_core2.createSendStore)(kit), [kit]);
   const state = (0, import_react2.useSyncExternalStore)(store.subscribe, store.getState, store.getState);
-  const getEstimate = (0, import_react2.useCallback)(
-    (...args) => store.getEstimate(...args),
-    [store]
-  );
-  const send = (0, import_react2.useCallback)(
-    (...args) => store.send(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const send = store.send;
   const reset = (0, import_react2.useCallback)(() => {
     store.reset();
   }, [store]);
@@ -102,14 +104,8 @@ var import_core3 = require("@arc-ui/core");
 function useSwap(kit) {
   const store = (0, import_react3.useMemo)(() => (0, import_core3.createSwapStore)(kit), [kit]);
   const state = (0, import_react3.useSyncExternalStore)(store.subscribe, store.getState, store.getState);
-  const getEstimate = (0, import_react3.useCallback)(
-    (...args) => store.getEstimate(...args),
-    [store]
-  );
-  const swap = (0, import_react3.useCallback)(
-    (...args) => store.swap(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const swap = store.swap;
   const reset = (0, import_react3.useCallback)(() => {
     store.reset();
   }, [store]);
@@ -130,14 +126,8 @@ var import_core4 = require("@arc-ui/core");
 function useBridge(kit) {
   const store = (0, import_react4.useMemo)(() => (0, import_core4.createBridgeStore)(kit), [kit]);
   const state = (0, import_react4.useSyncExternalStore)(store.subscribe, store.getState, store.getState);
-  const getEstimate = (0, import_react4.useCallback)(
-    (...args) => store.getEstimate(...args),
-    [store]
-  );
-  const bridge = (0, import_react4.useCallback)(
-    (...args) => store.bridge(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const bridge = store.bridge;
   const reset = (0, import_react4.useCallback)(() => {
     store.reset();
   }, [store]);
@@ -532,25 +522,18 @@ function SendMoneyForm({
   const [amountTouched, setAmountTouched] = (0, import_react8.useState)(false);
   const recipientValid = (0, import_core8.isValidAddress)(recipient);
   const amountValid = (0, import_core8.isValidAmount)(amount);
+  const { getEstimate } = hookResult;
   (0, import_react8.useEffect)(() => {
     if (isMocked) return;
     if (recipientValid && amountValid) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain },
-          to: recipient,
-          amount,
-          token
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+      getEstimate({
+        from: { chain },
+        to: recipient,
+        amount,
+        token
+      }).catch(console.error);
     }
-  }, [recipient, amount, recipientValid, amountValid, chain, token, isMocked, hookResult.getEstimate]);
-  (0, import_react8.useEffect)(() => {
-    if (status === "sending" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [recipient, amount, recipientValid, amountValid, chain, token, isMocked, getEstimate]);
   const handleReview = (e) => {
     e.preventDefault();
     if (recipientValid && amountValid) {
@@ -685,25 +668,18 @@ function SwapWidget({
   const [amountIn, setAmountIn] = (0, import_react9.useState)(defaultAmountIn);
   const [amountTouched, setAmountTouched] = (0, import_react9.useState)(false);
   const amountValid = (0, import_core9.isValidAmount)(amountIn);
+  const { getEstimate } = hookResult;
   (0, import_react9.useEffect)(() => {
     if (isMocked) return;
-    if (amountValid && tokenIn && tokenOut) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain },
-          tokenIn,
-          tokenOut,
-          amountIn
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+    if (amountValid && tokenIn && tokenOut && chain) {
+      getEstimate({
+        from: { chain },
+        tokenIn,
+        tokenOut,
+        amountIn
+      }).catch(console.error);
     }
-  }, [amountIn, tokenIn, tokenOut, amountValid, chain, isMocked, hookResult.getEstimate]);
-  (0, import_react9.useEffect)(() => {
-    if (status === "swapping" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [amountIn, tokenIn, tokenOut, amountValid, chain, isMocked, getEstimate]);
   const handleReview = (e) => {
     e.preventDefault();
     if (amountValid) setStage("review");
@@ -842,25 +818,18 @@ function BridgeWidget({
   const [amount, setAmount] = (0, import_react10.useState)(defaultAmount);
   const [amountTouched, setAmountTouched] = (0, import_react10.useState)(false);
   const amountValid = (0, import_core10.isValidAmount)(amount);
+  const { getEstimate } = hookResult;
   (0, import_react10.useEffect)(() => {
     if (isMocked) return;
     if (amountValid && chainFrom && chainTo && token) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain: chainFrom },
-          to: { chain: chainTo },
-          amount,
-          token
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+      getEstimate({
+        from: { chain: chainFrom },
+        to: { chain: chainTo },
+        amount,
+        token
+      }).catch(console.error);
     }
-  }, [amount, chainFrom, chainTo, token, amountValid, isMocked, hookResult.getEstimate]);
-  (0, import_react10.useEffect)(() => {
-    if (status === "bridging" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [amount, chainFrom, chainTo, token, amountValid, isMocked, getEstimate]);
   const handleReview = (e) => {
     e.preventDefault();
     if (amountValid) setStage("review");

@@ -46,10 +46,15 @@ const Navbar = (props: Partial<NavbarProps>) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sticky]);
 
+  const wrapperPadding = effectiveScrolled ? 'px-3 md:px-4 pt-3' : 'px-0 pt-0';
+  const navLayout = effectiveScrolled
+    ? 'max-w-5xl px-4 md:px-8 py-3 md:py-4'
+    : 'max-w-7xl px-8 md:px-16 xl:px-32 py-3 md:py-4';
+
   return (
-    <div className={`${sticky ? 'fixed top-0 left-0 z-50' : 'absolute top-0 left-0 z-50'} w-full transition-all duration-300 px-3 md:px-4 ${effectiveScrolled ? 'pt-3' : 'pt-0'}`}>
+    <div className={`${sticky ? 'fixed top-0 left-0 z-50' : 'absolute top-0 left-0 z-50'} w-full transition-all duration-300 ${wrapperPadding}`}>
       <nav 
-        className={`flex items-center justify-between px-4 md:px-8 py-3 md:py-4 mx-auto w-full transition-all duration-300 ${
+        className={`flex items-center justify-between mx-auto w-full transition-all duration-300 ${navLayout} ${
           effectiveScrolled
             ? 'bg-white/85 backdrop-blur-md shadow-xsm border border-gray-200 rounded-2xl max-w-5xl' 
             : 'bg-transparent border border-transparent rounded-none max-w-7xl'

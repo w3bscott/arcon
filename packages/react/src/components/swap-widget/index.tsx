@@ -59,27 +59,20 @@ export function SwapWidget({
   const [amountTouched, setAmountTouched] = useState(false);
   const amountValid = isValidAmount(amountIn);
 
-  // Debounced estimation
+  const { getEstimate } = hookResult;
+
+  // Auto-estimate on input change
   useEffect(() => {
     if (isMocked) return;
-    if (amountValid && tokenIn && tokenOut) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain },
-          tokenIn,
-          tokenOut,
-          amountIn,
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+    if (amountValid && tokenIn && tokenOut && chain) {
+      getEstimate({
+        from: { chain },
+        tokenIn,
+        tokenOut,
+        amountIn,
+      }).catch(console.error);
     }
-  }, [amountIn, tokenIn, tokenOut, amountValid, chain, isMocked, hookResult.getEstimate]);
-
-  useEffect(() => {
-    if (status === "swapping" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [amountIn, tokenIn, tokenOut, amountValid, chain, isMocked, getEstimate]);
 
   const handleReview = (e: FormEvent) => {
     e.preventDefault();

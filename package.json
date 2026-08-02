@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests",
     "typecheck": "pnpm -r typecheck",
-    "registry:build": "npx -y tsx tooling/registry-build.ts"
+    "registry:build": "npx -y tsx tooling/registry-build.ts",
+    "release:check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm registry:build && pnpm pack"
   },
   "devDependencies": {
     "@vitest/ui": "^2.0.0",

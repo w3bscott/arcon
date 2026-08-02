@@ -10,10 +10,15 @@ interface BlockCardProps {
 
 export function BlockCard({ block, preview }: BlockCardProps) {
   return (
-    <Link
-      href={`/blocks/${block.slug}`}
+    <article
       className="group relative flex flex-col p-5 bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all duration-200"
     >
+      <Link
+        href={`/blocks/${block.slug}`}
+        className="absolute inset-0 z-10 rounded-xl"
+        aria-label={`Open ${block.name} block details`}
+      />
+
       {/* Preview Area */}
       {preview ? (
         preview
@@ -45,6 +50,6 @@ export function BlockCard({ block, preview }: BlockCardProps) {
           strokeWidth={2}
         />
       </div>
-    </Link>
+    </article>
   );
 }

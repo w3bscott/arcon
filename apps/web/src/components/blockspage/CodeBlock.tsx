@@ -3,7 +3,7 @@ import { CopyButton } from "./CopyButton";
 
 interface CodeBlockProps {
   code: string;
-  language?: "tsx" | "bash" | "typescript";
+  language?: "tsx" | "bash" | "typescript" | "css";
   className?: string;
 }
 
@@ -28,7 +28,7 @@ export async function CodeBlock({
 
       {/* Code */}
       <div 
-        className="p-6 text-sm font-mono overflow-x-auto leading-[1.6] text-[#e6edf3]"
+        className="p-6 text-sm font-mono overflow-x-auto leading-[1.6] text-[#e6edf3] [&_pre]:!bg-transparent"
         dangerouslySetInnerHTML={{ __html: html }} 
       />
     </div>

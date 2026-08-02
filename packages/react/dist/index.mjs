@@ -3,10 +3,18 @@
 // src/hooks/useBalances.ts
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 import { createBalanceStore } from "@arc-ui/core";
-function useBalances({ refreshInterval, ...storeOptions }) {
+function useBalances(options) {
+  const { kit, sources, token, networkType, includePending, refreshInterval } = options;
+  const storeOptions = useMemo(() => ({
+    kit,
+    sources,
+    token,
+    networkType,
+    includePending
+  }), [kit, sources, token, networkType, includePending]);
   const store = useMemo(
     () => createBalanceStore(storeOptions),
-    [storeOptions.kit, storeOptions.sources, storeOptions.token, storeOptions.includePending, storeOptions.networkType]
+    [storeOptions]
   );
   const state = useSyncExternalStore(store.subscribe, store.getState, store.getState);
   const refetch = useCallback(() => {
@@ -38,14 +46,8 @@ import { createSendStore } from "@arc-ui/core";
 function useSend(kit) {
   const store = useMemo2(() => createSendStore(kit), [kit]);
   const state = useSyncExternalStore2(store.subscribe, store.getState, store.getState);
-  const getEstimate = useCallback2(
-    (...args) => store.getEstimate(...args),
-    [store]
-  );
-  const send = useCallback2(
-    (...args) => store.send(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const send = store.send;
   const reset = useCallback2(() => {
     store.reset();
   }, [store]);
@@ -66,14 +68,8 @@ import { createSwapStore } from "@arc-ui/core";
 function useSwap(kit) {
   const store = useMemo3(() => createSwapStore(kit), [kit]);
   const state = useSyncExternalStore3(store.subscribe, store.getState, store.getState);
-  const getEstimate = useCallback3(
-    (...args) => store.getEstimate(...args),
-    [store]
-  );
-  const swap = useCallback3(
-    (...args) => store.swap(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const swap = store.swap;
   const reset = useCallback3(() => {
     store.reset();
   }, [store]);
@@ -94,14 +90,8 @@ import { createBridgeStore } from "@arc-ui/core";
 function useBridge(kit) {
   const store = useMemo4(() => createBridgeStore(kit), [kit]);
   const state = useSyncExternalStore4(store.subscribe, store.getState, store.getState);
-  const getEstimate = useCallback4(
-    (...args) => store.getEstimate(...args),
-    [store]
-  );
-  const bridge = useCallback4(
-    (...args) => store.bridge(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const bridge = store.bridge;
   const reset = useCallback4(() => {
     store.reset();
   }, [store]);
@@ -519,25 +509,18 @@ function SendMoneyForm({
   const [amountTouched, setAmountTouched] = useState2(false);
   const recipientValid = isValidAddress(recipient);
   const amountValid = isValidAmount(amount);
+  const { getEstimate } = hookResult;
   useEffect7(() => {
     if (isMocked) return;
     if (recipientValid && amountValid) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain },
-          to: recipient,
-          amount,
-          token
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+      getEstimate({
+        from: { chain },
+        to: recipient,
+        amount,
+        token
+      }).catch(console.error);
     }
-  }, [recipient, amount, recipientValid, amountValid, chain, token, isMocked, hookResult.getEstimate]);
-  useEffect7(() => {
-    if (status === "sending" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [recipient, amount, recipientValid, amountValid, chain, token, isMocked, getEstimate]);
   const handleReview = (e) => {
     e.preventDefault();
     if (recipientValid && amountValid) {
@@ -678,25 +661,18 @@ function SwapWidget({
   const [amountIn, setAmountIn] = useState3(defaultAmountIn);
   const [amountTouched, setAmountTouched] = useState3(false);
   const amountValid = isValidAmount2(amountIn);
+  const { getEstimate } = hookResult;
   useEffect8(() => {
     if (isMocked) return;
-    if (amountValid && tokenIn && tokenOut) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain },
-          tokenIn,
-          tokenOut,
-          amountIn
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+    if (amountValid && tokenIn && tokenOut && chain) {
+      getEstimate({
+        from: { chain },
+        tokenIn,
+        tokenOut,
+        amountIn
+      }).catch(console.error);
     }
-  }, [amountIn, tokenIn, tokenOut, amountValid, chain, isMocked, hookResult.getEstimate]);
-  useEffect8(() => {
-    if (status === "swapping" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [amountIn, tokenIn, tokenOut, amountValid, chain, isMocked, getEstimate]);
   const handleReview = (e) => {
     e.preventDefault();
     if (amountValid) setStage("review");
@@ -841,25 +817,18 @@ function BridgeWidget({
   const [amount, setAmount] = useState4(defaultAmount);
   const [amountTouched, setAmountTouched] = useState4(false);
   const amountValid = isValidAmount3(amount);
+  const { getEstimate } = hookResult;
   useEffect9(() => {
     if (isMocked) return;
     if (amountValid && chainFrom && chainTo && token) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain: chainFrom },
-          to: { chain: chainTo },
-          amount,
-          token
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+      getEstimate({
+        from: { chain: chainFrom },
+        to: { chain: chainTo },
+        amount,
+        token
+      }).catch(console.error);
     }
-  }, [amount, chainFrom, chainTo, token, amountValid, isMocked, hookResult.getEstimate]);
-  useEffect9(() => {
-    if (status === "bridging" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [amount, chainFrom, chainTo, token, amountValid, isMocked, getEstimate]);
   const handleReview = (e) => {
     e.preventDefault();
     if (amountValid) setStage("review");

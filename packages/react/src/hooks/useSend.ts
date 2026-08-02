@@ -5,15 +5,8 @@ export function useSend(kit: AppKit) {
   const store = useMemo(() => createSendStore(kit), [kit]);
   const state = useSyncExternalStore(store.subscribe, store.getState, store.getState);
 
-  const getEstimate = useCallback(
-    (...args: Parameters<typeof store.getEstimate>) => store.getEstimate(...args),
-    [store]
-  );
-
-  const send = useCallback(
-    (...args: Parameters<typeof store.send>) => store.send(...args),
-    [store]
-  );
+  const getEstimate = store.getEstimate;
+  const send = store.send;
 
   const reset = useCallback(() => {
     store.reset();

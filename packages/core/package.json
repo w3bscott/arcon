@@ -1,7 +1,31 @@
 {
   "name": "@arc-ui/core",
   "version": "0.1.0",
-  "private": true,
+  "description": "Framework-agnostic state management, types, and utilities for Arc App Kit UI components.",
+  "keywords": [
+    "arc",
+    "arc-ui",
+    "circle",
+    "app-kit",
+    "web3",
+    "wallet",
+    "stablecoin",
+    "usdc",
+    "bridge",
+    "swap",
+    "payments"
+  ],
+  "author": "Arc UI Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arc-ui/arc-ui.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://arcblocks.com",
+  "bugs": {
+    "url": "https://github.com/arc-ui/arc-ui/issues"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -12,10 +36,18 @@
       "require": "./dist/index.js"
     }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "tsup": "^8.0.2",

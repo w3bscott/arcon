@@ -1,0 +1,25 @@
+{
+  "name": "create-arc-app",
+  "version": "0.1.0",
+  "description": "Scaffolding tool for Arc UI applications",
+  "bin": {
+    "create-arc-app": "./dist/index.mjs"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "prompts": "^2.4.2",
+    "picocolors": "^1.0.0",
+    "commander": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/prompts": "^2.4.9",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.0"
+  }
+}

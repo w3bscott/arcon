@@ -63,28 +63,23 @@ export function SendMoneyForm({
   const recipientValid = isValidAddress(recipient);
   const amountValid = isValidAmount(amount);
 
-  // Debounced estimation
+  const { getEstimate } = hookResult;
+
+  // Estimate whenever valid input changes
   useEffect(() => {
     if (isMocked) return;
     if (recipientValid && amountValid) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain },
-          to: recipient,
-          amount,
-          token,
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+      getEstimate({
+        from: { chain },
+        to: recipient,
+        amount,
+        token,
+      }).catch(console.error);
     }
-  }, [recipient, amount, recipientValid, amountValid, chain, token, isMocked, hookResult.getEstimate]); // hookResult.getEstimate is stable
+  }, [recipient, amount, recipientValid, amountValid, chain, token, isMocked, getEstimate]);
 
   // If status goes to success or error, advance to result automatically (or stay on result)
-  useEffect(() => {
-    if (status === "sending" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+
 
   const handleReview = (e: FormEvent) => {
     e.preventDefault();

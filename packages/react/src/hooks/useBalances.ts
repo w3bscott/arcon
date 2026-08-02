@@ -5,11 +5,17 @@ export interface UseBalancesOptions extends BalanceStoreOptions {
   refreshInterval?: number | undefined;
 }
 
-export function useBalances({ refreshInterval, ...storeOptions }: UseBalancesOptions) {
+export function useBalances(options: UseBalancesOptions) {
+  const { kit, sources, token, networkType, includePending, refreshInterval } = options;
+
+  const storeOptions = useMemo(() => ({
+    kit, sources, token, networkType, includePending
+  }), [kit, sources, token, networkType, includePending]);
+
   // Memoize store creation keyed on kit and other options to prevent unnecessary recreations
   const store = useMemo(
     () => createBalanceStore(storeOptions),
-    [storeOptions.kit, storeOptions.sources, storeOptions.token, storeOptions.includePending, storeOptions.networkType]
+    [storeOptions]
   );
 
   const state = useSyncExternalStore(store.subscribe, store.getState, store.getState);

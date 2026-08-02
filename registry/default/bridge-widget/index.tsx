@@ -59,28 +59,20 @@ export function BridgeWidget({
 
   const [amountTouched, setAmountTouched] = useState(false);
   const amountValid = isValidAmount(amount);
+  const { getEstimate } = hookResult;
 
-  // Debounced estimation
+  // Re-estimate on input change
   useEffect(() => {
     if (isMocked) return;
     if (amountValid && chainFrom && chainTo && token) {
-      const timer = setTimeout(() => {
-        hookResult.getEstimate({
-          from: { chain: chainFrom },
-          to: { chain: chainTo },
-          amount,
-          token,
-        });
-      }, 500);
-      return () => clearTimeout(timer);
+      getEstimate({
+        from: { chain: chainFrom },
+        to: { chain: chainTo },
+        amount,
+        token,
+      }).catch(console.error);
     }
-  }, [amount, chainFrom, chainTo, token, amountValid, isMocked, hookResult.getEstimate]);
-
-  useEffect(() => {
-    if (status === "bridging" && stage !== "result") {
-      setStage("result");
-    }
-  }, [status, stage]);
+  }, [amount, chainFrom, chainTo, token, amountValid, isMocked, getEstimate]);
 
   const handleReview = (e: FormEvent) => {
     e.preventDefault();
