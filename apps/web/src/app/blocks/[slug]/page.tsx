@@ -155,14 +155,10 @@ function InstallChipInline({ command }: { command: string }) {
         {command}
       </span>
 
-      <button
-        type="button"
-        aria-label="Copy install command"
-        className="ml-1 text-muted-foreground hover:text-foreground transition-colors shrink-0"
-      >
-        <Copy className="w-4 h-4" />
-        {/* <CopyButton content={command} className="w-4 h-4 bg-[#0d1117] text-grey-600" /> */}
-      </button>
+      <CopyButton 
+        content={command} 
+        className="!p-0 ml-1 !text-muted-foreground hover:!text-foreground !bg-transparent hover:!bg-transparent transition-colors shrink-0" 
+      />
     </div>
   );
 }

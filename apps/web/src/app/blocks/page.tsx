@@ -85,13 +85,14 @@ export default function BlocksPage() {
 
       {/* Grid */}
       <main className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 py-6">
-        <div className="mb-4 flex items-center justify-between">
+        {/* Block count indicator /*}
+        {/* <div className="mb-4 flex items-center justify-between">
           <p className="text-xs text-gray-400">
             {filtered.length} block{filtered.length !== 1 ? "s" : ""}
             {activeCategory !== "All" ? ` in ${activeCategory}` : ""}
             {query ? ` matching "${query}"` : ""}
           </p>
-        </div>
+        </div> */}
 
         <BlockGrid
           blocks={filtered}

@@ -1,12 +1,12 @@
 export const blockCategories = [
   "Wallet",
-  "Balances",
+  // "Balances",
   "Payments",
   "Bridge",
   "Swap",
   "Transactions",
   "Unified Balance",
-  "Flows",
+  // "Flows",
 ] as const;
 
 export type BlockCategory = (typeof blockCategories)[number];
