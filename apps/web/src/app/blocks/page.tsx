@@ -51,7 +51,7 @@ export default function BlocksPage() {
   }, [query, activeCategory]);
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-background">
       <Navbar sticky={false} />
 
       {/* Page header */}
@@ -72,7 +72,7 @@ export default function BlocksPage() {
       </header>
 
       {/* Toolbar: search + filter */}
-      <div className="top-[68px] z-30 bg-[#fafafa]/90 backdrop-blur-sm border-b border-gray-200">
+      <div className="top-[68px] z-30 bg-background/90 backdrop-blur-sm border-b border-gray-200">
         <div className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 py-3 pb-6 flex flex-col lg:flex-row items-start lg:items-center gap-3 justify-between">
           <SearchInput value={query} onChange={setQuery} />
           <CategoryFilter

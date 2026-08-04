@@ -73,7 +73,7 @@ export const blocks: BlockMetadata[] = [
   {
     name: "SwapWidget",
     slug: "swap-widget",
-    description: "Preview token swap inputs, quotes, and confirmation states.",
+    description: "Preview token swap inputs and quotes.",
     category: "Swap",
     status: "Stable",
     sdkMethods: ["kit.swap.quote()", "kit.swap.execute()"],

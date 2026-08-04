@@ -14,7 +14,7 @@ export function PreviewArea({ children, styleVariant = "1", slug }: PreviewAreaP
   const isDark = styleVariant === "3";
   
   return (
-    <div className={`relative border border-[#e4e4e7] rounded-xl flex flex-col transition-colors duration-200 overflow-hidden`}>
+    <div className={`relative border border-border rounded-xl flex flex-col transition-colors duration-200 overflow-hidden`}>
       {slug && (
         <Link
           href={`/blocks/${slug}/preview?style=${styleVariant}`}
@@ -29,8 +29,8 @@ export function PreviewArea({ children, styleVariant = "1", slug }: PreviewAreaP
       {children ? (
         children
       ) : (
-        <div className={`flex items-center justify-center min-h-[320px] ${isDark ? 'bg-zinc-900' : 'bg-[#fafafa]'}`}>
-          <p className={`font-sans text-sm ${isDark ? 'text-zinc-400' : 'text-[#71717a]'} text-center`}>
+        <div className={`flex items-center justify-center min-h-[320px] ${isDark ? 'bg-zinc-900' : 'bg-background'}`}>
+          <p className={`font-sans text-sm ${isDark ? 'text-zinc-400' : 'text-muted-foreground'} text-center`}>
             Live preview — coming in Phase 2
           </p>
         </div>

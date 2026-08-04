@@ -18,8 +18,8 @@ const components = [
 export default function ComponentsPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight text-[#09090b]">Components</h1>
-      <p className="text-lg text-[#71717a]">
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">Components</h1>
+      <p className="text-lg text-muted-foreground">
         Explore the available React components for Arc App Kit.
       </p>
 
@@ -28,12 +28,12 @@ export default function ComponentsPage() {
           <Link 
             key={comp.slug} 
             href={`/blocks/${comp.slug}`}
-            className="group block rounded-lg border border-[#e4e4e7] bg-white p-6 hover:border-[#09090b] transition-colors"
+            className="group block rounded-lg border border-border bg-white p-6 hover:border-[#09090b] transition-colors"
           >
-            <h3 className="font-semibold text-[#09090b] mb-2 group-hover:underline">
+            <h3 className="font-semibold text-foreground mb-2 group-hover:underline">
               {comp.name}
             </h3>
-            <p className="text-sm text-[#71717a]">
+            <p className="text-sm text-muted-foreground">
               {comp.desc}
             </p>
           </Link>
