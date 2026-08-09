@@ -11,7 +11,7 @@ interface BlockCardProps {
 export function BlockCard({ block, preview }: BlockCardProps) {
   return (
     <article
-      className="group relative flex flex-col p-3 bg-white border border-gray-200 rounded-2xl hover:border-gray-300 hover:shadow-sm transition-all duration-200"
+      className="group relative flex flex-col p-1 bg-white border border-gray-200 rounded-2xl hover:border-gray-300 hover:shadow-sm transition-all duration-200"
     >
       <Link
         href={`/blocks/${block.slug}`}
@@ -33,12 +33,12 @@ export function BlockCard({ block, preview }: BlockCardProps) {
       </span> */}
 
       {/* Title */}
-      <h3 className="text-sm font-semibold text-gray-900  leading-5 group-hover:text-black transition-colors">
+      <h3 className="text-sm font-semibold text-gray-900 px-3 pt-1 leading-5 group-hover:text-black transition-colors">
         {block.name}
       </h3>
 
       {/* Description */}
-      <p className="text-xs text-gray-500 leading-5 flex-1">
+      <p className="text-xs text-gray-500 px-3 pb-2 leading-5 flex-1">
         {block.description}
       </p>
 
