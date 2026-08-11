@@ -7,7 +7,13 @@ import { mockBridgeSuccessResult } from "@/lib/mock-data";
 import { CheckCircle2, ExternalLink } from "lucide-react";
 import { formatAddress } from "@arc-ui/react";
 
-export function TransactionStatusWrapper({ styleVariant }: { styleVariant: ShowcaseStyleVariant }) {
+export function TransactionStatusWrapper({ 
+  styleVariant,
+  onAction,
+}: { 
+  styleVariant: ShowcaseStyleVariant;
+  onAction?: () => void;
+}) {
   const skin = skins[styleVariant];
   const data = mockBridgeSuccessResult;
 
@@ -84,6 +90,7 @@ export function TransactionStatusWrapper({ styleVariant }: { styleVariant: Showc
         {/* Footer */}
         <button
           type="button"
+          onClick={onAction}
           className={`
             w-full py-2.5 rounded-xl text-[13.5px] font-medium
             border transition-colors duration-150 cursor-pointer

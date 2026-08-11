@@ -19,6 +19,7 @@ const defaultProps: NavbarProps = {
   links: [
     { label: "Home", href: "/" },
     { label: "Blocks", href: "/blocks" },
+    { label: "Flows", href: "/flows" },
     { label: "Docs", href: "/docs" },
   ],
   loginText: "",
