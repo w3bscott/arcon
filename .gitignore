@@ -39,4 +39,5 @@ next-env.d.ts
 *.md
 *.tgz
 
-#clean git version history for tgz
+*.ps1
+

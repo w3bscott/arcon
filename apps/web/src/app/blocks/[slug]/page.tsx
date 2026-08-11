@@ -12,7 +12,7 @@ import { BlockPreview } from "@/components/blockspage/BlockPreview";
 import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { CopyButton } from "@/components/blockspage/CopyButton";
 
-const STYLE_VARIANTS = ["1", "2", "3"] as const;
+const STYLE_VARIANTS = ["1", "2", "3", "4"] as const;
 type Tab = "preview" | "code";
 
 export default function BlockDetailPage({

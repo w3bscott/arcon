@@ -1,163 +1,228 @@
-export type ShowcaseStyleVariant = "1" | "2" | "3";
+export type ShowcaseStyleVariant = "1" | "2" | "3" | "4";
 
-/* ── Per-skin color tokens ─────────────────────────────────────────── */
+export const styleVariables: Record<
+  ShowcaseStyleVariant,
+  { light: React.CSSProperties; dark: React.CSSProperties }
+> = {
+  "1": {
+    light: {
+      "--background": "#f4f4f5",
+      "--foreground": "#09090b",
+      "--card": "#ffffff",
+      "--card-foreground": "#09090b",
+      "--border": "#e4e4e7",
+      "--primary": "#09090b",
+      "--primary-foreground": "#ffffff",
+      "--muted": "#f4f4f5",
+      "--muted-foreground": "#71717a",
+      "--radius": "20px",
+    },
+    dark: {
+      "--background": "#09090b",
+      "--foreground": "#fafafa",
+      "--card": "#18181b",
+      "--card-foreground": "#fafafa",
+      "--border": "#27272a",
+      "--primary": "#fafafa",
+      "--primary-foreground": "#09090b",
+      "--muted": "#27272a",
+      "--muted-foreground": "#a1a1aa",
+      "--radius": "20px",
+    },
+  },
+  "2": {
+    light: {
+      "--background": "#ffffff",
+      "--foreground": "#000000",
+      "--card": "#ffffff",
+      "--card-foreground": "#000000",
+      "--border": "#000000",
+      "--primary": "#bef264",
+      "--primary-foreground": "#000000",
+      "--secondary": "#f472b6",
+      "--secondary-foreground": "#000000",
+      "--muted": "#f3f4f6",
+      "--muted-foreground": "#374151",
+      "--radius": "0px",
+    },
+    dark: {
+      "--background": "#000000",
+      "--foreground": "#ffffff",
+      "--card": "#000000",
+      "--card-foreground": "#ffffff",
+      "--border": "#ffffff",
+      "--primary": "#bef264",
+      "--primary-foreground": "#000000",
+      "--secondary": "#f472b6",
+      "--secondary-foreground": "#000000",
+      "--muted": "#1f2937",
+      "--muted-foreground": "#d1d5db",
+      "--radius": "0px",
+    },
+  },
+  "3": {
+    light: {
+      "--background": "oklch(1 0 0)",
+      "--foreground": "oklch(0.145 0 0)",
+      "--card": "oklch(1 0 0)",
+      "--card-foreground": "oklch(0.145 0 0)",
+      "--border": "oklch(0.922 0 0)",
+      "--primary": "oklch(0.205 0 0)",
+      "--primary-foreground": "oklch(0.985 0 0)",
+      "--muted": "oklch(0.97 0 0)",
+      "--muted-foreground": "oklch(0.556 0 0)",
+      "--radius": "0.875rem",
+    },
+    dark: {
+      "--background": "oklch(0.145 0 0)",
+      "--foreground": "oklch(0.985 0 0)",
+      "--card": "oklch(0.205 0 0)",
+      "--card-foreground": "oklch(0.985 0 0)",
+      "--border": "oklch(1 0 0 / 10%)",
+      "--primary": "oklch(0.922 0 0)",
+      "--primary-foreground": "oklch(0.205 0 0)",
+      "--muted": "oklch(0.269 0 0)",
+      "--muted-foreground": "oklch(0.708 0 0)",
+      "--radius": "0.875rem",
+    },
+  },
+  "4": {
+    light: {
+      "--background": "oklch(1 0 0)",
+      "--foreground": "oklch(0.145 0 0)",
+      "--card": "oklch(1 0 0)",
+      "--card-foreground": "oklch(0.145 0 0)",
+      "--border": "oklch(0.922 0 0)",
+      "--primary": "oklch(0.205 0 0)",
+      "--primary-foreground": "oklch(0.985 0 0)",
+      "--muted": "oklch(0.97 0 0)",
+      "--muted-foreground": "oklch(0.556 0 0)",
+      "--radius": "0",
+      "--font-geist-sans": "var(--font-outfit)",
+    },
+    dark: {
+      "--background": "oklch(0.145 0 0)",
+      "--foreground": "oklch(0.985 0 0)",
+      "--card": "oklch(0.205 0 0)",
+      "--card-foreground": "oklch(0.985 0 0)",
+      "--border": "oklch(1 0 0 / 10%)",
+      "--primary": "oklch(0.922 0 0)",
+      "--primary-foreground": "oklch(0.205 0 0)",
+      "--muted": "oklch(0.269 0 0)",
+      "--muted-foreground": "oklch(0.708 0 0)",
+      "--radius": "0",
+      "--font-geist-sans": "var(--font-outfit)",
+    },
+  },
+} as any;
 
 export interface ShowcaseSkinTokens {
-  // Card shell
   cardBg: string;
   cardBorder: string;
   cardShadow: string;
   cardRadius: string;
   cardPadding: string;
-
-  // Outer surface (behind the card in PreviewArea)
   surfaceBg: string;
-
-  // Text
   textPrimary: string;
   textSecondary: string;
   textMuted: string;
-
-  // Accents
   accentGreen: string;
   accentAmber: string;
-
-  // Divider
   divider: string;
-
-  // Interactive surfaces (refresh btn, hover surfaces)
   interactiveBg: string;
   interactiveText: string;
-
-  // Chain row separator
   chainRowBorder: string;
-
-  // Live pill
   livePillBg: string;
   livePillText: string;
   liveDotColor: string;
-
-  // Input surfaces (for form components)
   inputBg: string;
   inputBorder: string;
   inputText: string;
   inputPlaceholder: string;
   inputFocusBorder: string;
-
-  // Buttons
   buttonPrimaryBg: string;
   buttonPrimaryText: string;
   buttonPrimaryHover: string;
   buttonSecondaryBg: string;
   buttonSecondaryText: string;
   buttonSecondaryBorder: string;
-
-  // Decorative glow (Style 3 only)
-  glowGradient?: string;
 }
 
-export const skins: Record<ShowcaseStyleVariant, ShowcaseSkinTokens> = {
-  /* ── Style 1 — Arc Default (light, rounded) ──────────────────────── */
-  "1": {
-    cardBg: "bg-white",
-    cardBorder: "border border-[#e4e4e7]",
-    cardShadow: "shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-8px_rgba(0,0,0,0.06)]",
-    cardRadius: "rounded-[20px]",
-    cardPadding: "p-7",
-    surfaceBg: "bg-[#f4f4f5]",
-    textPrimary: "text-[#09090b]",
-    textSecondary: "text-[#3f3f46]",
-    textMuted: "text-[#71717a]",
-    accentGreen: "text-[#16c268]",
-    accentAmber: "text-[#d97706]",
-    divider: "bg-[#f0f0f1]",
-    interactiveBg: "bg-[#f4f4f5]",
-    interactiveText: "text-[#71717a]",
-    chainRowBorder: "border-[#f4f4f5]",
-    livePillBg: "bg-[#ecfdf3]",
-    livePillText: "text-[#0a7d3a]",
-    liveDotColor: "#16c268",
-    inputBg: "bg-white",
-    inputBorder: "border-[#e4e4e7]",
-    inputText: "text-[#09090b]",
-    inputPlaceholder: "placeholder-[#a1a1aa]",
-    inputFocusBorder: "focus:border-[#09090b]",
-    buttonPrimaryBg: "bg-[#09090b]",
-    buttonPrimaryText: "text-white",
-    buttonPrimaryHover: "hover:bg-[#27272a]",
-    buttonSecondaryBg: "bg-[#f4f4f5]",
-    buttonSecondaryText: "text-[#3f3f46]",
-    buttonSecondaryBorder: "border-[#e4e4e7]",
-  },
-
-  "2": {
-    cardBg: "bg-white",
-    cardBorder: "border-4 border-black",
-    cardShadow: "shadow-[8px_8px_0px_0px_#000]",
-    cardRadius: "rounded-none",
-    cardPadding: "p-8",
-    surfaceBg: "bg-white",
-    textPrimary: "text-black font-black tracking-tighter",
-    textSecondary: "text-black font-mono font-bold tracking-tight",
-    textMuted: "text-gray-800 font-mono",
-    accentGreen: "text-black",
-    accentAmber: "text-black",
-    divider: "bg-black",
-    interactiveBg: "bg-[#bef264] border-4 border-black shadow-[2px_2px_0px_0px_#000]",
-    interactiveText: "text-black font-black uppercase",
-    chainRowBorder: "border-black border-b",
-    livePillBg: "bg-[#bef264] border-2 border-black shadow-[2px_2px_0px_0px_#000] !rounded-none",
-    livePillText: "text-black font-black uppercase tracking-tighter",
-    liveDotColor: "#000",
-    inputBg: "bg-white shadow-[4px_4px_0px_0px_#000] !rounded-none",
-    inputBorder: "border-4 border-black",
-    inputText: "text-black font-mono",
-    inputPlaceholder: "placeholder-gray-500 font-mono",
-    inputFocusBorder: "focus:border-black focus:ring-0 focus:outline-none",
-    buttonPrimaryBg: "bg-[#bef264] !rounded-none border-4 border-black shadow-[4px_4px_0px_0px_#000] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all",
-    buttonPrimaryText: "text-black font-black uppercase tracking-tighter",
-    buttonPrimaryHover: "hover:bg-[#a3e635]",
-    buttonSecondaryBg: "bg-[#f472b6] !rounded-none border-4 border-black shadow-[4px_4px_0px_0px_#000] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all",
-    buttonSecondaryText: "text-black font-black uppercase tracking-tighter",
-    buttonSecondaryBorder: "border-transparent",
-  },
-
-  /* ── Style 3 — Dark Arc (dark, glow) ─────────────────────────────── */
-  "3": {
-    cardBg: "bg-[#0b0b0d]",
-    cardBorder: "border border-[#1c1c20]",
-    cardShadow: "shadow-[0_0_0_1px_rgba(13,242,70,0.06),0_20px_40px_-16px_rgba(0,0,0,0.6)]",
-    cardRadius: "rounded-[20px]",
-    cardPadding: "p-7",
-    surfaceBg: "bg-[#09090b]",
-    textPrimary: "text-[#fafafa]",
-    textSecondary: "text-[#d4d4d8]",
-    textMuted: "text-[#a1a1aa]",
-    accentGreen: "text-[#0df246]",
-    accentAmber: "text-[#f0b429]",
-    divider: "bg-[#1c1c20]",
-    interactiveBg: "bg-[#18181b]",
-    interactiveText: "text-[#a1a1aa]",
-    chainRowBorder: "border-[#18181b]",
-    livePillBg: "bg-[rgba(13,242,70,0.1)]",
-    livePillText: "text-[#0df246]",
-    liveDotColor: "#0df246",
-    glowGradient: "radial-gradient(circle, rgba(13,242,70,0.14), transparent 70%)",
-    inputBg: "bg-[#18181b]",
-    inputBorder: "border-[#27272a]",
-    inputText: "text-[#fafafa]",
-    inputPlaceholder: "placeholder-[#52525b]",
-    inputFocusBorder: "focus:border-[#0df246]",
-    buttonPrimaryBg: "bg-[#0df246]",
-    buttonPrimaryText: "text-[#09090b]",
-    buttonPrimaryHover: "hover:bg-[#3bff6f]",
-    buttonSecondaryBg: "bg-[#18181b]",
-    buttonSecondaryText: "text-[#d4d4d8]",
-    buttonSecondaryBorder: "border-[#27272a]",
-  },
+const defaultSkin: ShowcaseSkinTokens = {
+  cardBg: "bg-card",
+  cardBorder: "border border-border",
+  cardShadow: "shadow-sm",
+  cardRadius: "rounded-[var(--radius)]",
+  cardPadding: "p-7",
+  surfaceBg: "bg-background",
+  textPrimary: "text-foreground",
+  textSecondary: "text-foreground/80",
+  textMuted: "text-muted-foreground",
+  accentGreen: "text-emerald-500",
+  accentAmber: "text-amber-500",
+  divider: "bg-border",
+  interactiveBg: "bg-muted",
+  interactiveText: "text-muted-foreground",
+  chainRowBorder: "border-border",
+  livePillBg: "bg-primary/10",
+  livePillText: "text-primary",
+  liveDotColor: "var(--primary)",
+  inputBg: "bg-background",
+  inputBorder: "border-border",
+  inputText: "text-foreground",
+  inputPlaceholder: "placeholder-muted-foreground",
+  inputFocusBorder: "focus:border-primary",
+  buttonPrimaryBg: "bg-primary",
+  buttonPrimaryText: "text-primary-foreground",
+  buttonPrimaryHover: "hover:opacity-90",
+  buttonSecondaryBg: "bg-muted",
+  buttonSecondaryText: "text-foreground",
+  buttonSecondaryBorder: "border border-border",
 };
 
-/* ── Chain colors (presentation only) ──────────────────────────────── */
+export const skins: Record<ShowcaseStyleVariant, ShowcaseSkinTokens> = {
+  "1": { ...defaultSkin, cardShadow: "shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-8px_rgba(0,0,0,0.06)]" },
+  "2": {
+    cardBg: "bg-card",
+    cardBorder: "border-4 border-border",
+    cardShadow: "shadow-[8px_8px_0px_0px_var(--border)]",
+    cardRadius: "rounded-none",
+    cardPadding: "p-8",
+    surfaceBg: "bg-background",
+    textPrimary: "text-foreground font-black tracking-tighter",
+    textSecondary: "text-foreground font-mono font-bold tracking-tight",
+    textMuted: "text-muted-foreground font-mono",
+    accentGreen: "text-foreground",
+    accentAmber: "text-foreground",
+    divider: "bg-border",
+    interactiveBg: "bg-primary border-4 border-border shadow-[2px_2px_0px_0px_var(--border)]",
+    interactiveText: "text-primary-foreground font-black uppercase",
+    chainRowBorder: "border-border border-b",
+    livePillBg: "bg-primary border-2 border-border shadow-[2px_2px_0px_0px_var(--border)] !rounded-none",
+    livePillText: "text-primary-foreground font-black uppercase tracking-tighter",
+    liveDotColor: "var(--foreground)",
+    inputBg: "bg-card shadow-[4px_4px_0px_0px_var(--border)] !rounded-none",
+    inputBorder: "border-4 border-border",
+    inputText: "text-foreground font-mono",
+    inputPlaceholder: "placeholder-muted-foreground font-mono",
+    inputFocusBorder: "focus:border-border focus:ring-0 focus:outline-none",
+    buttonPrimaryBg: "bg-primary !rounded-none border-4 border-border shadow-[4px_4px_0px_0px_var(--border)] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all",
+    buttonPrimaryText: "text-primary-foreground font-black uppercase tracking-tighter",
+    buttonPrimaryHover: "hover:opacity-90",
+    buttonSecondaryBg: "bg-secondary !rounded-none border-4 border-border shadow-[4px_4px_0px_0px_var(--border)] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all",
+    buttonSecondaryText: "text-secondary-foreground font-black uppercase tracking-tighter",
+    buttonSecondaryBorder: "border-transparent",
+  },
+  "3": defaultSkin,
+  "4": defaultSkin,
+};
+
+export const skeletonClass: Record<ShowcaseStyleVariant, string> = {
+  "1": "bg-gradient-to-r from-muted via-background to-muted bg-[length:400%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]",
+  "2": "bg-muted border-4 border-border !rounded-none animate-pulse",
+  "3": "bg-gradient-to-r from-muted via-background to-muted bg-[length:400%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]",
+  "4": "bg-gradient-to-r from-muted via-background to-muted bg-[length:400%_100%] animate-[shimmer_1.6s_ease-in-out_infinite] !rounded-none",
+};
 
 export const chainColors: Record<string, string> = {
   Ethereum: "#627eea",
@@ -166,12 +231,4 @@ export const chainColors: Record<string, string> = {
   Polygon: "#8247e5",
   Base: "#0052ff",
   Arc_Testnet: "#0df246",
-};
-
-/* ── Skeleton theme helpers ────────────────────────────────────────── */
-
-export const skeletonClass: Record<ShowcaseStyleVariant, string> = {
-  "1": "bg-gradient-to-r from-[#ececed] via-[#f6f6f7] to-[#ececed] bg-[length:400%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]",
-  "2": "bg-gray-300 border-4 border-black !rounded-none animate-pulse",
-  "3": "bg-gradient-to-r from-[#1c1c20] via-[#27272a] to-[#1c1c20] bg-[length:400%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]",
 };

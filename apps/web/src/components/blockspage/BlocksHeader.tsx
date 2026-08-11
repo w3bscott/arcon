@@ -25,8 +25,8 @@ export function BlocksHeader() {
     <div className="relative w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 pt-24">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-muted via-muted/60 to-background flex flex-col items-center justify-center gap-3 py-6 md:py-8 px-6">
 
-        <img className="absolute left-[-200] top-[90] grayscale-95 scale-140 opacity-18" src={'/12.jpg'}/>
-        {/* <img className="absolute mix-blend-luminosity opacity-20 scale-105 inset-0" src={'/blocks-header.jpg'}/> */}
+        {/* <img className="absolute left-[-200] top-[90] grayscale-95 scale-140 opacity-18" src={'/12.jpg'}/> */}
+        <img className="absolute mix-blend-luminosity opacity-30 scale-105 inset-0" src={'/blocks-header.jpg'}/>
 
         {/* Decorative floating icon chips — hidden on mobile to avoid clutter */}
         <div className="hidden md:block absolute inset-0 pointer-events-none">
