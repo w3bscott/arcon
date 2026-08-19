@@ -89,4 +89,43 @@ export const registry: Record<string, RegistryItem> = {
       },
     ],
   },
+  "transfer-form": {
+    name: "transfer-form",
+    type: "registry:block",
+    title: "TransferForm",
+    description: "Collect recipient and amount for a token transfer.",
+    dependencies: ["@arc-ui/core", "lucide-react"],
+    files: [
+      {
+        path: "registry/default/transfer-form/index.tsx",
+        type: "registry:component",
+      },
+    ],
+  },
+  "transfer-review": {
+    name: "transfer-review",
+    type: "registry:block",
+    title: "TransferReview",
+    description: "Review transfer details before execution.",
+    dependencies: ["@arc-ui/core"],
+    files: [
+      {
+        path: "registry/default/transfer-review/index.tsx",
+        type: "registry:component",
+      },
+    ],
+  },
+  "transfer-status": {
+    name: "transfer-status",
+    type: "registry:block",
+    title: "TransferStatus",
+    description: "Display pending, success, and error states for a transfer.",
+    dependencies: ["@arc-ui/core", "lucide-react"],
+    files: [
+      {
+        path: "registry/default/transfer-status/index.tsx",
+        type: "registry:component",
+      },
+    ],
+  },
 };

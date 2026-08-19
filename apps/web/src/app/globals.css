@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 /* @import "tw-animate-css"; */
 
 /* :root { */
@@ -16,6 +17,7 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-lexend: var(--font-lexend);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Outfit } from "next/font/google";
+import { Geist, Geist_Mono, Outfit, Lexend } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
@@ -18,6 +18,11 @@ const outfit = Outfit({
   subsets: ["latin"],
 });
 
+const lexend = Lexend({
+  variable: "--font-lexend",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Build Faster on Arc",
   description: "Pre-built UI components wired directly to the Arc SDK.",
@@ -31,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} ${lexend.variable} antialiased`}
     >
       <body className="antialiased">
         <SmoothScroll>

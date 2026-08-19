@@ -27,6 +27,9 @@ __export(index_exports, {
   SendMoneyForm: () => SendMoneyForm,
   SwapWidget: () => SwapWidget,
   TransactionStatus: () => TransactionStatus,
+  TransferForm: () => TransferForm,
+  TransferReview: () => TransferReview,
+  TransferStatus: () => TransferStatus,
   WalletConnectButton: () => WalletConnectButton,
   registry: () => registry,
   useBalances: () => useBalances,
@@ -494,9 +497,494 @@ function BalanceCard({
 }
 
 // src/components/send-money-form/index.tsx
+var import_react9 = require("react");
+var import_core11 = require("@arc-ui/core");
+
+// src/components/transfer-form/index.tsx
 var import_react8 = require("react");
+var import_lucide_react = require("lucide-react");
 var import_core8 = require("@arc-ui/core");
 var import_jsx_runtime4 = require("react/jsx-runtime");
+function toNumber(value) {
+  if (value === void 0 || value === "") return void 0;
+  const parsed = typeof value === "number" ? value : Number.parseFloat(value.replace(/,/g, ""));
+  return Number.isNaN(parsed) ? void 0 : parsed;
+}
+function formatAmount(value) {
+  const parsed = toNumber(value);
+  if (parsed === void 0) return "0.00";
+  return parsed.toLocaleString(void 0, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 6
+  });
+}
+function defaultValidateRecipient(value) {
+  if (!value) return false;
+  if (value.startsWith("0x")) return /^0x[a-fA-F0-9]{40}$/.test(value);
+  return (0, import_core8.isValidAddress)(value) || /^[a-zA-Z0-9_.-]{3,}$/.test(value);
+}
+function TransferForm({
+  recipient,
+  amount,
+  onRecipientChange,
+  onAmountChange,
+  balance,
+  networkFee = 0,
+  token = "USDC",
+  recentRecipients = [],
+  validateRecipient = defaultValidateRecipient,
+  validateAmount = import_core8.isValidAmount,
+  onReview,
+  className = "",
+  style
+}) {
+  const formId = (0, import_react8.useId)();
+  const recipientId = `${formId}-recipient`;
+  const recipientErrorId = `${formId}-recipient-error`;
+  const amountId = `${formId}-amount`;
+  const amountErrorId = `${formId}-amount-error`;
+  const [isRecipientFocused, setIsRecipientFocused] = (0, import_react8.useState)(false);
+  const [recipientTouched, setRecipientTouched] = (0, import_react8.useState)(false);
+  const [amountTouched, setAmountTouched] = (0, import_react8.useState)(false);
+  const balanceNumber = toNumber(balance);
+  const amountNumber = toNumber(amount);
+  const hasRecipient = recipient.length > 0;
+  const recipientValid = validateRecipient(recipient);
+  const amountFormatValid = validateAmount(amount);
+  const amountWithinBalance = balanceNumber === void 0 || amountNumber === void 0 || amountNumber <= balanceNumber;
+  const recipientError = recipientTouched && hasRecipient && !recipientValid ? "Invalid address or username" : "";
+  const amountError = (0, import_react8.useMemo)(() => {
+    if (!amountTouched || !amount) return "";
+    if (!amountFormatValid) return "Invalid amount";
+    if (!amountWithinBalance) return "Insufficient balance";
+    return "";
+  }, [amount, amountFormatValid, amountTouched, amountWithinBalance]);
+  const isReady = hasRecipient && recipientValid && amount.length > 0 && amountNumber !== void 0 && amountNumber > 0 && amountWithinBalance && !recipientError && !amountError;
+  function handleSubmit(event) {
+    event.preventDefault();
+    setRecipientTouched(true);
+    setAmountTouched(true);
+    if (!isReady) return;
+    onReview?.({ recipient, amount, token, networkFee });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+    "form",
+    {
+      "data-state": isReady ? "ready" : "idle",
+      className: `flex min-h-[470px] flex-col gap-6 ${className}`,
+      style,
+      onSubmit: handleSubmit,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h3", { className: "text-[22px] font-extrabold leading-normal text-foreground", children: "Send Money" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "flex items-center justify-center rounded-full border border-border p-[10px] text-foreground transition-colors hover:border-foreground", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react.ArrowUpRight, { className: "h-4 w-4", "aria-hidden": "true" }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "relative flex flex-col gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center justify-between gap-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "label",
+              {
+                htmlFor: recipientId,
+                className: "text-[12px] font-medium uppercase tracking-wider text-muted-foreground",
+                children: "Recipient"
+              }
+            ),
+            recipientError ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-right text-[12px] font-medium text-destructive", children: recipientError }) : null
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+            "div",
+            {
+              className: `flex h-[51px] items-center gap-2 rounded-[16px] border bg-muted px-4 transition-colors ${recipientError ? "border-destructive" : "border-transparent"}`,
+              children: [
+                hasRecipient && !recipientError ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "h-5 w-5 shrink-0 overflow-hidden rounded-full", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "block h-full w-full bg-gradient-to-br from-[#191bac] via-[#b97ff0] to-[#f17249]" }) }) : null,
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  "input",
+                  {
+                    id: recipientId,
+                    type: "text",
+                    value: recipient,
+                    onChange: (event) => onRecipientChange(event.target.value),
+                    onFocus: () => setIsRecipientFocused(true),
+                    onBlur: () => {
+                      setIsRecipientFocused(false);
+                      setRecipientTouched(true);
+                    },
+                    placeholder: "Enter public address (0x) or Username",
+                    "aria-invalid": !!recipientError,
+                    "aria-describedby": recipientError ? recipientErrorId : void 0,
+                    className: "min-w-0 flex-1 bg-transparent text-[16px] font-medium text-foreground outline-none placeholder:text-muted-foreground"
+                  }
+                ),
+                hasRecipient ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: () => onRecipientChange(""),
+                    className: "shrink-0 text-muted-foreground transition-colors hover:text-foreground",
+                    "aria-label": "Clear recipient",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react.X, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
+                  }
+                ) : null
+              ]
+            }
+          ),
+          recipientError ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { id: recipientErrorId, className: "sr-only", children: recipientError }) : null,
+          isRecipientFocused && !recipient && recentRecipients.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "absolute left-0 top-[calc(100%+4px)] z-50 w-full rounded-[12px] border border-border bg-card p-1 shadow-lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground", children: "Recent" }),
+            recentRecipients.map((item) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+              "button",
+              {
+                type: "button",
+                onMouseDown: (event) => {
+                  event.preventDefault();
+                  onRecipientChange(item.address);
+                  setRecipientTouched(true);
+                  setIsRecipientFocused(false);
+                },
+                className: "flex w-full items-center gap-3 rounded-[10px] px-2 py-2 text-left transition-colors hover:bg-muted",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "h-8 w-8 shrink-0 overflow-hidden rounded-full", children: item.avatarUrl ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                    "img",
+                    {
+                      src: item.avatarUrl,
+                      alt: "",
+                      className: "h-full w-full object-cover"
+                    }
+                  ) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "block h-full w-full bg-gradient-to-br from-[#191bac] via-[#b97ff0] to-[#f17249]" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "flex min-w-0 flex-col items-start", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-[12px] font-medium text-foreground", children: item.name }),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "text-[12px] font-medium text-muted-foreground", children: [
+                      item.address.slice(0, 6),
+                      "...",
+                      item.address.slice(-4)
+                    ] })
+                  ] })
+                ]
+              },
+              item.address
+            ))
+          ] }) : null
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex flex-col gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center justify-between gap-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "label",
+              {
+                htmlFor: amountId,
+                className: "text-[12px] font-medium uppercase tracking-wider text-muted-foreground",
+                children: "Amount"
+              }
+            ),
+            amountError ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-right text-[12px] font-medium text-destructive", children: amountError }) : null
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+            "div",
+            {
+              className: `flex items-center justify-between rounded-[16px] border bg-muted p-5 transition-colors ${amountError ? "border-destructive" : "border-transparent"}`,
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  "input",
+                  {
+                    id: amountId,
+                    type: "text",
+                    inputMode: "decimal",
+                    value: amount,
+                    placeholder: "0.00",
+                    onChange: (event) => onAmountChange(event.target.value),
+                    onBlur: () => setAmountTouched(true),
+                    "aria-invalid": !!amountError,
+                    "aria-describedby": amountError ? amountErrorId : void 0,
+                    className: "w-[140px] bg-transparent text-[28px] font-bold text-foreground outline-none placeholder:text-muted-foreground",
+                    style: { fontVariantNumeric: "tabular-nums" }
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-[14px] font-semibold text-muted-foreground", children: token })
+              ]
+            }
+          ),
+          amountError ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { id: amountErrorId, className: "sr-only", children: amountError }) : null,
+          balanceNumber !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "text-[12px] font-medium text-muted-foreground", children: [
+              "Balance: ",
+              formatAmount(balance)
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "button",
+              {
+                type: "button",
+                onClick: () => onAmountChange(String(balanceNumber)),
+                className: "text-[14px] font-normal text-foreground underline",
+                children: "Max"
+              }
+            )
+          ] }) : null
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "h-px w-full bg-border" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center justify-between py-1 text-[14px]", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "font-medium text-muted-foreground", children: "Network fee" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+            "span",
+            {
+              className: `font-semibold ${isReady ? "text-foreground" : "text-muted-foreground"}`,
+              children: [
+                formatAmount(networkFee),
+                " ",
+                token
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "button",
+          {
+            type: "submit",
+            disabled: !isReady,
+            className: `h-14 w-full rounded-full bg-primary text-[16px] font-semibold text-primary-foreground transition-opacity ${isReady ? "hover:opacity-90" : "cursor-not-allowed opacity-70"}`,
+            children: "Review Send"
+          }
+        )
+      ]
+    }
+  );
+}
+
+// src/components/transfer-review/index.tsx
+var import_core9 = require("@arc-ui/core");
+var import_jsx_runtime5 = require("react/jsx-runtime");
+function toNumber2(value) {
+  if (value === void 0 || value === "") return 0;
+  const parsed = typeof value === "number" ? value : Number.parseFloat(value.replace(/,/g, ""));
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+function formatAmount2(value) {
+  return toNumber2(value).toLocaleString(void 0, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 6
+  });
+}
+function TransferReview({
+  recipient,
+  amount,
+  network = "Ethereum",
+  networkFee = 0,
+  token = "USDC",
+  onConfirm,
+  onBack,
+  className = "",
+  style
+}) {
+  const total = toNumber2(amount) + toNumber2(networkFee);
+  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+    "div",
+    {
+      "data-state": "review",
+      className: `flex flex-col items-center gap-5 ${className}`,
+      style,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "space-y-1 text-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "text-lg font-semibold text-foreground", children: "Review Transfer" }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-[13px] text-muted-foreground", children: "Please confirm the details below" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("dl", { className: "w-full space-y-0", children: [
+          { label: "Send", value: `${formatAmount2(amount)} ${token}` },
+          { label: "To", value: (0, import_core9.formatAddress)(recipient), mono: true },
+          { label: "Network", value: network }
+        ].map((row, index) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          "div",
+          {
+            className: `flex items-center justify-between gap-4 py-3 ${index > 0 ? "border-t border-border" : ""}`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("dt", { className: "text-[13.5px] font-medium text-muted-foreground", children: row.label }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                "dd",
+                {
+                  className: `truncate text-right text-[13.5px] font-medium text-foreground ${row.mono ? "font-mono" : ""}`,
+                  title: row.value,
+                  children: row.value
+                }
+              )
+            ]
+          },
+          row.label
+        )) }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "h-px w-full bg-border" }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("dl", { className: "w-full space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-center justify-between gap-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("dt", { className: "text-[12.5px] text-muted-foreground", children: "Network Fee" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("dd", { className: "text-[12.5px] font-medium text-foreground", children: [
+              formatAmount2(networkFee),
+              " ",
+              token
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-center justify-between gap-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("dt", { className: "text-[13.5px] font-bold text-foreground", children: "Total" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("dd", { className: "text-[14px] font-bold text-foreground", children: [
+              formatAmount2(total),
+              " ",
+              token
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex w-full gap-2", children: [
+          onBack ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "button",
+            {
+              type: "button",
+              onClick: onBack,
+              className: "h-11 flex-1 rounded-xl border border-border bg-card text-[14px] font-semibold text-foreground transition-colors hover:bg-muted",
+              children: "Back"
+            }
+          ) : null,
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "button",
+            {
+              type: "button",
+              onClick: onConfirm,
+              className: "h-11 flex-1 rounded-xl bg-primary text-[14px] font-semibold text-primary-foreground transition-opacity hover:opacity-90",
+              children: "Confirm Send"
+            }
+          )
+        ] })
+      ]
+    }
+  );
+}
+
+// src/components/transfer-status/index.tsx
+var import_lucide_react2 = require("lucide-react");
+var import_core10 = require("@arc-ui/core");
+var import_jsx_runtime6 = require("react/jsx-runtime");
+function TransferStatus({
+  status,
+  amount = "0.00",
+  token = "USDC",
+  network = "Arc Testnet",
+  txHash,
+  explorerUrl,
+  errorMessage = "There was an error processing your transfer.",
+  onAction,
+  actionLabel,
+  className = "",
+  style
+}) {
+  if (status === "pending") {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+      "div",
+      {
+        "data-state": "pending",
+        className: `flex min-h-[180px] flex-col items-center justify-center gap-4 ${className}`,
+        style,
+        "aria-live": "polite",
+        "aria-busy": "true",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            import_lucide_react2.Loader2,
+            {
+              className: "h-10 w-10 animate-spin text-emerald-500",
+              "aria-hidden": "true"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "space-y-1 text-center", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h3", { className: "text-[15px] font-semibold text-foreground", children: "Processing Transaction" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { className: "text-[13px] text-muted-foreground", children: [
+              "Confirming on ",
+              network,
+              "..."
+            ] })
+          ] })
+        ]
+      }
+    );
+  }
+  if (status === "error") {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+      "div",
+      {
+        "data-state": "error",
+        className: `flex flex-col items-center gap-5 ${className}`,
+        style,
+        role: "alert",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "flex h-14 w-14 items-center justify-center rounded-full bg-destructive/10", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react2.XCircle, { className: "h-7 w-7 text-destructive", "aria-hidden": "true" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "space-y-1 text-center", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h3", { className: "text-lg font-semibold text-foreground", children: "Transfer Failed" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-[13px] text-muted-foreground", children: errorMessage })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "h-px w-full bg-border" }),
+          onAction ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "button",
+            {
+              type: "button",
+              onClick: onAction,
+              className: "w-full rounded-xl bg-primary py-2.5 text-[13.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90",
+              children: actionLabel ?? "Try Again"
+            }
+          ) : null
+        ]
+      }
+    );
+  }
+  const txLabel = txHash ? (0, import_core10.formatAddress)(txHash) : void 0;
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+    "div",
+    {
+      "data-state": "success",
+      className: `flex flex-col items-center gap-5 ${className}`,
+      style,
+      "aria-live": "polite",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-500/15", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          import_lucide_react2.CheckCircle2,
+          {
+            className: "h-7 w-7 text-emerald-700 dark:text-emerald-400",
+            "aria-hidden": "true"
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "space-y-1 text-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h3", { className: "text-lg font-semibold text-foreground", children: "Completed" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { className: "text-[13px] text-muted-foreground", children: [
+            "You just sent ",
+            amount,
+            " ",
+            token
+          ] })
+        ] }),
+        txHash ? explorerUrl ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+          "a",
+          {
+            href: explorerUrl,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "flex h-8 items-center gap-2 rounded-full bg-muted px-4 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "font-mono", children: txLabel }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react2.ExternalLink, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
+            ]
+          }
+        ) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "flex h-8 items-center rounded-full bg-muted px-4 text-[13px] font-medium text-muted-foreground", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "font-mono", children: txLabel }) }) : null,
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "h-px w-full bg-border" }),
+        onAction ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          "button",
+          {
+            type: "button",
+            onClick: onAction,
+            className: "w-full rounded-xl bg-primary py-2.5 text-[13.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90",
+            children: actionLabel ?? "Done"
+          }
+        ) : null
+      ]
+    }
+  );
+}
+
+// src/components/send-money-form/index.tsx
+var import_jsx_runtime7 = require("react/jsx-runtime");
+function mapSendStatus(status, isMocked) {
+  if (status === "error") return "error";
+  if (status === "success" || isMocked) return "success";
+  return "pending";
+}
 function SendMoneyForm({
   kit,
   chain = "Ethereum",
@@ -515,135 +1003,124 @@ function SendMoneyForm({
   const estimate = isMocked ? injectedData.estimate : hookResult.estimate;
   const result = isMocked ? injectedData.result : hookResult.result;
   const error = isMocked ? injectedData.error : hookResult.error;
-  const [stage, setStage] = (0, import_react8.useState)("input");
-  const [recipient, setRecipient] = (0, import_react8.useState)(defaultRecipient);
-  const [amount, setAmount] = (0, import_react8.useState)(defaultAmount);
-  const [recipientTouched, setRecipientTouched] = (0, import_react8.useState)(false);
-  const [amountTouched, setAmountTouched] = (0, import_react8.useState)(false);
-  const recipientValid = (0, import_core8.isValidAddress)(recipient);
-  const amountValid = (0, import_core8.isValidAmount)(amount);
+  const [stage, setStage] = (0, import_react9.useState)("input");
+  const [recipient, setRecipient] = (0, import_react9.useState)(defaultRecipient);
+  const [amount, setAmount] = (0, import_react9.useState)(defaultAmount);
+  const completedRef = (0, import_react9.useRef)(false);
+  const erroredRef = (0, import_react9.useRef)(false);
+  const recipientValid = (0, import_core11.isValidAddress)(recipient);
+  const amountValid = (0, import_core11.isValidAmount)(amount);
   const { getEstimate } = hookResult;
-  (0, import_react8.useEffect)(() => {
+  (0, import_react9.useEffect)(() => {
     if (isMocked) return;
-    if (recipientValid && amountValid) {
-      getEstimate({
-        from: { chain },
-        to: recipient,
-        amount,
-        token
-      }).catch(console.error);
+    if (!recipientValid || !amountValid) return;
+    getEstimate({
+      from: { chain },
+      to: recipient,
+      amount,
+      token
+    }).catch(console.error);
+  }, [
+    recipient,
+    amount,
+    recipientValid,
+    amountValid,
+    chain,
+    token,
+    isMocked,
+    getEstimate
+  ]);
+  (0, import_react9.useEffect)(() => {
+    if (stage !== "result") {
+      completedRef.current = false;
+      erroredRef.current = false;
+      return;
     }
-  }, [recipient, amount, recipientValid, amountValid, chain, token, isMocked, getEstimate]);
-  const handleReview = (e) => {
-    e.preventDefault();
+    if (status === "success" && result && !completedRef.current) {
+      completedRef.current = true;
+      onSuccess?.(result);
+    }
+    if (status === "error" && error && !erroredRef.current) {
+      erroredRef.current = true;
+      onError?.(error);
+    }
+  }, [stage, status, result, error, onSuccess, onError]);
+  function handleReview() {
     if (recipientValid && amountValid) {
       setStage("review");
     }
-  };
-  const handleConfirm = () => {
-    if (isMocked) {
-      setStage("result");
-      return;
-    }
+  }
+  function handleConfirm() {
+    setStage("result");
+    if (isMocked) return;
     hookResult.send({
       from: { chain },
       to: recipient,
       amount,
       token
     });
-  };
-  const handleRetry = () => {
+  }
+  function handleReset() {
     if (!isMocked) hookResult.reset();
     setStage("input");
-  };
-  if (stage === "result") {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { "data-state": status, className, style, children: [
-      status === "sending" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { "aria-busy": "true", children: "Sending..." }),
-      status !== "sending" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-        TransactionStatus,
-        {
-          sendResult: result || (error ? { name: "Send", state: "error", error } : void 0),
-          operationType: "send",
-          onComplete: () => {
-            if (result) onSuccess?.(result);
-          },
-          onError: (err) => onError?.(err instanceof Error ? err : new Error(String(err)))
-        }
-      ),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", onClick: handleRetry, children: "Try again" })
-    ] });
   }
   if (stage === "review") {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { "data-state": "idle", className, style, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h3", { children: "Review Summary" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("p", { children: [
-        "Recipient: ",
-        (0, import_core8.formatAddress)(recipient)
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("p", { children: [
-        "Amount: ",
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      TransferReview,
+      {
+        recipient,
         amount,
-        " ",
-        token
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("p", { children: [
-        "Network fee: ",
-        estimate ? (0, import_core8.formatFee)(estimate.fee, token) : "Calculating..."
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", onClick: () => setStage("input"), children: "Back" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", onClick: handleConfirm, disabled: status === "estimating", children: "Confirm Send" })
-    ] });
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { "data-state": "idle", className, style, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("form", { onSubmit: handleReview, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { children: "Recipient Address" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-        "input",
-        {
-          type: "text",
-          value: recipient,
-          onChange: (e) => setRecipient(e.target.value),
-          onBlur: () => setRecipientTouched(true),
-          placeholder: "0x..."
-        }
-      ),
-      recipientTouched && !recipientValid && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { role: "alert", children: "Invalid address" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { children: [
-        "Amount (",
+        network: chain,
+        networkFee: estimate?.fee,
         token,
-        ")"
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-        "input",
-        {
-          type: "number",
-          step: "any",
-          value: amount,
-          onChange: (e) => setAmount(e.target.value),
-          onBlur: () => setAmountTouched(true),
-          placeholder: "0.00"
-        }
-      ),
-      amountTouched && !amountValid && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { role: "alert", children: "Invalid amount" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-      status === "estimating" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: "Fetching fee\u2026" }),
-      status === "idle" && estimate && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("p", { children: [
-        "Network fee: ",
-        (0, import_core8.formatFee)(estimate.fee, token)
-      ] }),
-      status === "error" && !isMocked && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: "Unable to estimate fee" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "submit", disabled: !recipientValid || !amountValid, children: "Review" })
-  ] }) });
+        onBack: () => setStage("input"),
+        onConfirm: status === "estimating" ? void 0 : handleConfirm,
+        className,
+        style
+      }
+    );
+  }
+  if (stage === "result") {
+    const transferStatus = mapSendStatus(status, isMocked);
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      TransferStatus,
+      {
+        status: transferStatus,
+        amount,
+        token,
+        network: chain,
+        txHash: result?.txHash,
+        explorerUrl: result?.explorerUrl,
+        errorMessage: error?.message,
+        onAction: handleReset,
+        actionLabel: transferStatus === "error" ? "Try Again" : "Done",
+        className,
+        style
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+    TransferForm,
+    {
+      recipient,
+      amount,
+      onRecipientChange: setRecipient,
+      onAmountChange: setAmount,
+      networkFee: estimate?.fee,
+      token,
+      validateRecipient: import_core11.isValidAddress,
+      validateAmount: import_core11.isValidAmount,
+      onReview: handleReview,
+      className,
+      style
+    }
+  );
 }
 
 // src/components/swap-widget/index.tsx
-var import_react9 = require("react");
-var import_core9 = require("@arc-ui/core");
-var import_jsx_runtime5 = require("react/jsx-runtime");
+var import_react10 = require("react");
+var import_core12 = require("@arc-ui/core");
+var import_jsx_runtime8 = require("react/jsx-runtime");
 function SwapWidget({
   kit,
   chain = "Ethereum",
@@ -662,14 +1139,14 @@ function SwapWidget({
   const estimate = isMocked ? injectedData.estimate : hookResult.estimate;
   const result = isMocked ? injectedData.result : hookResult.result;
   const error = isMocked ? injectedData.error : hookResult.error;
-  const [stage, setStage] = (0, import_react9.useState)("input");
-  const [tokenIn, setTokenIn] = (0, import_react9.useState)(defaultTokenIn);
-  const [tokenOut, setTokenOut] = (0, import_react9.useState)(defaultTokenOut);
-  const [amountIn, setAmountIn] = (0, import_react9.useState)(defaultAmountIn);
-  const [amountTouched, setAmountTouched] = (0, import_react9.useState)(false);
-  const amountValid = (0, import_core9.isValidAmount)(amountIn);
+  const [stage, setStage] = (0, import_react10.useState)("input");
+  const [tokenIn, setTokenIn] = (0, import_react10.useState)(defaultTokenIn);
+  const [tokenOut, setTokenOut] = (0, import_react10.useState)(defaultTokenOut);
+  const [amountIn, setAmountIn] = (0, import_react10.useState)(defaultAmountIn);
+  const [amountTouched, setAmountTouched] = (0, import_react10.useState)(false);
+  const amountValid = (0, import_core12.isValidAmount)(amountIn);
   const { getEstimate } = hookResult;
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (isMocked) return;
     if (amountValid && tokenIn && tokenOut && chain) {
       getEstimate({
@@ -701,9 +1178,9 @@ function SwapWidget({
     setStage("input");
   };
   if (stage === "result") {
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { "data-state": status, className, style, children: [
-      status === "swapping" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { "aria-busy": "true", children: "Swapping..." }),
-      status !== "swapping" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { "data-state": status, className, style, children: [
+      status === "swapping" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { "aria-busy": "true", children: "Swapping..." }),
+      status !== "swapping" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
         TransactionStatus,
         {
           txHash: result?.txHash,
@@ -714,42 +1191,42 @@ function SwapWidget({
           onError: (err) => onError?.(err instanceof Error ? err : new Error(String(err)))
         }
       ),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", onClick: handleRetry, children: "Try again" })
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { type: "button", onClick: handleRetry, children: "Try again" })
     ] });
   }
   if (stage === "review") {
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { "data-state": "idle", className, style, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { children: "Review Swap" }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("p", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { "data-state": "idle", className, style, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { children: "Review Swap" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { children: [
         "Sell: ",
         amountIn,
         " ",
         tokenIn
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("p", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { children: [
         "Buy: ",
         estimate ? `${estimate.estimatedOutput} ${tokenOut}` : "Calculating..."
       ] }),
-      estimate && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("ul", { children: estimate.fees.map((fee, idx) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("li", { children: [
+      estimate && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("ul", { children: estimate.fees.map((fee, idx) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("li", { children: [
           fee.type,
           ": ",
-          (0, import_core9.formatFee)(fee.amount, fee.token)
+          (0, import_core12.formatFee)(fee.amount, fee.token)
         ] }, idx)) }),
-        estimate.priceImpact > 1.5 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("p", { role: "alert", style: { color: "red" }, children: [
+        estimate.priceImpact > 1.5 && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { role: "alert", style: { color: "red" }, children: [
           "Warning: High price impact (",
           estimate.priceImpact,
           "%)"
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", onClick: () => setStage("input"), children: "Back" }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", onClick: handleConfirm, disabled: status === "estimating" || !estimate, children: "Confirm Swap" })
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { type: "button", onClick: () => setStage("input"), children: "Back" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { type: "button", onClick: handleConfirm, disabled: status === "estimating" || !estimate, children: "Confirm Swap" })
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { "data-state": "idle", className, style, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("form", { onSubmit: handleReview, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { children: "Sell" }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { "data-state": "idle", className, style, children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("form", { onSubmit: handleReview, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("label", { children: "Sell" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
         "input",
         {
           type: "number",
@@ -760,39 +1237,39 @@ function SwapWidget({
           placeholder: "0.00"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("select", { value: tokenIn, onChange: (e) => setTokenIn(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "USDC", children: "USDC" }),
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "USDT", children: "USDT" }),
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "ETH", children: "ETH" })
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("select", { value: tokenIn, onChange: (e) => setTokenIn(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "USDC", children: "USDC" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "USDT", children: "USDT" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "ETH", children: "ETH" })
       ] }),
-      amountTouched && !amountValid && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { role: "alert", children: "Invalid amount" })
+      amountTouched && !amountValid && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { role: "alert", children: "Invalid amount" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { children: "Buy" }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("select", { value: tokenOut, onChange: (e) => setTokenOut(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "USDC", children: "USDC" }),
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "USDT", children: "USDT" }),
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "ETH", children: "ETH" })
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("label", { children: "Buy" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("select", { value: tokenOut, onChange: (e) => setTokenOut(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "USDC", children: "USDC" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "USDT", children: "USDT" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "ETH", children: "ETH" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-      status === "estimating" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { children: "Fetching estimate\u2026" }),
-      status === "idle" && estimate && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("p", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+      status === "estimating" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: "Fetching estimate\u2026" }),
+      status === "idle" && estimate && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { children: [
         "You will receive ~",
         estimate.estimatedOutput,
         " ",
         tokenOut
       ] }),
-      status === "error" && !isMocked && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { children: "Unable to estimate swap" })
+      status === "error" && !isMocked && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: "Unable to estimate swap" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "submit", disabled: !amountValid, children: "Review" })
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { type: "submit", disabled: !amountValid, children: "Review" })
   ] }) });
 }
 
 // src/components/bridge-widget/index.tsx
-var import_react10 = require("react");
-var import_core10 = require("@arc-ui/core");
-var import_jsx_runtime6 = require("react/jsx-runtime");
+var import_react11 = require("react");
+var import_core13 = require("@arc-ui/core");
+var import_jsx_runtime9 = require("react/jsx-runtime");
 function BridgeWidget({
   kit,
   defaultChainFrom = "Ethereum",
@@ -811,15 +1288,15 @@ function BridgeWidget({
   const estimate = isMocked ? injectedData.estimate : hookResult.estimate;
   const result = isMocked ? injectedData.result : hookResult.result;
   const error = isMocked ? injectedData.error : hookResult.error;
-  const [stage, setStage] = (0, import_react10.useState)("input");
-  const [chainFrom, setChainFrom] = (0, import_react10.useState)(defaultChainFrom);
-  const [chainTo, setChainTo] = (0, import_react10.useState)(defaultChainTo);
-  const [token, setToken] = (0, import_react10.useState)(defaultToken);
-  const [amount, setAmount] = (0, import_react10.useState)(defaultAmount);
-  const [amountTouched, setAmountTouched] = (0, import_react10.useState)(false);
-  const amountValid = (0, import_core10.isValidAmount)(amount);
+  const [stage, setStage] = (0, import_react11.useState)("input");
+  const [chainFrom, setChainFrom] = (0, import_react11.useState)(defaultChainFrom);
+  const [chainTo, setChainTo] = (0, import_react11.useState)(defaultChainTo);
+  const [token, setToken] = (0, import_react11.useState)(defaultToken);
+  const [amount, setAmount] = (0, import_react11.useState)(defaultAmount);
+  const [amountTouched, setAmountTouched] = (0, import_react11.useState)(false);
+  const amountValid = (0, import_core13.isValidAmount)(amount);
   const { getEstimate } = hookResult;
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     if (isMocked) return;
     if (amountValid && chainFrom && chainTo && token) {
       getEstimate({
@@ -851,9 +1328,9 @@ function BridgeWidget({
     setStage("input");
   };
   if (stage === "result") {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { "data-state": status, className, style, children: [
-      status === "bridging" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { "aria-busy": "true", children: "Bridging..." }),
-      status !== "bridging" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { "data-state": status, className, style, children: [
+      status === "bridging" && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { "aria-busy": "true", children: "Bridging..." }),
+      status !== "bridging" && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         TransactionStatus,
         {
           bridgeResult: result || (error ? { state: "error", steps: [{ name: "Bridge", state: "error", error }] } : void 0),
@@ -864,55 +1341,55 @@ function BridgeWidget({
           onError: (err) => onError?.(err instanceof Error ? err : new Error(String(err)))
         }
       ),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", onClick: handleRetry, children: "Try again" })
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", onClick: handleRetry, children: "Try again" })
     ] });
   }
   if (stage === "review") {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { "data-state": "idle", className, style, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h3", { children: "Review Bridge Transfer" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { "data-state": "idle", className, style, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h3", { children: "Review Bridge Transfer" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("p", { children: [
         "From: ",
         chainFrom
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("p", { children: [
         "To: ",
         chainTo
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("p", { children: [
         "Amount: ",
         amount,
         " ",
         token
       ] }),
-      estimate && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("ul", { children: estimate.fees.map((fee, idx) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("li", { children: [
+      estimate && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("ul", { children: estimate.fees.map((fee, idx) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("li", { children: [
         fee.type,
         ": ",
-        (0, import_core10.formatFee)(fee.amount, fee.token)
+        (0, import_core13.formatFee)(fee.amount, fee.token)
       ] }, idx)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", onClick: () => setStage("input"), children: "Back" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", onClick: handleConfirm, disabled: status === "estimating" || !estimate, children: "Confirm Bridge" })
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", onClick: () => setStage("input"), children: "Back" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", onClick: handleConfirm, disabled: status === "estimating" || !estimate, children: "Confirm Bridge" })
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { "data-state": "idle", className, style, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: handleReview, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { children: "From Chain" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { value: chainFrom, onChange: (e) => setChainFrom(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "Ethereum", children: "Ethereum" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "Optimism", children: "Optimism" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "Arbitrum", children: "Arbitrum" })
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { "data-state": "idle", className, style, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("form", { onSubmit: handleReview, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("label", { children: "From Chain" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("select", { value: chainFrom, onChange: (e) => setChainFrom(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "Ethereum", children: "Ethereum" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "Optimism", children: "Optimism" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "Arbitrum", children: "Arbitrum" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { children: "To Chain" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { value: chainTo, onChange: (e) => setChainTo(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "Arc_Testnet", children: "Arc Testnet" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "Base", children: "Base" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "Polygon", children: "Polygon" })
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("label", { children: "To Chain" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("select", { value: chainTo, onChange: (e) => setChainTo(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "Arc_Testnet", children: "Arc Testnet" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "Base", children: "Base" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "Polygon", children: "Polygon" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { children: "Amount" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("label", { children: "Amount" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         "input",
         {
           type: "number",
@@ -923,18 +1400,18 @@ function BridgeWidget({
           placeholder: "0.00"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { value: token, onChange: (e) => setToken(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "USDC", children: "USDC" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "USDT", children: "USDT" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "ETH", children: "ETH" })
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("select", { value: token, onChange: (e) => setToken(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "USDC", children: "USDC" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "USDT", children: "USDT" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "ETH", children: "ETH" })
       ] }),
-      amountTouched && !amountValid && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { role: "alert", children: "Invalid amount" })
+      amountTouched && !amountValid && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { role: "alert", children: "Invalid amount" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-      status === "estimating" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "Fetching estimate\u2026" }),
-      status === "error" && !isMocked && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "Unable to estimate bridge" })
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+      status === "estimating" && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { children: "Fetching estimate\u2026" }),
+      status === "error" && !isMocked && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { children: "Unable to estimate bridge" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "submit", disabled: !amountValid, children: "Review" })
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "submit", disabled: !amountValid, children: "Review" })
   ] }) });
 }
 
@@ -1017,6 +1494,45 @@ var registry = {
         type: "registry:component"
       }
     ]
+  },
+  "transfer-form": {
+    name: "transfer-form",
+    type: "registry:block",
+    title: "TransferForm",
+    description: "Collect recipient and amount for a token transfer.",
+    dependencies: ["@arc-ui/core", "lucide-react"],
+    files: [
+      {
+        path: "registry/default/transfer-form/index.tsx",
+        type: "registry:component"
+      }
+    ]
+  },
+  "transfer-review": {
+    name: "transfer-review",
+    type: "registry:block",
+    title: "TransferReview",
+    description: "Review transfer details before execution.",
+    dependencies: ["@arc-ui/core"],
+    files: [
+      {
+        path: "registry/default/transfer-review/index.tsx",
+        type: "registry:component"
+      }
+    ]
+  },
+  "transfer-status": {
+    name: "transfer-status",
+    type: "registry:block",
+    title: "TransferStatus",
+    description: "Display pending, success, and error states for a transfer.",
+    dependencies: ["@arc-ui/core", "lucide-react"],
+    files: [
+      {
+        path: "registry/default/transfer-status/index.tsx",
+        type: "registry:component"
+      }
+    ]
   }
 };
 
@@ -1029,6 +1545,9 @@ __reExport(index_exports, require("@arc-ui/core"), module.exports);
   SendMoneyForm,
   SwapWidget,
   TransactionStatus,
+  TransferForm,
+  TransferReview,
+  TransferStatus,
   WalletConnectButton,
   registry,
   useBalances,

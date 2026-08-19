@@ -1,5 +1,28 @@
 export type ShowcaseStyleVariant = "1" | "2" | "3" | "4";
 
+export const semanticColors = {
+  accentGreen: "#0df246",
+  success: "#008026",
+  successBg: "#e9fdee",
+  error: "#ef4444",
+  warning: "#9a6500",
+  info: "#0097c7",
+} as const;
+
+export const style1 = {
+  fontFamily: "Lexend, Inter, sans-serif",
+  card: "bg-white rounded-[28px] p-8 flex flex-col gap-6 w-[400px] min-h-[470px]",
+  inputBox: "bg-[#f4f4f5] rounded-[16px]",
+  inputBoxError: "bg-[#f4f4f5] rounded-[16px] border border-[#ef4444]",
+  labelText: "font-lexend font-medium text-[12px] uppercase text-[#71717a]",
+  errorText: "font-lexend font-medium text-[12px] text-[#ef4444]",
+  amountText: "font-lexend font-bold text-[28px]",
+  titleText: "font-lexend font-extrabold text-[22px] text-[#09090b]",
+  button: "w-full h-14 rounded-full bg-[#09090b] text-white font-lexend font-semibold text-[16px]",
+  buttonDisabled: "opacity-70 cursor-not-allowed",
+  divider: "h-px w-full bg-[#e4e4e7]",
+  closeButton: "border border-[#d4d4d4] rounded-full p-[10px] flex items-center justify-center",
+} as const;
 export const styleVariables: Record<
   ShowcaseStyleVariant,
   { light: React.CSSProperties; dark: React.CSSProperties }

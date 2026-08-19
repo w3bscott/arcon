@@ -1,0 +1,15 @@
+{
+  "name": "transfer-review",
+  "type": "registry:block",
+  "title": "TransferReview",
+  "description": "Review transfer details before execution.",
+  "dependencies": [
+    "@arc-ui/core"
+  ],
+  "files": [
+    {
+      "path": "registry/default/transfer-review/index.tsx",
+      "type": "registry:component"
+    }
+  ]
+}

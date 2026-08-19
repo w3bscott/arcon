@@ -1,115 +1,116 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  TransferForm,
+  TransferReview,
+  TransferStatus,
+  type TransferFormSubmit,
+} from "@arc-ui/react";
 import { useFlowState } from "@/hooks/use-flow-state";
-import { SendMoneyFormWrapper } from "@/components/showcase/SendMoneyFormWrapper";
-import { TransactionStatusWrapper } from "@/components/showcase/TransactionStatusWrapper";
 import { ShowcaseShell } from "@/components/showcase/ShowcaseShell";
-import { skins } from "@/lib/showcase-theme";
-import { Loader2, ArrowRight } from "lucide-react";
+import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 
-const STYLE_VARIANT = "1";
-
-function ReviewStep({ onConfirm }: { onConfirm: () => void }) {
-  const skin = skins[STYLE_VARIANT];
-
-  return (
-    <ShowcaseShell styleVariant={STYLE_VARIANT}>
-      <div className="space-y-6">
-        <div className="text-center space-y-1">
-          <h3 className={`text-lg font-semibold ${skin.textPrimary}`}>
-            Review Transfer
-          </h3>
-          <p className={`text-[13px] ${skin.textMuted}`}>
-            Please confirm the details below
-          </p>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <span className={`text-[13px] ${skin.textMuted}`}>Send</span>
-            <span className={`text-[14px] font-medium ${skin.textPrimary}`}>250.00 USDC</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className={`text-[13px] ${skin.textMuted}`}>To</span>
-            <span className={`text-[13px] font-mono ${skin.textSecondary}`}>0x1234…abcd</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className={`text-[13px] ${skin.textMuted}`}>Network</span>
-            <span className={`text-[13px] font-medium ${skin.textSecondary}`}>Arc Testnet</span>
-          </div>
-          
-          <div className={`h-px w-full ${skin.divider}`} />
-          
-          <div className="flex justify-between items-center">
-            <span className={`text-[13px] ${skin.textMuted}`}>Network Fee</span>
-            <span className={`text-[13px] font-medium ${skin.textSecondary}`}>0.50 USDC</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className={`text-[14px] font-semibold ${skin.textPrimary}`}>Total</span>
-            <span className={`text-[15px] font-bold ${skin.textPrimary}`}>250.50 USDC</span>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={onConfirm}
-          className={`
-            w-full py-3 rounded-xl text-[14px] font-semibold
-            transition-colors duration-150 cursor-pointer flex items-center justify-center gap-2
-            ${skin.buttonPrimaryBg} ${skin.buttonPrimaryText} ${skin.buttonPrimaryHover}
-          `}
-        >
-          Confirm Send
-          <ArrowRight className="w-4 h-4" />
-        </button>
-      </div>
-    </ShowcaseShell>
-  );
-}
-
-function PendingStep({ onComplete }: { onComplete: () => void }) {
-  const skin = skins[STYLE_VARIANT];
-
-  // Simulate network request
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onComplete();
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
-  return (
-    <ShowcaseShell styleVariant={STYLE_VARIANT}>
-      <div className="flex flex-col items-center justify-center py-8 space-y-4">
-        <Loader2 className={`w-10 h-10 animate-spin ${skin.accentGreen}`} />
-        <div className="text-center space-y-1">
-          <h3 className={`text-[16px] font-semibold ${skin.textPrimary}`}>
-            Processing Transaction
-          </h3>
-          <p className={`text-[13px] ${skin.textMuted}`}>
-            Confirming on Arc Testnet...
-          </p>
-        </div>
-      </div>
-    </ShowcaseShell>
-  );
-}
+const STYLE_VARIANT: ShowcaseStyleVariant = "1";
+const MOCK_BALANCE = 10000;
+const MOCK_NETWORK = "Arc Testnet";
+const MOCK_TX_HASH =
+  "0xabcd1234abcd1234abcd1234abcd1234abcd7890";
+const RECENT_RECIPIENTS = [
+  {
+    name: "vitalik.eth",
+    address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+  },
+];
 
 export function SendUsdcFlow() {
   const { currentStep, goToStep, resetFlow } = useFlowState();
+  const [recipient, setRecipient] = useState("");
+  const [amount, setAmount] = useState("");
+  const networkFee = recipient && amount ? "0.50" : "0.00";
 
-  switch (currentStep) {
-    case "input":
-      return <SendMoneyFormWrapper styleVariant={STYLE_VARIANT} onAction={() => goToStep("review")} />;
-    case "review":
-      return <ReviewStep onConfirm={() => goToStep("pending")} />;
-    case "pending":
-      return <PendingStep onComplete={() => goToStep("success")} />;
-    case "success":
-    case "error":
-      return <TransactionStatusWrapper styleVariant={STYLE_VARIANT} onAction={resetFlow} />;
-    default:
-      return null;
+  useEffect(() => {
+    if (currentStep !== "pending") return;
+
+    const timer = setTimeout(() => goToStep("success"), 1000);
+    return () => clearTimeout(timer);
+  }, [currentStep, goToStep]);
+
+  function handleReview(details: TransferFormSubmit) {
+    setRecipient(details.recipient);
+    setAmount(details.amount);
+    goToStep("review");
   }
+
+  function handleReset() {
+    setRecipient("");
+    setAmount("");
+    resetFlow();
+  }
+
+  return (
+    <ShowcaseShell styleVariant={STYLE_VARIANT}>
+      {currentStep === "input" ? (
+        <TransferForm
+          recipient={recipient}
+          amount={amount}
+          onRecipientChange={setRecipient}
+          onAmountChange={setAmount}
+          balance={MOCK_BALANCE}
+          networkFee={networkFee}
+          token="USDC"
+          recentRecipients={RECENT_RECIPIENTS}
+          onReview={handleReview}
+          className="font-[var(--font-lexend)]"
+        />
+      ) : null}
+
+      {currentStep === "review" ? (
+        <TransferReview
+          amount={amount}
+          recipient={recipient}
+          network={MOCK_NETWORK}
+          networkFee={networkFee}
+          token="USDC"
+          onBack={() => goToStep("input")}
+          onConfirm={() => goToStep("pending")}
+          className="font-[var(--font-lexend)]"
+        />
+      ) : null}
+
+      {currentStep === "pending" ? (
+        <TransferStatus
+          status="pending"
+          amount={amount}
+          token="USDC"
+          network={MOCK_NETWORK}
+          className="font-[var(--font-lexend)]"
+        />
+      ) : null}
+
+      {currentStep === "success" ? (
+        <TransferStatus
+          status="success"
+          amount={amount}
+          token="USDC"
+          network={MOCK_NETWORK}
+          txHash={MOCK_TX_HASH}
+          explorerUrl="https://etherscan.io/tx/0xabcd1234"
+          onAction={handleReset}
+          className="font-[var(--font-lexend)]"
+        />
+      ) : null}
+
+      {currentStep === "error" ? (
+        <TransferStatus
+          status="error"
+          amount={amount}
+          token="USDC"
+          network={MOCK_NETWORK}
+          onAction={handleReset}
+          className="font-[var(--font-lexend)]"
+        />
+      ) : null}
+    </ShowcaseShell>
+  );
 }
