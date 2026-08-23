@@ -4,10 +4,36 @@ export interface RegistryItem {
   title: string;
   description: string;
   dependencies: string[];
+  registryDependencies?: string[];
   files: {
     path: string;
-    type: "registry:component";
+    type: "registry:component" | "registry:hook";
+    target?: string;
   }[];
+}
+
+function componentFile(name: string) {
+  return {
+    path: `registry/default/${name}/index.tsx`,
+    type: "registry:component" as const,
+    target: `@components/arc-ui/${name}/index.tsx`,
+  };
+}
+
+function includedComponentFile(owner: string, name: string) {
+  return {
+    path: `registry/default/${owner}/${name}/index.tsx`,
+    type: "registry:component" as const,
+    target: `@components/arc-ui/${name}/index.tsx`,
+  };
+}
+
+function hookFile(owner: string, name: string) {
+  return {
+    path: `registry/default/${owner}/hooks/${name}.ts`,
+    type: "registry:hook" as const,
+    target: `@components/arc-ui/hooks/${name}.ts`,
+  };
 }
 
 export const registry: Record<string, RegistryItem> = {
@@ -17,12 +43,7 @@ export const registry: Record<string, RegistryItem> = {
     title: "WalletConnectButton",
     description: "Connect a user wallet before entering an Arc App Kit flow.",
     dependencies: ["@arc-ui/core", "@circle-fin/app-kit"],
-    files: [
-      {
-        path: "registry/default/wallet-connect-button/index.tsx",
-        type: "registry:component",
-      },
-    ],
+    files: [componentFile("wallet-connect-button")],
   },
   "transaction-status": {
     name: "transaction-status",
@@ -30,12 +51,7 @@ export const registry: Record<string, RegistryItem> = {
     title: "TransactionStatus",
     description: "Track and present transaction lifecycle states.",
     dependencies: ["@arc-ui/core"],
-    files: [
-      {
-        path: "registry/default/transaction-status/index.tsx",
-        type: "registry:component",
-      },
-    ],
+    files: [componentFile("transaction-status")],
   },
   "balance-card": {
     name: "balance-card",
@@ -43,24 +59,20 @@ export const registry: Record<string, RegistryItem> = {
     title: "BalanceCard",
     description: "Display Unified Balance across supported chains.",
     dependencies: ["@arc-ui/core"],
-    files: [
-      {
-        path: "registry/default/balance-card/index.tsx",
-        type: "registry:component",
-      },
-    ],
+    files: [componentFile("balance-card"), hookFile("balance-card", "useBalances")],
   },
   "send-money-form": {
     name: "send-money-form",
     type: "registry:block",
     title: "SendMoneyForm",
     description: "Collect recipient, amount, and asset details for payments.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arc-ui/core", "lucide-react"],
     files: [
-      {
-        path: "registry/default/send-money-form/index.tsx",
-        type: "registry:component",
-      },
+      componentFile("send-money-form"),
+      hookFile("send-money-form", "useSend"),
+      includedComponentFile("send-money-form", "transfer-form"),
+      includedComponentFile("send-money-form", "transfer-review"),
+      includedComponentFile("send-money-form", "transfer-status"),
     ],
   },
   "swap-widget": {
@@ -70,10 +82,9 @@ export const registry: Record<string, RegistryItem> = {
     description: "Allow users to swap tokens natively within your app.",
     dependencies: ["@arc-ui/core"],
     files: [
-      {
-        path: "registry/default/swap-widget/index.tsx",
-        type: "registry:component",
-      },
+      componentFile("swap-widget"),
+      hookFile("swap-widget", "useSwap"),
+      includedComponentFile("swap-widget", "transaction-status"),
     ],
   },
   "bridge-widget": {
@@ -83,10 +94,9 @@ export const registry: Record<string, RegistryItem> = {
     description: "Move tokens cross-chain via CCTP bridge.",
     dependencies: ["@arc-ui/core"],
     files: [
-      {
-        path: "registry/default/bridge-widget/index.tsx",
-        type: "registry:component",
-      },
+      componentFile("bridge-widget"),
+      hookFile("bridge-widget", "useBridge"),
+      includedComponentFile("bridge-widget", "transaction-status"),
     ],
   },
   "transfer-form": {
@@ -95,12 +105,7 @@ export const registry: Record<string, RegistryItem> = {
     title: "TransferForm",
     description: "Collect recipient and amount for a token transfer.",
     dependencies: ["@arc-ui/core", "lucide-react"],
-    files: [
-      {
-        path: "registry/default/transfer-form/index.tsx",
-        type: "registry:component",
-      },
-    ],
+    files: [componentFile("transfer-form")],
   },
   "transfer-review": {
     name: "transfer-review",
@@ -108,12 +113,7 @@ export const registry: Record<string, RegistryItem> = {
     title: "TransferReview",
     description: "Review transfer details before execution.",
     dependencies: ["@arc-ui/core"],
-    files: [
-      {
-        path: "registry/default/transfer-review/index.tsx",
-        type: "registry:component",
-      },
-    ],
+    files: [componentFile("transfer-review")],
   },
   "transfer-status": {
     name: "transfer-status",
@@ -121,11 +121,6 @@ export const registry: Record<string, RegistryItem> = {
     title: "TransferStatus",
     description: "Display pending, success, and error states for a transfer.",
     dependencies: ["@arc-ui/core", "lucide-react"],
-    files: [
-      {
-        path: "registry/default/transfer-status/index.tsx",
-        type: "registry:component",
-      },
-    ],
+    files: [componentFile("transfer-status")],
   },
 };

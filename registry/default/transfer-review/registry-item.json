@@ -9,7 +9,8 @@
   "files": [
     {
       "path": "registry/default/transfer-review/index.tsx",
-      "type": "registry:component"
+      "type": "registry:component",
+      "target": "@components/arc-ui/transfer-review/index.tsx"
     }
   ]
 }

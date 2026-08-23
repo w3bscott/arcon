@@ -14,7 +14,8 @@
       "files": [
         {
           "path": "registry/default/wallet-connect-button/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/wallet-connect-button/index.tsx"
         }
       ]
     },
@@ -29,7 +30,8 @@
       "files": [
         {
           "path": "registry/default/transaction-status/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/transaction-status/index.tsx"
         }
       ]
     },
@@ -44,7 +46,13 @@
       "files": [
         {
           "path": "registry/default/balance-card/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/balance-card/index.tsx"
+        },
+        {
+          "path": "registry/default/balance-card/hooks/useBalances.ts",
+          "type": "registry:hook",
+          "target": "@components/arc-ui/hooks/useBalances.ts"
         }
       ]
     },
@@ -54,12 +62,34 @@
       "title": "SendMoneyForm",
       "description": "Collect recipient, amount, and asset details for payments.",
       "dependencies": [
-        "@arc-ui/core"
+        "@arc-ui/core",
+        "lucide-react"
       ],
       "files": [
         {
           "path": "registry/default/send-money-form/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/send-money-form/index.tsx"
+        },
+        {
+          "path": "registry/default/send-money-form/hooks/useSend.ts",
+          "type": "registry:hook",
+          "target": "@components/arc-ui/hooks/useSend.ts"
+        },
+        {
+          "path": "registry/default/send-money-form/transfer-form/index.tsx",
+          "type": "registry:component",
+          "target": "@components/arc-ui/transfer-form/index.tsx"
+        },
+        {
+          "path": "registry/default/send-money-form/transfer-review/index.tsx",
+          "type": "registry:component",
+          "target": "@components/arc-ui/transfer-review/index.tsx"
+        },
+        {
+          "path": "registry/default/send-money-form/transfer-status/index.tsx",
+          "type": "registry:component",
+          "target": "@components/arc-ui/transfer-status/index.tsx"
         }
       ]
     },
@@ -74,7 +104,18 @@
       "files": [
         {
           "path": "registry/default/swap-widget/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/swap-widget/index.tsx"
+        },
+        {
+          "path": "registry/default/swap-widget/hooks/useSwap.ts",
+          "type": "registry:hook",
+          "target": "@components/arc-ui/hooks/useSwap.ts"
+        },
+        {
+          "path": "registry/default/swap-widget/transaction-status/index.tsx",
+          "type": "registry:component",
+          "target": "@components/arc-ui/transaction-status/index.tsx"
         }
       ]
     },
@@ -89,7 +130,18 @@
       "files": [
         {
           "path": "registry/default/bridge-widget/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/bridge-widget/index.tsx"
+        },
+        {
+          "path": "registry/default/bridge-widget/hooks/useBridge.ts",
+          "type": "registry:hook",
+          "target": "@components/arc-ui/hooks/useBridge.ts"
+        },
+        {
+          "path": "registry/default/bridge-widget/transaction-status/index.tsx",
+          "type": "registry:component",
+          "target": "@components/arc-ui/transaction-status/index.tsx"
         }
       ]
     },
@@ -105,7 +157,8 @@
       "files": [
         {
           "path": "registry/default/transfer-form/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/transfer-form/index.tsx"
         }
       ]
     },
@@ -120,7 +173,8 @@
       "files": [
         {
           "path": "registry/default/transfer-review/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/transfer-review/index.tsx"
         }
       ]
     },
@@ -136,7 +190,8 @@
       "files": [
         {
           "path": "registry/default/transfer-status/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "@components/arc-ui/transfer-status/index.tsx"
         }
       ]
     }

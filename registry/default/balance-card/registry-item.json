@@ -9,7 +9,13 @@
   "files": [
     {
       "path": "registry/default/balance-card/index.tsx",
-      "type": "registry:component"
+      "type": "registry:component",
+      "target": "@components/arc-ui/balance-card/index.tsx"
+    },
+    {
+      "path": "registry/default/balance-card/hooks/useBalances.ts",
+      "type": "registry:hook",
+      "target": "@components/arc-ui/hooks/useBalances.ts"
     }
   ]
 }
