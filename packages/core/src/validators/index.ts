@@ -1,7 +1,16 @@
-export function isValidAddress(address?: string): boolean {
+export interface ValidationOptions {
+  allowUsernames?: boolean;
+}
+
+export function isValidAddress(address?: string, options?: ValidationOptions): boolean {
   if (!address) return false;
-  // Simple check for hex-like address or length for mock purposes
-  return address.length >= 32;
+  if (address.startsWith("0x")) {
+    return /^0x[a-fA-F0-9]{40}$/.test(address);
+  }
+  if (options?.allowUsernames) {
+    return /^[a-zA-Z0-9_.-]{3,}$/.test(address);
+  }
+  return false;
 }
 
 export function isValidAmount(amount?: string): boolean {

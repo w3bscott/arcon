@@ -6,6 +6,7 @@ import {
   TransferReview,
   TransferStatus,
   type TransferFormSubmit,
+  isValidAddress,
 } from "@arc-ui/react";
 import { useFlowState } from "@/hooks/use-flow-state";
 import { ShowcaseShell } from "@/components/showcase/ShowcaseShell";
@@ -60,6 +61,7 @@ export function SendUsdcFlow() {
           networkFee={networkFee}
           token="USDC"
           recentRecipients={RECENT_RECIPIENTS}
+          validateRecipient={(value) => isValidAddress(value, { allowUsernames: true })}
           onReview={handleReview}
           className="font-[var(--font-lexend)]"
         />

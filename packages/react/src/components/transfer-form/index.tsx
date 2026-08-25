@@ -56,9 +56,7 @@ function formatAmount(value: string | number | undefined): string {
 }
 
 function defaultValidateRecipient(value: string): boolean {
-  if (!value) return false;
-  if (value.startsWith("0x")) return /^0x[a-fA-F0-9]{40}$/.test(value);
-  return isValidAddress(value) || /^[a-zA-Z0-9_.-]{3,}$/.test(value);
+  return isValidAddress(value);
 }
 
 export function TransferForm({

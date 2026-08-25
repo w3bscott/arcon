@@ -18,8 +18,8 @@ export interface SpendResult {
   destinationChain: string;
   txHash?: string;
   explorerUrl?: string;
-  allocations?: any[];
-  expirationBlock?: any;
+  allocations?: Record<string, unknown>[];
+  expirationBlock?: number;
 }
 
 export interface ChainBalanceBreakdown {
@@ -36,8 +36,30 @@ export interface GetBalancesResult {
 }
 
 export type SupportedTokenInput = string;
-export type Sources = any;
-export type AppKit = any;
+
+export interface WalletAddressSource {
+  address: string;
+  blockchain: string;
+}
+
+export type Sources = string[] | { walletAddresses: WalletAddressSource[] };
+
+export interface AppKit {
+  unifiedBalance: {
+    getBalances: (params: {
+      sources: Sources;
+      token?: SupportedTokenInput | undefined;
+      includePending?: boolean | undefined;
+      networkType?: "mainnet" | "testnet" | undefined;
+    }) => Promise<GetBalancesResult>;
+  };
+  estimateSend: (params: SendParams) => Promise<SendEstimateResult>;
+  send: (params: SendParams) => Promise<BridgeStep>;
+  estimateSwap: (params: SwapParams) => Promise<SwapEstimate>;
+  swap: (params: SwapParams) => Promise<SwapResult>;
+  estimateBridge: (params: BridgeParams) => Promise<BridgeEstimate>;
+  bridge: (params: BridgeParams) => Promise<BridgeResult>;
+}
 
 export type TokenAlias = string;
 
@@ -47,9 +69,13 @@ export interface FeeEntry {
   token: string;
 }
 
+export interface ChainSource {
+  chain: string;
+}
+
 export interface SendParams {
-  from: any;
-  to: string | any;
+  from: ChainSource;
+  to: string;
   amount: string;
   token?: string;
 }
@@ -59,11 +85,11 @@ export interface SendEstimateResult {
 }
 
 export interface SwapParams {
-  from: any;
+  from: ChainSource;
   tokenIn: string;
   tokenOut: string;
   amountIn: string;
-  config?: any;
+  config?: Record<string, unknown>;
 }
 
 export interface SwapEstimate {
@@ -79,8 +105,8 @@ export interface SwapResult {
 }
 
 export interface BridgeParams {
-  from: any;
-  to: any;
+  from: ChainSource;
+  to: ChainSource;
   amount: string;
   token?: string;
 }

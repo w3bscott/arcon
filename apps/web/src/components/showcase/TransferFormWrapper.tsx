@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TransferForm, type TransferFormSubmit } from "@arc-ui/react";
+import { TransferForm, type TransferFormSubmit, isValidAddress } from "@arc-ui/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 
@@ -37,6 +37,7 @@ export function TransferFormWrapper({
         networkFee={networkFee}
         token="USDC"
         recentRecipients={RECENT_RECIPIENTS}
+        validateRecipient={(value) => isValidAddress(value, { allowUsernames: true })}
         onReview={onAction}
         className={styleVariant === "1" ? "font-[var(--font-lexend)]" : ""}
       />

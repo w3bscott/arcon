@@ -205,9 +205,11 @@ interface RegistryItem {
     title: string;
     description: string;
     dependencies: string[];
+    registryDependencies?: string[];
     files: {
         path: string;
-        type: "registry:component";
+        type: "registry:component" | "registry:hook";
+        target?: string;
     }[];
 }
 declare const registry: Record<string, RegistryItem>;

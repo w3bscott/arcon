@@ -502,9 +502,7 @@ function formatAmount(value) {
   });
 }
 function defaultValidateRecipient(value) {
-  if (!value) return false;
-  if (value.startsWith("0x")) return /^0x[a-fA-F0-9]{40}$/.test(value);
-  return isValidAddress(value) || /^[a-zA-Z0-9_.-]{3,}$/.test(value);
+  return isValidAddress(value);
 }
 function TransferForm({
   recipient,
@@ -1411,6 +1409,27 @@ function BridgeWidget({
 }
 
 // src/registry.ts
+function componentFile(name) {
+  return {
+    path: `registry/default/${name}/index.tsx`,
+    type: "registry:component",
+    target: `@components/arc-ui/${name}/index.tsx`
+  };
+}
+function includedComponentFile(owner, name) {
+  return {
+    path: `registry/default/${owner}/${name}/index.tsx`,
+    type: "registry:component",
+    target: `@components/arc-ui/${name}/index.tsx`
+  };
+}
+function hookFile(owner, name) {
+  return {
+    path: `registry/default/${owner}/hooks/${name}.ts`,
+    type: "registry:hook",
+    target: `@components/arc-ui/hooks/${name}.ts`
+  };
+}
 var registry = {
   "wallet-connect-button": {
     name: "wallet-connect-button",
@@ -1418,12 +1437,7 @@ var registry = {
     title: "WalletConnectButton",
     description: "Connect a user wallet before entering an Arc App Kit flow.",
     dependencies: ["@arc-ui/core", "@circle-fin/app-kit"],
-    files: [
-      {
-        path: "registry/default/wallet-connect-button/index.tsx",
-        type: "registry:component"
-      }
-    ]
+    files: [componentFile("wallet-connect-button")]
   },
   "transaction-status": {
     name: "transaction-status",
@@ -1431,12 +1445,7 @@ var registry = {
     title: "TransactionStatus",
     description: "Track and present transaction lifecycle states.",
     dependencies: ["@arc-ui/core"],
-    files: [
-      {
-        path: "registry/default/transaction-status/index.tsx",
-        type: "registry:component"
-      }
-    ]
+    files: [componentFile("transaction-status")]
   },
   "balance-card": {
     name: "balance-card",
@@ -1444,24 +1453,20 @@ var registry = {
     title: "BalanceCard",
     description: "Display Unified Balance across supported chains.",
     dependencies: ["@arc-ui/core"],
-    files: [
-      {
-        path: "registry/default/balance-card/index.tsx",
-        type: "registry:component"
-      }
-    ]
+    files: [componentFile("balance-card"), hookFile("balance-card", "useBalances")]
   },
   "send-money-form": {
     name: "send-money-form",
     type: "registry:block",
     title: "SendMoneyForm",
     description: "Collect recipient, amount, and asset details for payments.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arc-ui/core", "lucide-react"],
     files: [
-      {
-        path: "registry/default/send-money-form/index.tsx",
-        type: "registry:component"
-      }
+      componentFile("send-money-form"),
+      hookFile("send-money-form", "useSend"),
+      includedComponentFile("send-money-form", "transfer-form"),
+      includedComponentFile("send-money-form", "transfer-review"),
+      includedComponentFile("send-money-form", "transfer-status")
     ]
   },
   "swap-widget": {
@@ -1471,10 +1476,9 @@ var registry = {
     description: "Allow users to swap tokens natively within your app.",
     dependencies: ["@arc-ui/core"],
     files: [
-      {
-        path: "registry/default/swap-widget/index.tsx",
-        type: "registry:component"
-      }
+      componentFile("swap-widget"),
+      hookFile("swap-widget", "useSwap"),
+      includedComponentFile("swap-widget", "transaction-status")
     ]
   },
   "bridge-widget": {
@@ -1484,10 +1488,9 @@ var registry = {
     description: "Move tokens cross-chain via CCTP bridge.",
     dependencies: ["@arc-ui/core"],
     files: [
-      {
-        path: "registry/default/bridge-widget/index.tsx",
-        type: "registry:component"
-      }
+      componentFile("bridge-widget"),
+      hookFile("bridge-widget", "useBridge"),
+      includedComponentFile("bridge-widget", "transaction-status")
     ]
   },
   "transfer-form": {
@@ -1496,12 +1499,7 @@ var registry = {
     title: "TransferForm",
     description: "Collect recipient and amount for a token transfer.",
     dependencies: ["@arc-ui/core", "lucide-react"],
-    files: [
-      {
-        path: "registry/default/transfer-form/index.tsx",
-        type: "registry:component"
-      }
-    ]
+    files: [componentFile("transfer-form")]
   },
   "transfer-review": {
     name: "transfer-review",
@@ -1509,12 +1507,7 @@ var registry = {
     title: "TransferReview",
     description: "Review transfer details before execution.",
     dependencies: ["@arc-ui/core"],
-    files: [
-      {
-        path: "registry/default/transfer-review/index.tsx",
-        type: "registry:component"
-      }
-    ]
+    files: [componentFile("transfer-review")]
   },
   "transfer-status": {
     name: "transfer-status",
@@ -1522,12 +1515,7 @@ var registry = {
     title: "TransferStatus",
     description: "Display pending, success, and error states for a transfer.",
     dependencies: ["@arc-ui/core", "lucide-react"],
-    files: [
-      {
-        path: "registry/default/transfer-status/index.tsx",
-        type: "registry:component"
-      }
-    ]
+    files: [componentFile("transfer-status")]
   }
 };
 
