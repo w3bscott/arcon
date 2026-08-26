@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TransferForm, type TransferFormSubmit, isValidAddress } from "@arc-ui/react";
+import { TransferForm, type TransferFormSubmit, isValidAddress } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 

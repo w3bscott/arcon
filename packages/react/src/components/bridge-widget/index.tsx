@@ -12,7 +12,7 @@ import {
   type BridgeStoreState,
   formatFee,
   isValidAmount,
-} from "@arc-ui/core";
+} from "@arcforge/core";
 import { useBridge } from "../../hooks/useBridge";
 import { TransactionStatus } from "../transaction-status";
 

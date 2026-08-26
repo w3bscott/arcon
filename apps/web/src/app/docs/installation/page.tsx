@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { CodeBlock } from "@/components/blockspage/CodeBlock";
 
 export const metadata: Metadata = {
-  title: "Installation — Arc UI",
-  description: "How to install and set up Arc UI in your project.",
+  title: "Installation — ArcForge",
+  description: "How to install and set up ArcForge in your project.",
 };
 
 const setupCode = `import { AppKit } from "@circle-fin/app-kit"
@@ -26,15 +26,15 @@ export default function InstallationPage() {
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">1. Install the Core Package</h2>
         <p className="text-muted-foreground leading-7">
-          First, install the Arc App Kit SDK and the Arc UI core package. The core package contains the headless state management that the React components rely on.
+          First, install the Arc App Kit SDK and the ArcForge core package. The core package contains the headless state management that the React components rely on.
         </p>
-        <CodeBlock code="npm install @arc-ui/core @circle-fin/app-kit" language="bash" />
+        <CodeBlock code="npm install @arcforge/core @circle-fin/app-kit" language="bash" />
       </div>
 
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">2. Setup the App Kit</h2>
         <p className="text-muted-foreground leading-7">
-          Initialize the Arc App Kit instance in your application. You'll need to pass this instance to the Arc UI components.
+          Initialize the Arc App Kit instance in your application. You'll need to pass this instance to the ArcForge components.
         </p>
         <CodeBlock code={setupCode} language="typescript" />
       </div>
@@ -44,7 +44,7 @@ export default function InstallationPage() {
         <p className="text-muted-foreground leading-7">
           Use the shadcn CLI to add specific components directly into your codebase. For example, to add the Balance Card:
         </p>
-        <CodeBlock code="npx shadcn add https://arcblocks.com/r/balance-card" language="bash" />
+        <CodeBlock code="npx shadcn add https://TODO:VERCEL_URL/r/balance-card" language="bash" />
         <p className="text-muted-foreground leading-7">
           This will create a new file in your components directory (e.g., <code>components/balance-card.tsx</code>) containing the full source code for the component.
         </p>

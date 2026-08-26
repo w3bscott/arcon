@@ -12,7 +12,7 @@ import {
   type SpendResult,
   type TransactionState,
   formatAddress,
-} from "@arc-ui/core";
+} from "@arcforge/core";
 
 export interface TransactionStatusProps {
   bridgeResult?: BridgeResult | undefined;

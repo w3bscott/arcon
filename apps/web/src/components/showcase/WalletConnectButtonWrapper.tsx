@@ -1,9 +1,9 @@
 "use client";
 
-import { WalletConnectButton } from "@arc-ui/react";
+import { WalletConnectButton } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import { skins, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
-import { Wallet, Loader2 } from "lucide-react";
+import { Wallet } from "lucide-react";
 
 export function WalletConnectButtonWrapper({ styleVariant }: { styleVariant: ShowcaseStyleVariant }) {
   const skin = skins[styleVariant];
@@ -33,7 +33,7 @@ export function WalletConnectButtonWrapper({ styleVariant }: { styleVariant: Sho
             Connect your wallet
           </h3>
           <p className={`text-[13px] ${skin.textMuted}`}>
-            Link a wallet to get started with Arc
+            Link a wallet to get started with ArcForge
           </p>
         </div>
 

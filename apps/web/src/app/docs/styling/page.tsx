@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { CodeBlock } from "@/components/blockspage/CodeBlock";
 
 export const metadata: Metadata = {
-  title: "Styling — Arc UI",
-  description: "Learn how to style Arc UI components.",
+  title: "Styling — ArcForge",
+  description: "Learn how to style ArcForge components.",
 };
 
 const stylingCode = `/* Your global CSS file (e.g. index.css or globals.css) */
@@ -42,7 +42,7 @@ export default function StylingPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold tracking-tight text-foreground">Styling</h1>
       <p className="text-lg text-muted-foreground">
-        Arc UI components are completely unstyled by default. You have full control over the visual presentation.
+        ArcForge components are completely unstyled by default. You have full control over the visual presentation.
       </p>
 
       <div className="space-y-4">
@@ -55,7 +55,7 @@ export default function StylingPage() {
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">State Management via Data Attributes</h2>
         <p className="text-muted-foreground leading-7">
-          Arc UI components use <code>data-state</code> attributes to communicate their current status (e.g., loading, error, success, empty). This is a standard pattern that works well with both vanilla CSS and utility frameworks like Tailwind.
+          ArcForge components use <code>data-state</code> attributes to communicate their current status (e.g., loading, error, success, empty). This is a standard pattern that works well with both vanilla CSS and utility frameworks like Tailwind.
         </p>
         
         <h3 className="text-xl font-medium tracking-tight text-foreground mt-6">Example: Vanilla CSS</h3>

@@ -51,7 +51,7 @@ export function BlocksHeader() {
             Forge Blocks
           </h1>
           <p className="text-base font-regular text-muted-foreground leading-6">
-            Production-ready financial interface blocks for Arc App Kit.
+            Production-ready financial interface blocks for Circle's Arc App Kit.
             <br className="hidden md:block" />
             Install, connect, and ship faster.
           </p>

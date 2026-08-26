@@ -1,6 +1,6 @@
 "use client";
 
-import { SendMoneyForm } from "@arc-ui/react";
+import { SendMoneyForm } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import { skins, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { mockSendFormData } from "@/lib/mock-data";

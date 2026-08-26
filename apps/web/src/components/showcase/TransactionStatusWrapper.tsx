@@ -1,11 +1,11 @@
 "use client";
 
-import { TransactionStatus } from "@arc-ui/react";
+import { TransactionStatus } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import { skins, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { mockBridgeSuccessResult } from "@/lib/mock-data";
 import { CheckCircle2, ExternalLink } from "lucide-react";
-import { formatAddress } from "@arc-ui/react";
+import { formatAddress } from "@arcforge/react";
 
 export function TransactionStatusWrapper({ 
   styleVariant,

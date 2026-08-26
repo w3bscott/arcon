@@ -7,7 +7,7 @@ import {
   type SendStoreState,
   isValidAddress,
   isValidAmount,
-} from "@arc-ui/core";
+} from "@arcforge/core";
 import { useSend } from "../../hooks/useSend";
 import { TransferForm } from "../transfer-form";
 import { TransferReview } from "../transfer-review";

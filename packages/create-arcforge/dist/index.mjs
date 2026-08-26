@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+import{Command as d}from"commander";import l from"prompts";import t from"picocolors";import{spawnSync as g}from"child_process";import p from"fs";import m from"path";var y="https://TODO:VERCEL_URL/r";function s(c,e,a){let o=g(c,e,{cwd:a||process.cwd(),stdio:"inherit",shell:process.platform==="win32"});if(o.error)throw o.error;if(o.status!==0)throw new Error(`Command failed with status ${o.status}`)}var u=new d().name("create-arcforge").description("Scaffold a new ArcForge application").argument("[project-directory]","Directory to create the project in").action(async c=>{try{let e=c;e||(e=(await l({type:"text",name:"dir",message:"What is your project named?",initial:"my-arc-app"})).dir),e||(console.log(t.red("Please specify a project directory.")),process.exit(1)),p.existsSync(e)&&p.readdirSync(e).length>0&&(console.log(t.red(`Directory ${e} is not empty.`)),process.exit(1));let o=(await l({type:"select",name:"template",message:"Which template would you like to start with?",choices:[{title:"Payments",value:"payments",description:"Send Money and Transaction Status"},{title:"Bridge",value:"bridge",description:"Cross-chain Bridge Widget"},{title:"Checkout",value:"checkout",description:"Balance Card and Swap Widget"},{title:"Blank",value:"blank",description:"Empty Next.js app with Arc setup"}]})).template;o||process.exit(1),console.log(`
+Creating a new ArcForge app in ${t.green(e)}...
+`),console.log(t.cyan("1. Initializing Next.js project...")),s("npx",["create-next-app@latest",e,"--typescript","--tailwind","--eslint","--app","--src-dir","--import-alias","@/*","--use-npm"]);let i=m.resolve(process.cwd(),e);console.log(t.cyan(`
+2. Installing ArcForge Core and App Kit...`)),s("npm",["install","@arcforge/core","@circle-fin/app-kit"],i),console.log(t.cyan(`
+3. Initializing shadcn components...`)),s("npx",["shadcn@latest","init","-y"],i),console.log(t.cyan(`
+4. Installing ${o} template components via registry...`));let r=["wallet-connect-button"];o==="payments"?r.push("send-money-form","transaction-status"):o==="bridge"?r.push("bridge-widget"):o==="checkout"&&r.push("balance-card","swap-widget");for(let n of r){console.log(`Installing ${n}...`);try{s("npx",["shadcn@latest","add",`${y}/${n}`],i)}catch{console.error(t.red(`
+Error: Failed to install ${n} from registry.`)),console.error(t.yellow("Please check your network connectivity to TODO:VERCEL_URL or try again later.")),process.exit(1)}}console.log(t.green(`
+Success! Your ArcForge project is ready.`)),console.log(`
+Next steps:`),console.log(t.cyan(`  cd ${e}`)),console.log(t.cyan("  npm run dev")),console.log(`
+Happy building!
+`)}catch(e){console.error(t.red(`
+An error occurred while scaffolding the app.`)),console.error(e),process.exit(1)}});u.parse();

@@ -4,34 +4,34 @@
   "title": "SendMoneyForm",
   "description": "Collect recipient, amount, and asset details for payments.",
   "dependencies": [
-    "@arc-ui/core",
+    "@arcforge/core",
     "lucide-react"
   ],
   "files": [
     {
       "path": "registry/default/send-money-form/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/send-money-form/index.tsx"
+      "target": "@components/arcforge/send-money-form/index.tsx"
     },
     {
       "path": "registry/default/send-money-form/hooks/useSend.ts",
       "type": "registry:hook",
-      "target": "@components/arc-ui/hooks/useSend.ts"
+      "target": "@components/arcforge/hooks/useSend.ts"
     },
     {
       "path": "registry/default/send-money-form/transfer-form/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/transfer-form/index.tsx"
+      "target": "@components/arcforge/transfer-form/index.tsx"
     },
     {
       "path": "registry/default/send-money-form/transfer-review/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/transfer-review/index.tsx"
+      "target": "@components/arcforge/transfer-review/index.tsx"
     },
     {
       "path": "registry/default/send-money-form/transfer-status/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/transfer-status/index.tsx"
+      "target": "@components/arcforge/transfer-status/index.tsx"
     }
   ]
 }

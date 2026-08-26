@@ -1,6 +1,6 @@
 "use client";
 
-import { TransferReview } from "@arc-ui/react";
+import { TransferReview } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 

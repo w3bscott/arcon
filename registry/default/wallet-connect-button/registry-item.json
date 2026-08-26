@@ -4,14 +4,14 @@
   "title": "WalletConnectButton",
   "description": "Connect a user wallet before entering an Arc App Kit flow.",
   "dependencies": [
-    "@arc-ui/core",
+    "@arcforge/core",
     "@circle-fin/app-kit"
   ],
   "files": [
     {
       "path": "registry/default/wallet-connect-button/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/wallet-connect-button/index.tsx"
+      "target": "@components/arcforge/wallet-connect-button/index.tsx"
     }
   ]
 }

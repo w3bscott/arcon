@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
-import { AppKit, createSwapStore } from "@arc-ui/core";
+import { AppKit, createSwapStore } from "@arcforge/core";
 
 export function useSwap(kit: AppKit) {
   const store = useMemo(() => createSwapStore(kit), [kit]);

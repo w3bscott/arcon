@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
-import { AppKit, createSendStore } from "@arc-ui/core";
+import { AppKit, createSendStore } from "@arcforge/core";
 
 export function useSend(kit: AppKit) {
   const store = useMemo(() => createSendStore(kit), [kit]);

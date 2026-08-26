@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { CheckCircle2, ExternalLink, Loader2, XCircle } from "lucide-react";
-import { formatAddress } from "@arc-ui/core";
+import { formatAddress } from "@arcforge/core";
 
 export type TransferStatusState = "pending" | "success" | "error";
 

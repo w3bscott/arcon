@@ -24,8 +24,8 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: "Build Faster on Arc",
-  description: "Pre-built UI components wired directly to the Arc SDK.",
+  title: "Build Faster with ArcForge",
+  description: "Pre-built UI components for Circle's Arc App Kit.",
 };
 
 export default function RootLayout({

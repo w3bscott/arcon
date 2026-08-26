@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Introduction — Arc UI",
-  description: "What is Arc UI and how does it work?",
+  title: "Introduction — ArcForge",
+  description: "What is ArcForge and how does it work?",
 };
 
 export default function IntroductionPage() {
@@ -14,12 +14,12 @@ export default function IntroductionPage() {
       </p>
 
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground">What is Arc UI?</h2>
+        <h2 className="text-2xl font-semibold tracking-tight text-foreground">What is ArcForge?</h2>
         <p className="text-muted-foreground leading-7">
-          Arc UI is a collection of re-usable React components that make it easy to integrate web3 functionality like wallets, token balances, payments, swaps, and cross-chain bridges into your application.
+          ArcForge is a collection of re-usable React components that make it easy to integrate web3 functionality like wallets, token balances, payments, swaps, and cross-chain bridges into your application.
         </p>
         <p className="text-muted-foreground leading-7">
-          It is built on top of the <strong>shadcn/ui</strong> model. This means that Arc UI is <strong>not a component library</strong> you install via npm. Instead, it is a component registry. You use the shadcn CLI to copy the source code of the components directly into your project.
+          It is built on top of the <strong>shadcn/ui</strong> model. This means that ArcForge is <strong>not a component library</strong> you install via npm. Instead, it is a component registry. You use the shadcn CLI to copy the source code of the components directly into your project.
         </p>
       </div>
 
@@ -41,10 +41,10 @@ export default function IntroductionPage() {
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">Architecture</h2>
         <p className="text-muted-foreground leading-7">
-          Arc UI consists of two main pieces:
+          ArcForge consists of two main pieces:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-          <li><strong>@arc-ui/core</strong>: A small, framework-agnostic npm package containing the headless state management stores, types, and formatting utilities.</li>
+          <li><strong>@arcforge/core</strong>: A small, framework-agnostic npm package containing the headless state management stores, types, and formatting utilities.</li>
           <li><strong>The Registry</strong>: The React components themselves, which you copy into your project. These components consume the core stores to render the UI.</li>
         </ul>
       </div>

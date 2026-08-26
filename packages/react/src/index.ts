@@ -4,4 +4,4 @@ export * from './utils';
 export * from './testing';
 export * from './components';
 export * from './registry';
-export * from '@arc-ui/core';
+export * from '@arcforge/core';

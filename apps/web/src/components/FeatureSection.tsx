@@ -46,7 +46,7 @@ const defaultProps: FeatureSectionProps = {
     {
       title: "Three layers. Framework agnostic.",
       description:
-        "The core logic runs in Vue, Svelte, plain TypeScript, and AI agents — anywhere Arc runs. @arc-ui/core has no framework dependency.",
+        "The core logic runs in Vue, Svelte, plain TypeScript, and AI agents — anywhere ArcForge runs. @arcforge/core has no framework dependency.",
       // image: { src: PLACEHOLDER_IMAGE, alt: "Three layer architecture" },
       align: "left",
     },
@@ -60,7 +60,7 @@ const defaultProps: FeatureSectionProps = {
     {
       title: "SDK-first, always.",
       description:
-        "Every component maps to a live, shipped Arc method. No roadmap speculation. No invented abstractions. Strict TypeScript throughout.",
+        "Every component maps to a live, shipped Arc SDK method. No roadmap speculation. No invented abstractions. Strict TypeScript throughout.",
       // image: { src: PLACEHOLDER_IMAGE, alt: "SDK integration" },
       align: "left",
     },

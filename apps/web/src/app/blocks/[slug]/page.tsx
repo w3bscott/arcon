@@ -1,7 +1,7 @@
 import { use } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Copy, ChevronDown } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { getBlockBySlug, blocks } from "@/data/blocks";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";

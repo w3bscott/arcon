@@ -41,7 +41,7 @@ module.exports = __toCommonJS(index_exports);
 
 // src/hooks/useBalances.ts
 var import_react = require("react");
-var import_core = require("@arc-ui/core");
+var import_core = require("@arcforge/core");
 function useBalances(options) {
   const { kit, sources, token, networkType, includePending, refreshInterval } = options;
   const storeOptions = (0, import_react.useMemo)(() => ({
@@ -81,7 +81,7 @@ function useBalances(options) {
 
 // src/hooks/useSend.ts
 var import_react2 = require("react");
-var import_core2 = require("@arc-ui/core");
+var import_core2 = require("@arcforge/core");
 function useSend(kit) {
   const store = (0, import_react2.useMemo)(() => (0, import_core2.createSendStore)(kit), [kit]);
   const state = (0, import_react2.useSyncExternalStore)(store.subscribe, store.getState, store.getState);
@@ -103,7 +103,7 @@ function useSend(kit) {
 
 // src/hooks/useSwap.ts
 var import_react3 = require("react");
-var import_core3 = require("@arc-ui/core");
+var import_core3 = require("@arcforge/core");
 function useSwap(kit) {
   const store = (0, import_react3.useMemo)(() => (0, import_core3.createSwapStore)(kit), [kit]);
   const state = (0, import_react3.useSyncExternalStore)(store.subscribe, store.getState, store.getState);
@@ -125,7 +125,7 @@ function useSwap(kit) {
 
 // src/hooks/useBridge.ts
 var import_react4 = require("react");
-var import_core4 = require("@arc-ui/core");
+var import_core4 = require("@arcforge/core");
 function useBridge(kit) {
   const store = (0, import_react4.useMemo)(() => (0, import_core4.createBridgeStore)(kit), [kit]);
   const state = (0, import_react4.useSyncExternalStore)(store.subscribe, store.getState, store.getState);
@@ -147,7 +147,7 @@ function useBridge(kit) {
 
 // src/components/wallet-connect-button/index.tsx
 var import_react5 = require("react");
-var import_core5 = require("@arc-ui/core");
+var import_core5 = require("@arcforge/core");
 var import_jsx_runtime = require("react/jsx-runtime");
 function deriveState(isConnected, isLoading, internalError) {
   if (isLoading) return "connecting";
@@ -266,7 +266,7 @@ function WalletConnectButton({
 
 // src/components/transaction-status/index.tsx
 var import_react6 = require("react");
-var import_core6 = require("@arc-ui/core");
+var import_core6 = require("@arcforge/core");
 var import_jsx_runtime2 = require("react/jsx-runtime");
 function deriveState2(bridgeResult, sendResult, spendResult) {
   if (bridgeResult) return bridgeResult.state;
@@ -413,7 +413,7 @@ function TransactionStatus({
 
 // src/components/balance-card/index.tsx
 var import_react7 = require("react");
-var import_core7 = require("@arc-ui/core");
+var import_core7 = require("@arcforge/core");
 var import_jsx_runtime3 = require("react/jsx-runtime");
 function BalanceCard({
   kit,
@@ -498,12 +498,12 @@ function BalanceCard({
 
 // src/components/send-money-form/index.tsx
 var import_react9 = require("react");
-var import_core11 = require("@arc-ui/core");
+var import_core11 = require("@arcforge/core");
 
 // src/components/transfer-form/index.tsx
 var import_react8 = require("react");
 var import_lucide_react = require("lucide-react");
-var import_core8 = require("@arc-ui/core");
+var import_core8 = require("@arcforge/core");
 var import_jsx_runtime4 = require("react/jsx-runtime");
 function toNumber(value) {
   if (value === void 0 || value === "") return void 0;
@@ -645,7 +645,7 @@ function TransferForm({
                     "img",
                     {
                       src: item.avatarUrl,
-                      alt: "",
+                      alt: `Avatar for ${item.name}`,
                       className: "h-full w-full object-cover"
                     }
                   ) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "block h-full w-full bg-gradient-to-br from-[#191bac] via-[#b97ff0] to-[#f17249]" }) }),
@@ -747,7 +747,7 @@ function TransferForm({
 }
 
 // src/components/transfer-review/index.tsx
-var import_core9 = require("@arc-ui/core");
+var import_core9 = require("@arcforge/core");
 var import_jsx_runtime5 = require("react/jsx-runtime");
 function toNumber2(value) {
   if (value === void 0 || value === "") return 0;
@@ -851,7 +851,7 @@ function TransferReview({
 
 // src/components/transfer-status/index.tsx
 var import_lucide_react2 = require("lucide-react");
-var import_core10 = require("@arc-ui/core");
+var import_core10 = require("@arcforge/core");
 var import_jsx_runtime6 = require("react/jsx-runtime");
 function TransferStatus({
   status,
@@ -1117,7 +1117,7 @@ function SendMoneyForm({
 
 // src/components/swap-widget/index.tsx
 var import_react10 = require("react");
-var import_core12 = require("@arc-ui/core");
+var import_core12 = require("@arcforge/core");
 var import_jsx_runtime8 = require("react/jsx-runtime");
 function SwapWidget({
   kit,
@@ -1136,7 +1136,7 @@ function SwapWidget({
   const status = isMocked ? injectedData.status : hookResult.status;
   const estimate = isMocked ? injectedData.estimate : hookResult.estimate;
   const result = isMocked ? injectedData.result : hookResult.result;
-  const error = isMocked ? injectedData.error : hookResult.error;
+  const _error = isMocked ? injectedData.error : hookResult.error;
   const [stage, setStage] = (0, import_react10.useState)("input");
   const [tokenIn, setTokenIn] = (0, import_react10.useState)(defaultTokenIn);
   const [tokenOut, setTokenOut] = (0, import_react10.useState)(defaultTokenOut);
@@ -1266,7 +1266,7 @@ function SwapWidget({
 
 // src/components/bridge-widget/index.tsx
 var import_react11 = require("react");
-var import_core13 = require("@arc-ui/core");
+var import_core13 = require("@arcforge/core");
 var import_jsx_runtime9 = require("react/jsx-runtime");
 function BridgeWidget({
   kit,
@@ -1418,21 +1418,21 @@ function componentFile(name) {
   return {
     path: `registry/default/${name}/index.tsx`,
     type: "registry:component",
-    target: `@components/arc-ui/${name}/index.tsx`
+    target: `@components/arcforge/${name}/index.tsx`
   };
 }
 function includedComponentFile(owner, name) {
   return {
     path: `registry/default/${owner}/${name}/index.tsx`,
     type: "registry:component",
-    target: `@components/arc-ui/${name}/index.tsx`
+    target: `@components/arcforge/${name}/index.tsx`
   };
 }
 function hookFile(owner, name) {
   return {
     path: `registry/default/${owner}/hooks/${name}.ts`,
     type: "registry:hook",
-    target: `@components/arc-ui/hooks/${name}.ts`
+    target: `@components/arcforge/hooks/${name}.ts`
   };
 }
 var registry = {
@@ -1441,7 +1441,7 @@ var registry = {
     type: "registry:block",
     title: "WalletConnectButton",
     description: "Connect a user wallet before entering an Arc App Kit flow.",
-    dependencies: ["@arc-ui/core", "@circle-fin/app-kit"],
+    dependencies: ["@arcforge/core", "@circle-fin/app-kit"],
     files: [componentFile("wallet-connect-button")]
   },
   "transaction-status": {
@@ -1449,7 +1449,7 @@ var registry = {
     type: "registry:block",
     title: "TransactionStatus",
     description: "Track and present transaction lifecycle states.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [componentFile("transaction-status")]
   },
   "balance-card": {
@@ -1457,7 +1457,7 @@ var registry = {
     type: "registry:block",
     title: "BalanceCard",
     description: "Display Unified Balance across supported chains.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [componentFile("balance-card"), hookFile("balance-card", "useBalances")]
   },
   "send-money-form": {
@@ -1465,7 +1465,7 @@ var registry = {
     type: "registry:block",
     title: "SendMoneyForm",
     description: "Collect recipient, amount, and asset details for payments.",
-    dependencies: ["@arc-ui/core", "lucide-react"],
+    dependencies: ["@arcforge/core", "lucide-react"],
     files: [
       componentFile("send-money-form"),
       hookFile("send-money-form", "useSend"),
@@ -1479,7 +1479,7 @@ var registry = {
     type: "registry:block",
     title: "SwapWidget",
     description: "Allow users to swap tokens natively within your app.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [
       componentFile("swap-widget"),
       hookFile("swap-widget", "useSwap"),
@@ -1491,7 +1491,7 @@ var registry = {
     type: "registry:block",
     title: "BridgeWidget",
     description: "Move tokens cross-chain via CCTP bridge.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [
       componentFile("bridge-widget"),
       hookFile("bridge-widget", "useBridge"),
@@ -1503,7 +1503,7 @@ var registry = {
     type: "registry:block",
     title: "TransferForm",
     description: "Collect recipient and amount for a token transfer.",
-    dependencies: ["@arc-ui/core", "lucide-react"],
+    dependencies: ["@arcforge/core", "lucide-react"],
     files: [componentFile("transfer-form")]
   },
   "transfer-review": {
@@ -1511,7 +1511,7 @@ var registry = {
     type: "registry:block",
     title: "TransferReview",
     description: "Review transfer details before execution.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [componentFile("transfer-review")]
   },
   "transfer-status": {
@@ -1519,13 +1519,13 @@ var registry = {
     type: "registry:block",
     title: "TransferStatus",
     description: "Display pending, success, and error states for a transfer.",
-    dependencies: ["@arc-ui/core", "lucide-react"],
+    dependencies: ["@arcforge/core", "lucide-react"],
     files: [componentFile("transfer-status")]
   }
 };
 
 // src/index.ts
-__reExport(index_exports, require("@arc-ui/core"), module.exports);
+__reExport(index_exports, require("@arcforge/core"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   BalanceCard,
@@ -1542,6 +1542,6 @@ __reExport(index_exports, require("@arc-ui/core"), module.exports);
   useBridge,
   useSend,
   useSwap,
-  ...require("@arc-ui/core")
+  ...require("@arcforge/core")
 });
 //# sourceMappingURL=index.js.map

@@ -12,13 +12,13 @@ export function useFlowState(options?: UseFlowStateOptions) {
   );
   
   // Generic data payload to carry between steps (e.g., recipient, amount, network)
-  const [flowData, setFlowData] = useState<Record<string, any>>({});
+  const [flowData, setFlowData] = useState<Record<string, unknown>>({});
 
   const goToStep = useCallback((step: FlowStep) => {
     setCurrentStep(step);
   }, []);
 
-  const updateData = useCallback((data: Record<string, any>) => {
+  const updateData = useCallback((data: Record<string, unknown>) => {
     setFlowData((prev) => ({ ...prev, ...data }));
   }, []);
 

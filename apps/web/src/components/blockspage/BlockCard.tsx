@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { BlockMetadata } from "@/data/blocks";
-import { StatusBadge } from "./StatusBadge";
-import { ArrowRight } from "lucide-react";
+
 
 interface BlockCardProps {
   block: BlockMetadata;

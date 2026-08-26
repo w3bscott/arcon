@@ -76,7 +76,7 @@ const AfterCode = () => (
       { text: "BalanceCard", color: t.white },
       { text: " } ", color: t.muted },
       { text: "from ", color: t.keyword },
-      { text: "'@arc-ui/react'", color: t.string },
+      { text: "'@arcforge/react'", color: t.string },
     ]} />
     <BlankLine />
     <Line tokens={[

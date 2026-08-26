@@ -1,6 +1,6 @@
 "use client";
 
-import { SwapWidget } from "@arc-ui/react";
+import { SwapWidget } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import { skins, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { mockSwapWidgetData } from "@/lib/mock-data";

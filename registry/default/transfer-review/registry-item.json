@@ -4,13 +4,13 @@
   "title": "TransferReview",
   "description": "Review transfer details before execution.",
   "dependencies": [
-    "@arc-ui/core"
+    "@arcforge/core"
   ],
   "files": [
     {
       "path": "registry/default/transfer-review/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/transfer-review/index.tsx"
+      "target": "@components/arcforge/transfer-review/index.tsx"
     }
   ]
 }

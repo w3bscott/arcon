@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
-import { AppKit, createBridgeStore } from "@arc-ui/core";
+import { AppKit, createBridgeStore } from "@arcforge/core";
 
 export function useBridge(kit: AppKit) {
   const store = useMemo(() => createBridgeStore(kit), [kit]);

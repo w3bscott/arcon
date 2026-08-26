@@ -16,7 +16,7 @@ function componentFile(name: string) {
   return {
     path: `registry/default/${name}/index.tsx`,
     type: "registry:component" as const,
-    target: `@components/arc-ui/${name}/index.tsx`,
+    target: `@components/arcforge/${name}/index.tsx`,
   };
 }
 
@@ -24,7 +24,7 @@ function includedComponentFile(owner: string, name: string) {
   return {
     path: `registry/default/${owner}/${name}/index.tsx`,
     type: "registry:component" as const,
-    target: `@components/arc-ui/${name}/index.tsx`,
+    target: `@components/arcforge/${name}/index.tsx`,
   };
 }
 
@@ -32,7 +32,7 @@ function hookFile(owner: string, name: string) {
   return {
     path: `registry/default/${owner}/hooks/${name}.ts`,
     type: "registry:hook" as const,
-    target: `@components/arc-ui/hooks/${name}.ts`,
+    target: `@components/arcforge/hooks/${name}.ts`,
   };
 }
 
@@ -42,7 +42,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "WalletConnectButton",
     description: "Connect a user wallet before entering an Arc App Kit flow.",
-    dependencies: ["@arc-ui/core", "@circle-fin/app-kit"],
+    dependencies: ["@arcforge/core", "@circle-fin/app-kit"],
     files: [componentFile("wallet-connect-button")],
   },
   "transaction-status": {
@@ -50,7 +50,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "TransactionStatus",
     description: "Track and present transaction lifecycle states.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [componentFile("transaction-status")],
   },
   "balance-card": {
@@ -58,7 +58,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "BalanceCard",
     description: "Display Unified Balance across supported chains.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [componentFile("balance-card"), hookFile("balance-card", "useBalances")],
   },
   "send-money-form": {
@@ -66,7 +66,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "SendMoneyForm",
     description: "Collect recipient, amount, and asset details for payments.",
-    dependencies: ["@arc-ui/core", "lucide-react"],
+    dependencies: ["@arcforge/core", "lucide-react"],
     files: [
       componentFile("send-money-form"),
       hookFile("send-money-form", "useSend"),
@@ -80,7 +80,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "SwapWidget",
     description: "Allow users to swap tokens natively within your app.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [
       componentFile("swap-widget"),
       hookFile("swap-widget", "useSwap"),
@@ -92,7 +92,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "BridgeWidget",
     description: "Move tokens cross-chain via CCTP bridge.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [
       componentFile("bridge-widget"),
       hookFile("bridge-widget", "useBridge"),
@@ -104,7 +104,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "TransferForm",
     description: "Collect recipient and amount for a token transfer.",
-    dependencies: ["@arc-ui/core", "lucide-react"],
+    dependencies: ["@arcforge/core", "lucide-react"],
     files: [componentFile("transfer-form")],
   },
   "transfer-review": {
@@ -112,7 +112,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "TransferReview",
     description: "Review transfer details before execution.",
-    dependencies: ["@arc-ui/core"],
+    dependencies: ["@arcforge/core"],
     files: [componentFile("transfer-review")],
   },
   "transfer-status": {
@@ -120,7 +120,7 @@ export const registry: Record<string, RegistryItem> = {
     type: "registry:block",
     title: "TransferStatus",
     description: "Display pending, success, and error states for a transfer.",
-    dependencies: ["@arc-ui/core", "lucide-react"],
+    dependencies: ["@arcforge/core", "lucide-react"],
     files: [componentFile("transfer-status")],
   },
 };

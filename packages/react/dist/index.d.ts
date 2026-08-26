@@ -1,6 +1,6 @@
-import * as _arc_ui_core from '@arc-ui/core';
-import { BalanceStoreOptions, AppKit, BridgeResult, BridgeStep, SpendResult, Sources, SupportedTokenInput, GetBalancesResult, SendStoreState, SwapResult, SwapStoreState, BridgeStoreState } from '@arc-ui/core';
-export * from '@arc-ui/core';
+import * as _arcforge_core from '@arcforge/core';
+import { BalanceStoreOptions, AppKit, BridgeResult, BridgeStep, SpendResult, Sources, SupportedTokenInput, GetBalancesResult, SendStoreState, SwapResult, SwapStoreState, BridgeStoreState } from '@arcforge/core';
+export * from '@arcforge/core';
 import * as react from 'react';
 import { CSSProperties, ReactNode } from 'react';
 
@@ -9,38 +9,38 @@ interface UseBalancesOptions extends BalanceStoreOptions {
 }
 declare function useBalances(options: UseBalancesOptions): {
     status: "idle" | "loading" | "success" | "error";
-    data: _arc_ui_core.GetBalancesResult | undefined;
+    data: _arcforge_core.GetBalancesResult | undefined;
     error: Error | undefined;
-    refetch: () => Promise<_arc_ui_core.BalanceStoreState>;
+    refetch: () => Promise<_arcforge_core.BalanceStoreState>;
 };
 
 declare function useSend(kit: AppKit): {
-    getEstimate: (params: _arc_ui_core.SendParams) => Promise<void>;
-    send: (params: _arc_ui_core.SendParams) => Promise<void>;
+    getEstimate: (params: _arcforge_core.SendParams) => Promise<void>;
+    send: (params: _arcforge_core.SendParams) => Promise<void>;
     reset: () => void;
     status: "idle" | "estimating" | "sending" | "success" | "error";
-    estimate?: _arc_ui_core.SendEstimateResult | undefined;
-    result?: _arc_ui_core.BridgeStep | undefined;
+    estimate?: _arcforge_core.SendEstimateResult | undefined;
+    result?: _arcforge_core.BridgeStep | undefined;
     error?: Error | undefined;
 };
 
 declare function useSwap(kit: AppKit): {
-    getEstimate: (params: _arc_ui_core.SwapParams) => Promise<void>;
-    swap: (params: _arc_ui_core.SwapParams) => Promise<void>;
+    getEstimate: (params: _arcforge_core.SwapParams) => Promise<void>;
+    swap: (params: _arcforge_core.SwapParams) => Promise<void>;
     reset: () => void;
     status: "idle" | "estimating" | "swapping" | "success" | "error";
-    estimate?: _arc_ui_core.SwapEstimate | undefined;
-    result?: _arc_ui_core.SwapResult | undefined;
+    estimate?: _arcforge_core.SwapEstimate | undefined;
+    result?: _arcforge_core.SwapResult | undefined;
     error?: Error | undefined;
 };
 
 declare function useBridge(kit: AppKit): {
-    getEstimate: (params: _arc_ui_core.BridgeParams) => Promise<void>;
-    bridge: (params: _arc_ui_core.BridgeParams) => Promise<void>;
+    getEstimate: (params: _arcforge_core.BridgeParams) => Promise<void>;
+    bridge: (params: _arcforge_core.BridgeParams) => Promise<void>;
     reset: () => void;
     status: "idle" | "estimating" | "bridging" | "success" | "error";
-    estimate?: _arc_ui_core.BridgeEstimate | undefined;
-    result?: _arc_ui_core.BridgeResult | undefined;
+    estimate?: _arcforge_core.BridgeEstimate | undefined;
+    result?: _arcforge_core.BridgeResult | undefined;
     error?: Error | undefined;
 };
 

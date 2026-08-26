@@ -4,18 +4,18 @@
   "title": "BalanceCard",
   "description": "Display Unified Balance across supported chains.",
   "dependencies": [
-    "@arc-ui/core"
+    "@arcforge/core"
   ],
   "files": [
     {
       "path": "registry/default/balance-card/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/balance-card/index.tsx"
+      "target": "@components/arcforge/balance-card/index.tsx"
     },
     {
       "path": "registry/default/balance-card/hooks/useBalances.ts",
       "type": "registry:hook",
-      "target": "@components/arc-ui/hooks/useBalances.ts"
+      "target": "@components/arcforge/hooks/useBalances.ts"
     }
   ]
 }

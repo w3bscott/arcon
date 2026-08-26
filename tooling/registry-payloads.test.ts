@@ -4,25 +4,25 @@ import { registry } from "../packages/react/src/registry";
 
 const requiredTargets: Record<string, string[]> = {
   "balance-card": [
-    "@components/arc-ui/balance-card/index.tsx",
-    "@components/arc-ui/hooks/useBalances.ts",
+    "@components/arcforge/balance-card/index.tsx",
+    "@components/arcforge/hooks/useBalances.ts",
   ],
   "send-money-form": [
-    "@components/arc-ui/send-money-form/index.tsx",
-    "@components/arc-ui/hooks/useSend.ts",
-    "@components/arc-ui/transfer-form/index.tsx",
-    "@components/arc-ui/transfer-review/index.tsx",
-    "@components/arc-ui/transfer-status/index.tsx",
+    "@components/arcforge/send-money-form/index.tsx",
+    "@components/arcforge/hooks/useSend.ts",
+    "@components/arcforge/transfer-form/index.tsx",
+    "@components/arcforge/transfer-review/index.tsx",
+    "@components/arcforge/transfer-status/index.tsx",
   ],
   "swap-widget": [
-    "@components/arc-ui/swap-widget/index.tsx",
-    "@components/arc-ui/hooks/useSwap.ts",
-    "@components/arc-ui/transaction-status/index.tsx",
+    "@components/arcforge/swap-widget/index.tsx",
+    "@components/arcforge/hooks/useSwap.ts",
+    "@components/arcforge/transaction-status/index.tsx",
   ],
   "bridge-widget": [
-    "@components/arc-ui/bridge-widget/index.tsx",
-    "@components/arc-ui/hooks/useBridge.ts",
-    "@components/arc-ui/transaction-status/index.tsx",
+    "@components/arcforge/bridge-widget/index.tsx",
+    "@components/arcforge/hooks/useBridge.ts",
+    "@components/arcforge/transaction-status/index.tsx",
   ],
 };
 

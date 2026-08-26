@@ -4,13 +4,13 @@
   "title": "TransactionStatus",
   "description": "Track and present transaction lifecycle states.",
   "dependencies": [
-    "@arc-ui/core"
+    "@arcforge/core"
   ],
   "files": [
     {
       "path": "registry/default/transaction-status/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/transaction-status/index.tsx"
+      "target": "@components/arcforge/transaction-status/index.tsx"
     }
   ]
 }

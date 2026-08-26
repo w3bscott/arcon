@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { CodeBlock } from "@/components/blockspage/CodeBlock";
 
 export const metadata: Metadata = {
-  title: "Core Library — Arc UI",
-  description: "Learn about the @arc-ui/core package.",
+  title: "Core Library — ArcForge",
+  description: "Learn about the @arcforge/core package.",
 };
 
-const storeCode = `import { createBalanceStore } from "@arc-ui/core"
+const storeCode = `import { createBalanceStore } from "@arcforge/core"
 
 // 1. Create a store instance
 const balanceStore = createBalanceStore({
@@ -36,15 +36,15 @@ export default function CorePage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold tracking-tight text-foreground">Core Library</h1>
       <p className="text-lg text-muted-foreground">
-        The engine powering Arc UI: headless state management, types, and utilities.
+        The engine powering ArcForge: headless state management, types, and utilities.
       </p>
 
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">Overview</h2>
         <p className="text-muted-foreground leading-7">
-          While the React components are copied into your project, they all rely on the <code>@arc-ui/core</code> npm package. This package is <strong>framework-agnostic</strong> and handles the complex business logic of interacting with the Arc App Kit SDK.
+          While the React components are copied into your project, they all rely on the <code>@arcforge/core</code> npm package. This package is <strong>framework-agnostic</strong> and handles the complex business logic of interacting with the Arc App Kit SDK.
         </p>
-        <CodeBlock code="npm install @arc-ui/core" language="bash" />
+        <CodeBlock code="npm install @arcforge/core" language="bash" />
       </div>
 
       <div className="space-y-4">
@@ -79,7 +79,7 @@ export default function CorePage() {
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">Types</h2>
         <p className="text-muted-foreground leading-7">
-          All data shapes used by Arc UI are rigorously typed and exported from the core package, including <code>GetBalancesResult</code>, <code>SendEstimate</code>, <code>SupportedChain</code>, and more.
+          All data shapes used by ArcForge are rigorously typed and exported from the core package, including <code>GetBalancesResult</code>, <code>SendEstimate</code>, <code>SupportedChain</code>, and more.
         </p>
       </div>
     </div>

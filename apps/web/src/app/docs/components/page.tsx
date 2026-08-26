@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Components — Arc UI",
-  description: "Browse the available Arc UI components.",
+  title: "Components — ArcForge",
+  description: "Browse the available ArcForge components.",
 };
 
 const components = [

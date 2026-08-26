@@ -4,7 +4,7 @@ import type {
   SwapStoreState,
   BridgeStoreState,
   BridgeResult,
-} from "@arc-ui/react";
+} from "@arcforge/react";
 
 // BalanceCard Mock Data
 // Matches GetBalancesResult: { totalConfirmedBalance, token, breakdown, totalPendingBalance? }

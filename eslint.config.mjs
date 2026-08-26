@@ -15,14 +15,26 @@ const eslintConfig = defineConfig([
     "**/registry/**"
   ]),
   {
+    settings: {
+      next: {
+        rootDir: "apps/web/"
+      }
+    },
     rules: {
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/ban-ts-comment": "off",
       "react/no-unescaped-entities": "off",
       "@next/next/no-img-element": "off",
       "@typescript-eslint/no-empty-object-type": "off",
-      "@typescript-eslint/no-unused-expressions": "off"
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off"
+    }
+  },
+  {
+    files: ["packages/**/*.ts", "packages/**/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }]
     }
   },
   {

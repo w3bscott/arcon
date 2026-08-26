@@ -7,10 +7,10 @@ interface FooterProps {
 }
 
 const defaultProps: FooterProps = {
-  brandName: "ARCBLOCKS",
-  copyright: "©2026 arcblocks.com",
+  brandName: "ARCFORGE",
+  copyright: "©2026 ArcForge",
   disclaimer:
-    "arcblocks.com is not officially affiliated with arc.io or shadcn/ui or Tailwind CSS\nThis project wouldn't be possible without the open-source shadcn/ui project.",
+    "ArcForge is not officially affiliated with arc.io or shadcn/ui or Tailwind CSS.\nThis project wouldn't be possible without the open-source shadcn/ui project.",
   email: "info@arcblocks.com",
 };
 

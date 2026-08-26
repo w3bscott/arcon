@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contributing — Arc UI",
-  description: "How to contribute to Arc UI.",
+  title: "Contributing — ArcForge",
+  description: "How to contribute to ArcForge.",
 };
 
 export default function ContributingPage() {
@@ -10,13 +10,13 @@ export default function ContributingPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold tracking-tight text-foreground">Contributing</h1>
       <p className="text-lg text-muted-foreground">
-        We welcome community contributions to Arc UI!
+        We welcome community contributions to ArcForge!
       </p>
 
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">Repository Structure</h2>
         <p className="text-muted-foreground leading-7">
-          Arc UI is a monorepo managed with pnpm. The key directories are:
+          ArcForge is a monorepo managed with pnpm. The key directories are:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
           <li><strong>packages/core:</strong> The framework-agnostic headless logic.</li>
@@ -40,10 +40,10 @@ export default function ContributingPage() {
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">Adding a New Component</h2>
         <ol className="list-decimal pl-6 space-y-2 text-muted-foreground">
           <li>Create a new directory in <code>packages/react/src/components/your-component/</code>.</li>
-          <li>Write the component source code in <code>index.tsx</code>. Ensure it is framework-agnostic and relies only on <code>@arc-ui/core</code> for state management.</li>
+          <li>Write the component source code in <code>index.tsx</code>. Ensure it is framework-agnostic and relies only on <code>@arcforge/core</code> for state management.</li>
           <li>Register the component by adding its metadata to <code>packages/react/src/registry.ts</code>.</li>
           <li>Export the component in <code>packages/react/src/index.ts</code>.</li>
-          <li>Create a preview wrapper for the website in <code>apps/web/src/components/arc-ui/your-component-wrapper.tsx</code> to handle mock data and presentation.</li>
+          <li>Create a preview wrapper for the website in <code>apps/web/src/components/arcforge/your-component-wrapper.tsx</code> to handle mock data and presentation.</li>
         </ol>
       </div>
 

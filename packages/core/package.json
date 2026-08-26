@@ -1,10 +1,10 @@
 {
-  "name": "@arc-ui/core",
+  "name": "@arcforge/core",
   "version": "0.1.0",
-  "description": "Framework-agnostic state management, types, and utilities for Arc App Kit UI components.",
+  "description": "Framework-agnostic state management, types, and utilities for ArcForge components.",
   "keywords": [
     "arc",
-    "arc-ui",
+    "arcforge",
     "circle",
     "app-kit",
     "web3",
@@ -15,16 +15,16 @@
     "swap",
     "payments"
   ],
-  "author": "Arc UI Contributors",
+  "author": "ArcForge Contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/arc-ui/arc-ui.git",
+    "url": "https://github.com/arcforge/arcforge.git",
     "directory": "packages/core"
   },
   "homepage": "https://arcblocks.com",
   "bugs": {
-    "url": "https://github.com/arc-ui/arc-ui/issues"
+    "url": "https://github.com/arcforge/arcforge/issues"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

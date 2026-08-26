@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { ArrowUpRight, X } from "lucide-react";
-import { isValidAddress, isValidAmount } from "@arc-ui/core";
+import { isValidAddress, isValidAmount } from "@arcforge/core";
 
 export interface TransferRecipient {
   name: string;
@@ -215,7 +215,7 @@ export function TransferForm({
                   {item.avatarUrl ? (
                     <img
                       src={item.avatarUrl}
-                      alt=""
+                      alt={`Avatar for ${item.name}`}
                       className="h-full w-full object-cover"
                     />
                   ) : (

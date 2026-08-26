@@ -1,6 +1,6 @@
 "use client";
 
-import { TransferStatus, type TransferStatusState } from "@arc-ui/react";
+import { TransferStatus, type TransferStatusState } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 

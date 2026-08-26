@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { formatAddress } from "@arc-ui/core";
+import { formatAddress } from "@arcforge/core";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */

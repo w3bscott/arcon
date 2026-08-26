@@ -137,7 +137,7 @@ export const styleVariables: Record<
       "--font-geist-sans": "var(--font-outfit)",
     },
   },
-} as any;
+} as Record<ShowcaseStyleVariant, { light: Record<string, string>; dark: Record<string, string> }>;
 
 export interface ShowcaseSkinTokens {
   cardBg: string;

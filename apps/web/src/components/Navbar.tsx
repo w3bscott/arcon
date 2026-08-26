@@ -15,7 +15,7 @@ export interface NavbarProps {
 }
 
 const defaultProps: NavbarProps = {
-  logoText: "arcon",
+  logoText: "ArcForge",
   links: [
     { label: "Home", href: "/" },
     { label: "Blocks", href: "/blocks" },

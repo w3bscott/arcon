@@ -29,7 +29,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@arc-ui/react':
+      '@arcforge/react':
         specifier: workspace:*
         version: link:../../packages/react
       gsap:
@@ -88,7 +88,7 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
-  packages/create-arc-app:
+  packages/create-arcforge:
     dependencies:
       commander:
         specifier: ^12.0.0
@@ -115,7 +115,7 @@ importers:
 
   packages/react:
     dependencies:
-      '@arc-ui/core':
+      '@arcforge/core':
         specifier: workspace:*
         version: link:../core
       lucide-react:

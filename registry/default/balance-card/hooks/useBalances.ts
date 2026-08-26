@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
-import { createBalanceStore, BalanceStoreOptions } from "@arc-ui/core";
+import { createBalanceStore, BalanceStoreOptions } from "@arcforge/core";
 
 export interface UseBalancesOptions extends BalanceStoreOptions {
   refreshInterval?: number | undefined;

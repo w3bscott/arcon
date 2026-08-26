@@ -1,9 +1,9 @@
 {
-  "name": "create-arc-app",
+  "name": "create-arcforge",
   "version": "0.1.0",
-  "description": "Scaffolding tool for Arc UI applications",
+  "description": "Scaffolding tool for ArcForge applications",
   "bin": {
-    "create-arc-app": "./dist/index.mjs"
+    "create-arcforge": "./dist/index.mjs"
   },
   "scripts": {
     "build": "tsup",

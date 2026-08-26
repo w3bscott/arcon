@@ -1,13 +1,13 @@
-# Arc UI
+# ArcForge
 
 > A shadcn-style component registry for [Circle's Arc App Kit](https://developers.circle.com/docs/arc-app-kit-overview) — drop-in React blocks for wallets, balances, payments, swaps, and bridges.
 
-## What is Arc UI?
+## What is ArcForge?
 
-Arc UI provides a set of **copy-paste React components** for building fintech applications powered by Circle's Arc App Kit. Instead of installing a traditional component library, you add individual blocks directly into your codebase via the [shadcn CLI](https://ui.shadcn.com/docs/cli):
+ArcForge provides a set of **copy-paste React components** for building fintech applications powered by Circle's Arc App Kit. Instead of installing a traditional component library, you add individual blocks directly into your codebase via the [shadcn CLI](https://ui.shadcn.com/docs/cli):
 
 ```bash
-npx shadcn add https://arcblocks.com/r/balance-card
+npx shadcn add https://TODO:VERCEL_URL/r/balance-card
 ```
 
 This gives you full ownership of the component source code while following established patterns and best practices.
@@ -28,13 +28,13 @@ This gives you full ownership of the component source code while following estab
 ### 1. Install the core SDK
 
 ```bash
-npm install @arc-ui/core @circle-fin/app-kit
+npm install @arcforge/core @circle-fin/app-kit
 ```
 
 ### 2. Add a component
 
 ```bash
-npx shadcn add https://arcblocks.com/r/balance-card
+npx shadcn add https://TODO:VERCEL_URL/r/balance-card
 ```
 
 ### 3. Use it
@@ -51,8 +51,8 @@ export default function Dashboard() {
 
 | Package | Description |
 |---|---|
-| [`@arc-ui/core`](./packages/core) | Framework-agnostic stores, types, formatters, and validators |
-| [`@arc-ui/react`](./packages/react) | React hooks and pre-built components |
+| [`@arcforge/core`](./packages/core) | Framework-agnostic stores, types, formatters, and validators |
+| [`@arcforge/react`](./packages/react) | React hooks and pre-built components |
 | [`apps/web`](./apps/web) | Documentation website and component showcase |
 
 ## Development
@@ -73,10 +73,10 @@ pnpm release:check
 
 ## Architecture
 
-Arc UI follows a layered architecture:
+ArcForge follows a layered architecture:
 
-1. **`@arc-ui/core`** — Framework-agnostic state management and types
-2. **`@arc-ui/react`** — React bindings (hooks + components) consuming the core stores
+1. **`@arcforge/core`** — Framework-agnostic state management and types
+2. **`@arcforge/react`** — React bindings (hooks + components) consuming the core stores
 3. **Registry** — Auto-generated shadcn-compatible component distribution
 4. **Website** — Documentation, live previews, and component showcase
 

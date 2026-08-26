@@ -1,6 +1,6 @@
 "use client";
 
-import { BridgeWidget } from "@arc-ui/react";
+import { BridgeWidget } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import { skins, chainColors, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { mockBridgeWidgetData } from "@/lib/mock-data";

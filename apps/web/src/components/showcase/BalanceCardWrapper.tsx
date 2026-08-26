@@ -1,10 +1,10 @@
 "use client";
 
-import { BalanceCard } from "@arc-ui/react";
+import { BalanceCard } from "@arcforge/react";
 import { ShowcaseShell } from "./ShowcaseShell";
 import { skins, chainColors, skeletonClass, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { mockBalanceData } from "@/lib/mock-data";
-import { RefreshCw } from "lucide-react";
+
 
 export function BalanceCardWrapper({ styleVariant }: { styleVariant: ShowcaseStyleVariant }) {
   const skin = skins[styleVariant];

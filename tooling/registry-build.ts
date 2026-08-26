@@ -22,8 +22,8 @@ function getFileNameWithoutExtension(filePath: string) {
 }
 
 function getComponentName(file: RegistryFile) {
-  if (file.target?.startsWith('@components/arc-ui/')) {
-    const [componentName] = file.target.replace('@components/arc-ui/', '').split('/');
+  if (file.target?.startsWith('@components/arcforge/')) {
+    const [componentName] = file.target.replace('@components/arcforge/', '').split('/');
     return componentName;
   }
 
@@ -94,8 +94,8 @@ async function buildRegistry() {
   // Write root registry.json
   const rootRegistryPath = path.join(REGISTRY_DIR, 'registry.json');
   const rootRegistryData = {
-    name: "arc-ui",
-    homepage: "https://arc-ui.com",
+    name: "arcforge",
+    homepage: "https://TODO:VERCEL_URL",
     items: registryItems,
   };
   fs.writeFileSync(rootRegistryPath, JSON.stringify(rootRegistryData, null, 2), 'utf8');

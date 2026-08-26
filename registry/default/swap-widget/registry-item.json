@@ -4,23 +4,23 @@
   "title": "SwapWidget",
   "description": "Allow users to swap tokens natively within your app.",
   "dependencies": [
-    "@arc-ui/core"
+    "@arcforge/core"
   ],
   "files": [
     {
       "path": "registry/default/swap-widget/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/swap-widget/index.tsx"
+      "target": "@components/arcforge/swap-widget/index.tsx"
     },
     {
       "path": "registry/default/swap-widget/hooks/useSwap.ts",
       "type": "registry:hook",
-      "target": "@components/arc-ui/hooks/useSwap.ts"
+      "target": "@components/arcforge/hooks/useSwap.ts"
     },
     {
       "path": "registry/default/swap-widget/transaction-status/index.tsx",
       "type": "registry:component",
-      "target": "@components/arc-ui/transaction-status/index.tsx"
+      "target": "@components/arcforge/transaction-status/index.tsx"
     }
   ]
 }

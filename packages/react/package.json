@@ -1,5 +1,5 @@
 {
-  "name": "@arc-ui/react",
+  "name": "@arcforge/react",
   "version": "0.1.0",
   "private": true,
   "main": "./dist/index.js",
@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@arc-ui/core": "workspace:*",
+    "@arcforge/core": "workspace:*",
     "lucide-react": "^1.21.0"
   },
   "peerDependencies": {

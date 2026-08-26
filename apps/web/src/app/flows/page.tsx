@@ -17,7 +17,7 @@ export default function FlowsPage() {
             Flows
           </h1>
           <p className="text-base md:text-lg text-muted-foreground leading-7">
-            Production-oriented compositions built from Arc UI primitives.
+            Production-oriented compositions built from ArcForge primitives.
             <br className="hidden md:block" />
             Complete user journeys ready for integration.
           </p>

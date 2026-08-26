@@ -12,7 +12,7 @@ import {
   type SupportedTokenInput,
   formatBalance,
   formatChainName,
-} from "@arc-ui/core";
+} from "@arcforge/core";
 import { useBalances } from "../../hooks/useBalances";
 
 export interface BalanceCardProps {

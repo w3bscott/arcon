@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { formatAddress } from "@arc-ui/core";
+import { formatAddress } from "@arcforge/core";
 
 export interface TransferReviewProps {
   recipient: string;

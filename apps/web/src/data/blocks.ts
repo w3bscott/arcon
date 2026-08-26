@@ -33,8 +33,8 @@ export const blocks: BlockMetadata[] = [
     category: "Wallet",
     status: "Stable",
     sdkMethods: ["kit.wallet.connect()"],
-    installCommand: "npx arc-ui add wallet-connect-button",
-    importStatement: 'import { WalletConnectButton } from "@/components/arc-ui/wallet-connect-button"',
+    installCommand: "npx arcforge add wallet-connect-button",
+    importStatement: 'import { WalletConnectButton } from "@/components/arcforge/wallet-connect-button"',
     codeExample: '<WalletConnectButton onConnect={handleConnect} connectLabel="Connect Wallet" />',
   },
   {
@@ -44,8 +44,8 @@ export const blocks: BlockMetadata[] = [
     category: "Unified Balance",
     status: "Stable",
     sdkMethods: ["kit.unifiedBalance.getBalances()"],
-    installCommand: "npx arc-ui add balance-card",
-    importStatement: 'import { BalanceCard } from "@/components/arc-ui/balance-card"',
+    installCommand: "npx arcforge add balance-card",
+    importStatement: 'import { BalanceCard } from "@/components/arcforge/balance-card"',
     codeExample: `<BalanceCard\n  kit={kit}\n  sources={{ walletAddresses: [{ address, blockchain: "Arc_Testnet" }] }}\n  includePending\n/>`,
   },
   {
@@ -55,8 +55,8 @@ export const blocks: BlockMetadata[] = [
     category: "Transactions",
     status: "Stable",
     sdkMethods: ["kit.transactions.getStatus()"],
-    installCommand: "npx arc-ui add transaction-status",
-    importStatement: 'import { TransactionStatus } from "@/components/arc-ui/transaction-status"',
+    installCommand: "npx arcforge add transaction-status",
+    importStatement: 'import { TransactionStatus } from "@/components/arcforge/transaction-status"',
     codeExample: `<TransactionStatus\n  sendResult={result}\n  operationType="send"\n  onComplete={() => console.log("done")}\n/>`,
   },
   {
@@ -66,8 +66,8 @@ export const blocks: BlockMetadata[] = [
     category: "Payments",
     status: "Stable",
     sdkMethods: ["kit.payments.send()"],
-    installCommand: "npx arc-ui add send-money-form",
-    importStatement: 'import { SendMoneyForm } from "@/components/arc-ui/send-money-form"',
+    installCommand: "npx arcforge add send-money-form",
+    importStatement: 'import { SendMoneyForm } from "@/components/arcforge/send-money-form"',
     codeExample: `<SendMoneyForm\n  kit={kit}\n  chain="Arc_Testnet"\n  onSuccess={(result) => console.log(result)}\n/>`,
   },
   {
@@ -77,8 +77,8 @@ export const blocks: BlockMetadata[] = [
     category: "Swap",
     status: "Stable",
     sdkMethods: ["kit.swap.quote()", "kit.swap.execute()"],
-    installCommand: "npx arc-ui add swap-widget",
-    importStatement: 'import { SwapWidget } from "@/components/arc-ui/swap-widget"',
+    installCommand: "npx arcforge add swap-widget",
+    importStatement: 'import { SwapWidget } from "@/components/arcforge/swap-widget"',
     codeExample: `<SwapWidget\n  kit={kit}\n  chain="Arc_Testnet"\n  defaultTokenIn="USDC"\n  defaultTokenOut="EURC"\n/>`,
   },
   {
@@ -88,8 +88,8 @@ export const blocks: BlockMetadata[] = [
     category: "Bridge",
     status: "Stable",
     sdkMethods: ["kit.bridge.quote()", "kit.bridge.execute()"],
-    installCommand: "npx arc-ui add bridge-widget",
-    importStatement: 'import { BridgeWidget } from "@/components/arc-ui/bridge-widget"',
+    installCommand: "npx arcforge add bridge-widget",
+    importStatement: 'import { BridgeWidget } from "@/components/arcforge/bridge-widget"',
     codeExample: `<BridgeWidget\n  kit={kit}\n  defaultFromChain="Arc_Testnet"\n  defaultToChain="Ethereum"\n  onSuccess={(result) => console.log(result)}\n/>`,
   },
   {
@@ -99,8 +99,8 @@ export const blocks: BlockMetadata[] = [
     category: "Payments",
     status: "Preview",
     sdkMethods: [],
-    installCommand: "npx arc-ui add transfer-form",
-    importStatement: 'import { TransferForm } from "@/components/arc-ui/transfer-form"',
+    installCommand: "npx arcforge add transfer-form",
+    importStatement: 'import { TransferForm } from "@/components/arcforge/transfer-form"',
     codeExample: `<TransferForm
   recipient={recipient}
   amount={amount}
@@ -118,8 +118,8 @@ export const blocks: BlockMetadata[] = [
     category: "Payments",
     status: "Preview",
     sdkMethods: [],
-    installCommand: "npx arc-ui add transfer-review",
-    importStatement: 'import { TransferReview } from "@/components/arc-ui/transfer-review"',
+    installCommand: "npx arcforge add transfer-review",
+    importStatement: 'import { TransferReview } from "@/components/arcforge/transfer-review"',
     codeExample: `<TransferReview
   recipient={recipient}
   amount="250.00"
@@ -136,8 +136,8 @@ export const blocks: BlockMetadata[] = [
     category: "Transactions",
     status: "Preview",
     sdkMethods: [],
-    installCommand: "npx arc-ui add transfer-status",
-    importStatement: 'import { TransferStatus } from "@/components/arc-ui/transfer-status"',
+    installCommand: "npx arcforge add transfer-status",
+    importStatement: 'import { TransferStatus } from "@/components/arcforge/transfer-status"',
     codeExample: `<TransferStatus
   status="success"
   amount="250.00"

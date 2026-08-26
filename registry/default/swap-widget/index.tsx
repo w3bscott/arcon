@@ -12,7 +12,7 @@ import {
   type SwapStoreState,
   formatFee,
   isValidAmount,
-} from "@arc-ui/core";
+} from "@arcforge/core";
 import { useSwap } from "../../hooks/useSwap";
 import { TransactionStatus } from "../transaction-status";
 
@@ -49,7 +49,7 @@ export function SwapWidget({
   const status = isMocked ? injectedData.status : hookResult.status;
   const estimate = isMocked ? injectedData.estimate : hookResult.estimate;
   const result = isMocked ? injectedData.result : hookResult.result;
-  const error = isMocked ? injectedData.error : hookResult.error;
+  const _error = isMocked ? injectedData.error : hookResult.error;
 
   const [stage, setStage] = useState<Stage>("input");
   const [tokenIn, setTokenIn] = useState(defaultTokenIn);
