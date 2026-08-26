@@ -92,6 +92,60 @@ export const blocks: BlockMetadata[] = [
     importStatement: 'import { BridgeWidget } from "@/components/arc-ui/bridge-widget"',
     codeExample: `<BridgeWidget\n  kit={kit}\n  defaultFromChain="Arc_Testnet"\n  defaultToChain="Ethereum"\n  onSuccess={(result) => console.log(result)}\n/>`,
   },
+  {
+    name: "TransferForm",
+    slug: "transfer-form",
+    description: "Collect recipient and amount for a token transfer.",
+    category: "Payments",
+    status: "Preview",
+    sdkMethods: [],
+    installCommand: "npx arc-ui add transfer-form",
+    importStatement: 'import { TransferForm } from "@/components/arc-ui/transfer-form"',
+    codeExample: `<TransferForm
+  recipient={recipient}
+  amount={amount}
+  onRecipientChange={setRecipient}
+  onAmountChange={setAmount}
+  balance="10000"
+  networkFee="0.50"
+  onReview={(details) => console.log(details)}
+/>`,
+  },
+  {
+    name: "TransferReview",
+    slug: "transfer-review",
+    description: "Review transfer details before execution.",
+    category: "Payments",
+    status: "Preview",
+    sdkMethods: [],
+    installCommand: "npx arc-ui add transfer-review",
+    importStatement: 'import { TransferReview } from "@/components/arc-ui/transfer-review"',
+    codeExample: `<TransferReview
+  recipient={recipient}
+  amount="250.00"
+  network="Arc Testnet"
+  networkFee="0.50"
+  onConfirm={confirmTransfer}
+  onBack={() => setStep("input")}
+/>`,
+  },
+  {
+    name: "TransferStatus",
+    slug: "transfer-status",
+    description: "Display pending or success states for a transfer.",
+    category: "Transactions",
+    status: "Preview",
+    sdkMethods: [],
+    installCommand: "npx arc-ui add transfer-status",
+    importStatement: 'import { TransferStatus } from "@/components/arc-ui/transfer-status"',
+    codeExample: `<TransferStatus
+  status="success"
+  amount="250.00"
+  txHash={txHash}
+  explorerUrl={explorerUrl}
+  onAction={resetFlow}
+/>`,
+  },
 ];
 
 export function getBlockBySlug(slug: string) {

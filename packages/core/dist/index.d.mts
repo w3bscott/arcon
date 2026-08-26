@@ -12,7 +12,10 @@ declare function formatBalance(amount?: string): string;
 declare function formatChainName(chain?: string): string;
 declare function formatFee(fee?: string, token?: string): string;
 
-declare function isValidAddress(address?: string): boolean;
+interface ValidationOptions {
+    allowUsernames?: boolean;
+}
+declare function isValidAddress(address?: string, options?: ValidationOptions): boolean;
 declare function isValidAmount(amount?: string): boolean;
 
 type TransactionState = "idle" | "pending" | "success" | "error" | "noop";
@@ -32,8 +35,8 @@ interface SpendResult {
     destinationChain: string;
     txHash?: string;
     explorerUrl?: string;
-    allocations?: any[];
-    expirationBlock?: any;
+    allocations?: Record<string, unknown>[];
+    expirationBlock?: number;
 }
 interface ChainBalanceBreakdown {
     chain: string;
@@ -47,17 +50,41 @@ interface GetBalancesResult {
     breakdown: ChainBalanceBreakdown[];
 }
 type SupportedTokenInput = string;
-type Sources = any;
-type AppKit = any;
+interface WalletAddressSource {
+    address: string;
+    blockchain: string;
+}
+type Sources = string[] | {
+    walletAddresses: WalletAddressSource[];
+};
+interface AppKit {
+    unifiedBalance: {
+        getBalances: (params: {
+            sources: Sources;
+            token?: SupportedTokenInput | undefined;
+            includePending?: boolean | undefined;
+            networkType?: "mainnet" | "testnet" | undefined;
+        }) => Promise<GetBalancesResult>;
+    };
+    estimateSend: (params: SendParams) => Promise<SendEstimateResult>;
+    send: (params: SendParams) => Promise<BridgeStep>;
+    estimateSwap: (params: SwapParams) => Promise<SwapEstimate>;
+    swap: (params: SwapParams) => Promise<SwapResult>;
+    estimateBridge: (params: BridgeParams) => Promise<BridgeEstimate>;
+    bridge: (params: BridgeParams) => Promise<BridgeResult>;
+}
 type TokenAlias = string;
 interface FeeEntry {
     type: string;
     amount: string;
     token: string;
 }
+interface ChainSource {
+    chain: string;
+}
 interface SendParams {
-    from: any;
-    to: string | any;
+    from: ChainSource;
+    to: string;
     amount: string;
     token?: string;
 }
@@ -65,11 +92,11 @@ interface SendEstimateResult {
     fee: string;
 }
 interface SwapParams {
-    from: any;
+    from: ChainSource;
     tokenIn: string;
     tokenOut: string;
     amountIn: string;
-    config?: any;
+    config?: Record<string, unknown>;
 }
 interface SwapEstimate {
     estimatedOutput: string;
@@ -82,8 +109,8 @@ interface SwapResult {
     tokenOut: string;
 }
 interface BridgeParams {
-    from: any;
-    to: any;
+    from: ChainSource;
+    to: ChainSource;
     amount: string;
     token?: string;
 }
@@ -153,4 +180,4 @@ declare function createBridgeStore(kit: AppKit): {
     reset: () => void;
 };
 
-export { type AppKit, type BalanceStoreOptions, type BalanceStoreState, type BridgeEstimate, type BridgeParams, type BridgeResult, type BridgeStep, type BridgeStoreState, type ChainBalanceBreakdown, type FeeEntry, type GetBalancesResult, type SendEstimateResult, type SendParams, type SendStoreState, type Sources, type SpendResult, type SupportedTokenInput, type SwapEstimate, type SwapParams, type SwapResult, type SwapStoreState, type TokenAlias, type TransactionState, createBalanceStore, createBridgeStore, createSendStore, createSwapStore, formatAddress, formatBalance, formatChainName, formatFee, isValidAddress, isValidAmount };
+export { type AppKit, type BalanceStoreOptions, type BalanceStoreState, type BridgeEstimate, type BridgeParams, type BridgeResult, type BridgeStep, type BridgeStoreState, type ChainBalanceBreakdown, type ChainSource, type FeeEntry, type GetBalancesResult, type SendEstimateResult, type SendParams, type SendStoreState, type Sources, type SpendResult, type SupportedTokenInput, type SwapEstimate, type SwapParams, type SwapResult, type SwapStoreState, type TokenAlias, type TransactionState, type ValidationOptions, type WalletAddressSource, createBalanceStore, createBridgeStore, createSendStore, createSwapStore, formatAddress, formatBalance, formatChainName, formatFee, isValidAddress, isValidAmount };

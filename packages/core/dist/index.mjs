@@ -19,9 +19,15 @@ function formatFee(fee, token) {
 }
 
 // src/validators/index.ts
-function isValidAddress(address) {
+function isValidAddress(address, options) {
   if (!address) return false;
-  return address.length >= 32;
+  if (address.startsWith("0x")) {
+    return /^0x[a-fA-F0-9]{40}$/.test(address);
+  }
+  if (options?.allowUsernames) {
+    return /^[a-zA-Z0-9_.-]{3,}$/.test(address);
+  }
+  return false;
 }
 function isValidAmount(amount) {
   if (!amount) return false;

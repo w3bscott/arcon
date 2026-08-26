@@ -142,17 +142,76 @@ interface BridgeWidgetProps {
 }
 declare function BridgeWidget({ kit, defaultChainFrom, defaultChainTo, defaultToken, defaultAmount, onSuccess, onError, data: injectedData, className, style, }: BridgeWidgetProps): react.JSX.Element;
 
+interface TransferRecipient {
+    name: string;
+    address: string;
+    avatarUrl?: string | undefined;
+}
+interface TransferFormSubmit {
+    recipient: string;
+    amount: string;
+    token: string;
+    networkFee?: string | number | undefined;
+}
+interface TransferFormProps {
+    recipient: string;
+    amount: string;
+    onRecipientChange: (value: string) => void;
+    onAmountChange: (value: string) => void;
+    balance?: string | number | undefined;
+    networkFee?: string | number | undefined;
+    token?: string | undefined;
+    recentRecipients?: TransferRecipient[] | undefined;
+    validateRecipient?: ((value: string) => boolean) | undefined;
+    validateAmount?: ((value: string) => boolean) | undefined;
+    onReview?: ((details: TransferFormSubmit) => void) | undefined;
+    className?: string | undefined;
+    style?: CSSProperties | undefined;
+}
+declare function TransferForm({ recipient, amount, onRecipientChange, onAmountChange, balance, networkFee, token, recentRecipients, validateRecipient, validateAmount, onReview, className, style, }: TransferFormProps): react.JSX.Element;
+
+interface TransferReviewProps {
+    recipient: string;
+    amount: string;
+    networkFee?: string | number | undefined;
+    network?: string | undefined;
+    token?: string | undefined;
+    onConfirm?: (() => void) | undefined;
+    onBack?: (() => void) | undefined;
+    className?: string | undefined;
+    style?: CSSProperties | undefined;
+}
+declare function TransferReview({ recipient, amount, network, networkFee, token, onConfirm, onBack, className, style, }: TransferReviewProps): react.JSX.Element;
+
+type TransferStatusState = "pending" | "success" | "error";
+interface TransferStatusProps {
+    status: TransferStatusState;
+    amount?: string | undefined;
+    token?: string | undefined;
+    network?: string | undefined;
+    txHash?: string | undefined;
+    explorerUrl?: string | undefined;
+    errorMessage?: string | undefined;
+    onAction?: (() => void) | undefined;
+    actionLabel?: string | undefined;
+    className?: string | undefined;
+    style?: CSSProperties | undefined;
+}
+declare function TransferStatus({ status, amount, token, network, txHash, explorerUrl, errorMessage, onAction, actionLabel, className, style, }: TransferStatusProps): react.JSX.Element;
+
 interface RegistryItem {
     name: string;
     type: "registry:block";
     title: string;
     description: string;
     dependencies: string[];
+    registryDependencies?: string[];
     files: {
         path: string;
-        type: "registry:component";
+        type: "registry:component" | "registry:hook";
+        target?: string;
     }[];
 }
 declare const registry: Record<string, RegistryItem>;
 
-export { BalanceCard, type BalanceCardProps, BridgeWidget, type BridgeWidgetProps, type RegistryItem, SendMoneyForm, type SendMoneyFormProps, SwapWidget, type SwapWidgetProps, TransactionStatus, type TransactionStatusProps, type UseBalancesOptions, WalletConnectButton, type WalletConnectButtonProps, registry, useBalances, useBridge, useSend, useSwap };
+export { BalanceCard, type BalanceCardProps, BridgeWidget, type BridgeWidgetProps, type RegistryItem, SendMoneyForm, type SendMoneyFormProps, SwapWidget, type SwapWidgetProps, TransactionStatus, type TransactionStatusProps, TransferForm, type TransferFormProps, type TransferFormSubmit, type TransferRecipient, TransferReview, type TransferReviewProps, TransferStatus, type TransferStatusProps, type TransferStatusState, type UseBalancesOptions, WalletConnectButton, type WalletConnectButtonProps, registry, useBalances, useBridge, useSend, useSwap };

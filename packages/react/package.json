@@ -18,7 +18,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@arc-ui/core": "workspace:*"
+    "@arc-ui/core": "workspace:*",
+    "lucide-react": "^1.21.0"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",

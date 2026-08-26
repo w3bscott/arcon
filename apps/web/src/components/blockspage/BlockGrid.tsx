@@ -7,6 +7,9 @@ import { BalanceCardWrapper } from "../showcase/BalanceCardWrapper";
 import { SendMoneyFormWrapper } from "../showcase/SendMoneyFormWrapper";
 import { SwapWidgetWrapper } from "../showcase/SwapWidgetWrapper";
 import { BridgeWidgetWrapper } from "../showcase/BridgeWidgetWrapper";
+import { TransferFormWrapper } from "../showcase/TransferFormWrapper";
+import { TransferReviewWrapper } from "../showcase/TransferReviewWrapper";
+import { TransferStatusWrapper } from "../showcase/TransferStatusWrapper";
 
 interface BlockGridProps {
   blocks: BlockMetadata[];
@@ -33,6 +36,15 @@ function getPreviewForSlug(slug: string) {
       break;
     case "bridge-widget":
       content = <BridgeWidgetWrapper styleVariant="1" />;
+      break;
+    case "transfer-form":
+      content = <TransferFormWrapper styleVariant="1" />;
+      break;
+    case "transfer-review":
+      content = <TransferReviewWrapper styleVariant="1" />;
+      break;
+    case "transfer-status":
+      content = <TransferStatusWrapper styleVariant="1" />;
       break;
     default:
       return null;

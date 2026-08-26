@@ -6,6 +6,9 @@ import { BalanceCardWrapper } from "../showcase/BalanceCardWrapper";
 import { SendMoneyFormWrapper } from "../showcase/SendMoneyFormWrapper";
 import { SwapWidgetWrapper } from "../showcase/SwapWidgetWrapper";
 import { BridgeWidgetWrapper } from "../showcase/BridgeWidgetWrapper";
+import { TransferFormWrapper } from "../showcase/TransferFormWrapper";
+import { TransferReviewWrapper } from "../showcase/TransferReviewWrapper";
+import { TransferStatusWrapper } from "../showcase/TransferStatusWrapper";
 import type { ShowcaseStyleVariant } from "@/lib/showcase-theme";
 
 interface BlockPreviewProps {
@@ -27,6 +30,12 @@ export function BlockPreview({ slug, styleVariant = "1" }: BlockPreviewProps) {
       return <SwapWidgetWrapper styleVariant={styleVariant} />;
     case "bridge-widget":
       return <BridgeWidgetWrapper styleVariant={styleVariant} />;
+    case "transfer-form":
+      return <TransferFormWrapper styleVariant={styleVariant} />;
+    case "transfer-review":
+      return <TransferReviewWrapper styleVariant={styleVariant} />;
+    case "transfer-status":
+      return <TransferStatusWrapper styleVariant={styleVariant} />;
     default:
       return <div>Component not found</div>;
   }

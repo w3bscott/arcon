@@ -1,0 +1,17 @@
+{
+  "name": "transfer-form",
+  "type": "registry:block",
+  "title": "TransferForm",
+  "description": "Collect recipient and amount for a token transfer.",
+  "dependencies": [
+    "@arc-ui/core",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/default/transfer-form/index.tsx",
+      "type": "registry:component",
+      "target": "@components/arc-ui/transfer-form/index.tsx"
+    }
+  ]
+}
