@@ -81,7 +81,7 @@ const Cards = (props: Partial<CardsProps>) => {
   ];
 
   return (
-    <section ref={containerRef} className="w-full max-w-7xl mx-auto px-4 py-24 bg-[#fafafa]">
+    <section ref={containerRef} className="w-full max-w-7xl mx-auto px-4 py-24 bg-background">
       <h2 className="md:hidden text-2xl leading-tight font-semibold tracking-tight text-black mb-6 max-w-sm">
         {mobileHeadline}
       </h2>

@@ -7,6 +7,7 @@ import { CategoryFilter } from "@/components/blockspage/CategoryFilter";
 import { BlockGrid } from "@/components/blockspage/BlockGrid";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BlocksHeader } from "@/components/blockspage/BlocksHeader";
 
 export default function BlocksPage() {
   const [query, setQuery] = useState("");
@@ -51,15 +52,12 @@ export default function BlocksPage() {
   }, [query, activeCategory]);
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-background">
       <Navbar sticky={false} />
 
       {/* Page header */}
-      <header className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 pb-2 pt-24">
+      {/* <header className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 pb-2 pt-24">
         <div className="max-w-2xl">
-          {/* <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-400">
-            Arc UI
-          </p> */}
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
             Blocks
           </h1>
@@ -69,11 +67,13 @@ export default function BlocksPage() {
             Install, connect, and ship faster.
           </p>
         </div>
-      </header>
+      </header> */}
+
+      <BlocksHeader/>
 
       {/* Toolbar: search + filter */}
-      <div className="top-[68px] z-30 bg-[#fafafa]/90 backdrop-blur-sm border-b border-gray-200">
-        <div className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 py-3 pb-6 flex flex-col lg:flex-row items-start lg:items-center gap-3 justify-between">
+      <div className="top-[68px] z-30 bg-background/90 backdrop-blur-sm">
+        <div className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 py-6 flex flex-col lg:flex-row items-start lg:items-center gap-3 justify-between">
           <SearchInput value={query} onChange={setQuery} />
           <CategoryFilter
             selected={activeCategory}
@@ -84,14 +84,15 @@ export default function BlocksPage() {
       </div>
 
       {/* Grid */}
-      <main className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 py-6">
-        <div className="mb-4 flex items-center justify-between">
+      <main className="w-full max-w-7xl mx-auto px-8 md:px-16 xl:px-32 pb-6">
+        {/* Block count indicator /*}
+        {/* <div className="mb-4 flex items-center justify-between">
           <p className="text-xs text-gray-400">
             {filtered.length} block{filtered.length !== 1 ? "s" : ""}
             {activeCategory !== "All" ? ` in ${activeCategory}` : ""}
             {query ? ` matching "${query}"` : ""}
           </p>
-        </div>
+        </div> */}
 
         <BlockGrid
           blocks={filtered}

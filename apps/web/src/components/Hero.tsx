@@ -223,7 +223,7 @@ const Hero = (props: Partial<HeroProps>) => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-[#fafafa]"
+      className="relative min-h-screen bg-background"
     >
       <div
         ref={pinRef}

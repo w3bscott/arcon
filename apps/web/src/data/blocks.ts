@@ -1,12 +1,12 @@
 export const blockCategories = [
   "Wallet",
-  "Balances",
+  // "Balances",
   "Payments",
   "Bridge",
   "Swap",
   "Transactions",
   "Unified Balance",
-  "Flows",
+  // "Flows",
 ] as const;
 
 export type BlockCategory = (typeof blockCategories)[number];
@@ -29,7 +29,7 @@ export const blocks: BlockMetadata[] = [
   {
     name: "WalletConnectButton",
     slug: "wallet-connect-button",
-    description: "Connect a user wallet before entering an Arc App Kit flow.",
+    description: "Connect a user wallet.",
     category: "Wallet",
     status: "Stable",
     sdkMethods: ["kit.wallet.connect()"],
@@ -73,7 +73,7 @@ export const blocks: BlockMetadata[] = [
   {
     name: "SwapWidget",
     slug: "swap-widget",
-    description: "Preview token swap inputs, quotes, and confirmation states.",
+    description: "Preview token swap inputs and quotes.",
     category: "Swap",
     status: "Stable",
     sdkMethods: ["kit.swap.quote()", "kit.swap.execute()"],

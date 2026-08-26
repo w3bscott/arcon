@@ -21,7 +21,7 @@ const Footer = (props: Partial<FooterProps>) => {
   };
 
   return (
-    <footer className={`w-full overflow-hidden border-t border-gray-100 bg-[#fafafa] ${className ?? ""}`}>
+    <footer className={`w-full overflow-hidden border-t border-gray-100 bg-background ${className ?? ""}`}>
       <div className="w-full max-w-7xl mx-auto px-5 md:px-16 py-8 md:py-12">
 
         {/* Watermark */}

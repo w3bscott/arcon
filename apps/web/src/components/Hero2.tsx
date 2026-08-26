@@ -136,7 +136,7 @@ const Hero2 = (props: Partial<Hero2Props>) => {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#fafafa]"
+      className="relative bg-background"
     >
       <div
         ref={pinRef}

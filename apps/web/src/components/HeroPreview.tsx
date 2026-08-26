@@ -145,13 +145,13 @@ const HeroPreview = ({ className = "" }: HeroPreviewProps) => {
         </div>
 
         {/* 100+ metric card */}
-        <div className="metric-card md:col-span-1 bg-[#f4f4f5] h-[260px] rounded-2xl p-10 overflow-hidden shrink-0">
+        <div className="metric-card md:col-span-1 bg-muted h-[260px] rounded-2xl p-10 overflow-hidden shrink-0">
           <div className="flex flex-col h-full justify-end text-left gap-4">
-            <p className="text-5xl font-normal text-[#09090b] leading-none flex">
+            <p className="text-5xl font-normal text-foreground leading-none flex">
               <span className="metric-1-val">0</span>
               <span className="metric-1-plus">+</span>
             </p>
-            <p className="text-lg font-normal text-[#09090b] leading-7">
+            <p className="text-lg font-normal text-foreground leading-7">
               Unoptimized lines of code and workflows
             </p>
           </div>
@@ -159,10 +159,10 @@ const HeroPreview = ({ className = "" }: HeroPreviewProps) => {
 
         {/* ── Row 2 ── */}
         {/* 10 metric card */}
-        <div className="metric-card md:col-span-1 bg-[#f4f4f5] h-[260px] rounded-2xl p-10 overflow-hidden shrink-0">
+        <div className="metric-card md:col-span-1 bg-muted h-[260px] rounded-2xl p-10 overflow-hidden shrink-0">
           <div className="flex flex-col h-full justify-end text-left gap-4">
-            <p className="text-5xl font-normal text-[#09090b] leading-none metric-2-val">0</p>
-            <p className="text-lg font-normal text-[#09090b] leading-7">
+            <p className="text-5xl font-normal text-foreground leading-none metric-2-val">0</p>
+            <p className="text-lg font-normal text-foreground leading-7">
               Streamlined workflow and maintainable code
             </p>
           </div>

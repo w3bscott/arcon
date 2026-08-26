@@ -6,7 +6,13 @@ import { skins, type ShowcaseStyleVariant } from "@/lib/showcase-theme";
 import { mockSendFormData } from "@/lib/mock-data";
 import { ArrowUpRight } from "lucide-react";
 
-export function SendMoneyFormWrapper({ styleVariant }: { styleVariant: ShowcaseStyleVariant }) {
+export function SendMoneyFormWrapper({ 
+  styleVariant,
+  onAction,
+}: { 
+  styleVariant: ShowcaseStyleVariant;
+  onAction?: () => void;
+}) {
   const skin = skins[styleVariant];
 
   return (
@@ -70,6 +76,7 @@ export function SendMoneyFormWrapper({ styleVariant }: { styleVariant: ShowcaseS
         {/* CTA */}
         <button
           type="button"
+          onClick={onAction}
           className={`
             w-full py-3 rounded-xl text-[14px] font-semibold
             transition-colors duration-150 cursor-pointer

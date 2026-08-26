@@ -7,7 +7,7 @@ import { Cards } from "@/components/Cards";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#fafafa]">
+    <main className="min-h-screen bg-background">
       <Navbar />
       <Hero />
       <Cards />

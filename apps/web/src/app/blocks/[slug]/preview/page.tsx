@@ -21,7 +21,7 @@ export default function PreviewPage({
   const isDark = activeStyle === "3";
 
   return (
-    <div className={`min-h-screen w-full flex items-center justify-center ${isDark ? 'bg-zinc-950' : 'bg-[#fafafa]'}`}>
+    <div className={`min-h-screen w-full flex items-center justify-center ${isDark ? 'bg-zinc-950' : 'bg-background'}`}>
       <div className="w-full h-full flex flex-col">
         <BlockPreview slug={slug} styleVariant={activeStyle} />
       </div>

@@ -1,22 +1,12 @@
 import type { BlockMetadata } from "@/data/blocks";
 import { BlockCard } from "./BlockCard";
 import { ComponentThumbnail } from "./ComponentThumbnail";
-import { getBlockStyle } from "@/lib/block-styles";
-import {
-  WalletConnectButton,
-  TransactionStatus,
-  BalanceCard,
-  SendMoneyForm,
-  SwapWidget,
-  BridgeWidget,
-} from "@arc-ui/react";
-import {
-  mockBalanceData,
-  mockSendFormData,
-  mockSwapWidgetData,
-  mockBridgeWidgetData,
-  mockBridgeSuccessResult,
-} from "@/lib/mock-data";
+import { WalletConnectButtonWrapper } from "../showcase/WalletConnectButtonWrapper";
+import { TransactionStatusWrapper } from "../showcase/TransactionStatusWrapper";
+import { BalanceCardWrapper } from "../showcase/BalanceCardWrapper";
+import { SendMoneyFormWrapper } from "../showcase/SendMoneyFormWrapper";
+import { SwapWidgetWrapper } from "../showcase/SwapWidgetWrapper";
+import { BridgeWidgetWrapper } from "../showcase/BridgeWidgetWrapper";
 
 interface BlockGridProps {
   blocks: BlockMetadata[];
@@ -24,27 +14,25 @@ interface BlockGridProps {
 }
 
 function getPreviewForSlug(slug: string) {
-  const className = getBlockStyle(slug, "1"); // Use Style 1 for thumbnails
-  
   let content = null;
   switch (slug) {
     case "wallet-connect-button":
-      content = <WalletConnectButton onConnect={async () => {}} className={className} />;
+      content = <WalletConnectButtonWrapper styleVariant="1" />;
       break;
     case "transaction-status":
-      content = <TransactionStatus bridgeResult={mockBridgeSuccessResult} operationType="bridge" className={className} />;
+      content = <TransactionStatusWrapper styleVariant="1" />;
       break;
     case "balance-card":
-      content = <BalanceCard data={mockBalanceData} className={className} />;
+      content = <BalanceCardWrapper styleVariant="1" />;
       break;
     case "send-money-form":
-      content = <SendMoneyForm data={mockSendFormData} className={className} />;
+      content = <SendMoneyFormWrapper styleVariant="1" />;
       break;
     case "swap-widget":
-      content = <SwapWidget data={mockSwapWidgetData} className={className} />;
+      content = <SwapWidgetWrapper styleVariant="1" />;
       break;
     case "bridge-widget":
-      content = <BridgeWidget data={mockBridgeWidgetData} className={className} />;
+      content = <BridgeWidgetWrapper styleVariant="1" />;
       break;
     default:
       return null;

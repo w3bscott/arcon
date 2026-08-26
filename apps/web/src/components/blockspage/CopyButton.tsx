@@ -15,7 +15,7 @@ export function CopyButton({ content, className = "" }: CopyButtonProps) {
     try {
       await navigator.clipboard.writeText(content);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       // Clipboard API not available
     }
@@ -24,14 +24,21 @@ export function CopyButton({ content, className = "" }: CopyButtonProps) {
   return (
     <button
       onClick={handleCopy}
-      className={`flex items-center justify-center p-2 text-gray-400 hover:text-white transition-colors rounded-md hover:bg-white/10 ${className}`}
+      className={`relative flex items-center justify-center p-2 text-gray-400 hover:text-white transition-colors rounded-md hover:bg-white/10 ${className}`}
       aria-label="Copy code"
     >
-      {copied ? (
-        <Check className="w-4 h-4 text-emerald-400" />
-      ) : (
-        <Copy className="w-4 h-4" />
-      )}
+      <div className="relative w-4 h-4 flex items-center justify-center">
+        <Check
+          className={`absolute w-4 h-4 text-emerald-400 transition-all duration-300 ${
+            copied ? "opacity-100 scale-100" : "opacity-0 scale-50 pointer-events-none"
+          }`}
+        />
+        <Copy
+          className={`absolute w-4 h-4 transition-all duration-300 ${
+            copied ? "opacity-0 scale-50 pointer-events-none" : "opacity-100 scale-100"
+          }`}
+        />
+      </div>
     </button>
   );
 }
