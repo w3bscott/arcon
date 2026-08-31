@@ -25,7 +25,7 @@ const defaultProps: CardsProps = {
   ],
 };
 
-const mobileHeadline = "Install, connect, and ship production ready interfaces faster.";
+const mobileHeadline = "Reusable UI blocks and complete flows for Arc.";
 
 const Cards = (props: Partial<CardsProps>) => {
   const { images } = { ...defaultProps, ...props };

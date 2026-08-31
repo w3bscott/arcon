@@ -37,31 +37,31 @@ export interface FeatureSectionProps {
 const IMAGE_HEIGHT = 208;
 
 const defaultProps: FeatureSectionProps = {
-  heading: "Build your dream\nproject with our blocks",
+  heading: "From primitives\nto complete flows",
   subheading:
-    "Each component is mapped to a live Arc SDK method. Fully typed, unstyled by default, and ready to drop into any React project.",
-  ctaText: "Get started for free",
-  ctaHref: "/docs/getting-started",
+    "ArcForge gives developers reusable building blocks that compose into multi-step product experiences. Build Arc-specific transaction UX with polished starting points.",
+  ctaText: "Read the docs",
+  ctaHref: "/docs/introduction",
   features: [
     {
-      title: "Three layers. Framework agnostic.",
+      title: "Installable UI Blocks",
       description:
-        "The core logic runs in Vue, Svelte, plain TypeScript, and AI agents — anywhere ArcForge runs. @arcforge/core has no framework dependency.",
-      // image: { src: PLACEHOLDER_IMAGE, alt: "Three layer architecture" },
+        "Reusable, unopinionated building blocks you can install directly into your codebase. You own the code, the styling, and the structure.",
+      // image: { src: PLACEHOLDER_IMAGE, alt: "Installable UI Blocks" },
       align: "left",
     },
     {
-      title: "Six production-ready components.",
+      title: "Complete Flows",
       description:
-        "Each component is mapped to a live Arc SDK method. Fully typed, unstyled by default, and ready to drop into any React project.",
-      // image: { src: PLACEHOLDER_IMAGE, alt: "Component library" },
+        "Higher-level compositions assembled from blocks. Drop in an entire multi-step transfer experience instead of wiring up individual inputs.",
+      // image: { src: PLACEHOLDER_IMAGE, alt: "Complete Flows" },
       align: "right",
     },
     {
-      title: "SDK-first, always.",
+      title: "Built for Arc Infrastructure",
       description:
-        "Every component maps to a live, shipped Arc SDK method. No roadmap speculation. No invented abstractions. Strict TypeScript throughout.",
-      // image: { src: PLACEHOLDER_IMAGE, alt: "SDK integration" },
+        "Every block is designed specifically for Arc Network capabilities. Map directly to SDK methods without writing boilerplate integration logic.",
+      // image: { src: PLACEHOLDER_IMAGE, alt: "Built for Arc Infrastructure" },
       align: "left",
     },
   ],
