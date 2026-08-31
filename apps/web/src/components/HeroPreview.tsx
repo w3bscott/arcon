@@ -37,84 +37,81 @@ const Chrome = ({ filename }: { filename: string }) => (
   </div>
 );
 
-/* ── Before: manual boilerplate ─────────────────────────────────────── */
+/* ── Before: manual SDK integration ─────────────────────────────────── */
 const BeforeCode = () => (
   <div className="text-left w-full">
-    <Chrome filename="balance.tsx" />
-    <Line tokens={[{ text: "// fetch chain balances manually", color: t.comment }]} />
+    <Chrome filename="balance.tsx — manual integration" />
     <Line tokens={[
       { text: "const ", color: t.keyword },
-      { text: "kit", color: t.white },
-      { text: " = new ", color: t.muted },
-      { text: "AppKit", color: t.fn },
-      { text: "()", color: t.muted },
+      { text: "[balances, setBalances]", color: t.white },
+      { text: " = ", color: t.muted },
+      { text: "useState", color: t.fn },
+      { text: "<", color: t.muted },
+      { text: "Balance[]", color: t.white },
+      { text: ">([])", color: t.muted },
     ]} />
     <Line tokens={[
       { text: "const ", color: t.keyword },
-      { text: "[data, setData]", color: t.white },
+      { text: "[loading, setLoading]", color: t.white },
       { text: " = ", color: t.muted },
       { text: "useState", color: t.fn },
       { text: "(", color: t.muted },
-      { text: "null", color: t.keyword },
+      { text: "true", color: t.keyword },
       { text: ")", color: t.muted },
     ]} />
+    <Line tokens={[
+      { text: "const ", color: t.keyword },
+      { text: "[error, setError]", color: t.white },
+      { text: " = ", color: t.muted },
+      { text: "useState", color: t.fn },
+      { text: "<", color: t.muted },
+      { text: "Error", color: t.white },
+      { text: ">()", color: t.muted },
+    ]} />
     <BlankLine />
-    <Line tokens={[{ text: "// ...chain normalization", color: t.comment }]} />
-    <Line tokens={[{ text: "// ...pending amount aggregation", color: t.comment }]} />
-    <Line tokens={[{ text: "// ...loading skeleton", color: t.comment }]} />
-    <Line tokens={[{ text: "// ...error boundary + retry", color: t.comment }]} />
+    <Line tokens={[
+      { text: "useEffect", color: t.fn },
+      { text: "(() => {", color: t.muted },
+    ]} />
+    <Line indent={1} tokens={[{ text: "// fetch balances across chains", color: t.comment }]} />
+    <Line indent={1} tokens={[{ text: "// normalize token decimals", color: t.comment }]} />
+    <Line indent={1} tokens={[{ text: "// aggregate pending amounts", color: t.comment }]} />
+    <Line indent={1} tokens={[{ text: "// handle refresh interval", color: t.comment }]} />
+    <Line indent={1} tokens={[{ text: "// format currency display", color: t.comment }]} />
+    <Line indent={1} tokens={[{ text: "// build loading skeleton", color: t.comment }]} />
+    <Line indent={1} tokens={[{ text: "// wire error retry logic", color: t.comment }]} />
+    <Line tokens={[{ text: "}, [])", color: t.muted }]} />
   </div>
 );
 
-/* ── After: arc/ui one-liner ────────────────────────────────────────── */
+/* ── After: install a block and use it ──────────────────────────────── */
 const AfterCode = () => (
   <div className="text-left w-full">
-    <Chrome filename="page.tsx" />
+    <Chrome filename="terminal + page.tsx" />
+    <Line tokens={[{ text: "# install the block", color: t.comment }]} />
+    <Line tokens={[
+      { text: "npx ", color: t.white },
+      { text: "shadcn add ", color: t.fn },
+      { text: "balance-card", color: t.string },
+    ]} />
+    <BlankLine />
+    <Line tokens={[{ text: "// use it", color: t.comment }]} />
     <Line tokens={[
       { text: "import ", color: t.keyword },
       { text: "{ ", color: t.muted },
       { text: "BalanceCard", color: t.white },
       { text: " } ", color: t.muted },
       { text: "from ", color: t.keyword },
-      { text: "'@arcforge/react'", color: t.string },
+      { text: "'./components/balance-card'", color: t.string },
     ]} />
     <BlankLine />
     <Line tokens={[
       { text: "<", color: t.tag },
-      { text: "BalanceCard", color: t.tag },
-    ]} />
-    <Line indent={1} tokens={[
-      { text: "kit", color: t.attr },
+      { text: "BalanceCard ", color: t.tag },
+      { text: "walletId", color: t.attr },
       { text: "={", color: t.muted },
-      { text: "kit", color: t.white },
-      { text: "}", color: t.muted },
-    ]} />
-    <Line indent={1} tokens={[
-      { text: "sources", color: t.attr },
-      { text: "={", color: t.muted },
-      { text: "sources", color: t.white },
-      { text: "}", color: t.muted },
-    ]} />
-    {/* <Line indent={1} tokens={[
-      { text: "includePending", color: t.attr },
-    ]} /> */}
-    <Line indent={1} tokens={[
-      { text: "theme", color: t.attr },
-      { text: "=", color: t.muted },
-      { text: '"dark"', color: t.string },
-    ]} />
-    <Line indent={1} tokens={[
-      { text: "className", color: t.attr },
-      { text: "=", color: t.muted },
-      { text: '"w-full max-w-sm"', color: t.string },
-    ]} />
-    <Line indent={1} tokens={[
-      { text: "refreshInterval", color: t.attr },
-      { text: "={", color: t.muted },
-      { text: "30000", color: t.num },
-      { text: "}", color: t.muted },
-    ]} />
-    <Line tokens={[
+      { text: "id", color: t.white },
+      { text: "} ", color: t.muted },
       { text: "/>", color: t.tag },
     ]} />
   </div>
@@ -138,10 +135,6 @@ const HeroPreview = ({ className = "" }: HeroPreviewProps) => {
           <div className="preview-before absolute inset-0 p-5 pb-12 flex items-start justify-start will-change-transform will-change-opacity">
             <BeforeCode />
           </div>
-          {/* <div className="preview-before-label absolute bottom-0 left-0 p-5 flex items-center gap-1.5">
-            <span className="text-[15px] font-medium text-white/90">Before</span>
-            <ChevronUp className="w-3.5 h-3.5 text-white/90" />
-          </div> */}
         </div>
 
         {/* 100+ metric card */}
@@ -152,7 +145,7 @@ const HeroPreview = ({ className = "" }: HeroPreviewProps) => {
               <span className="metric-1-plus">+</span>
             </p>
             <p className="text-lg font-normal text-foreground leading-7">
-              Unoptimized lines of code and workflows
+              Lines of manual integration code
             </p>
           </div>
         </div>
@@ -163,7 +156,7 @@ const HeroPreview = ({ className = "" }: HeroPreviewProps) => {
           <div className="flex flex-col h-full justify-end text-left gap-4">
             <p className="text-5xl font-normal text-foreground leading-none metric-2-val">0</p>
             <p className="text-lg font-normal text-foreground leading-7">
-              Streamlined workflow and maintainable code
+              Lines with ArcForge
             </p>
           </div>
         </div>
@@ -173,10 +166,6 @@ const HeroPreview = ({ className = "" }: HeroPreviewProps) => {
           <div className="preview-after absolute inset-0 p-5 pb-12 flex items-start justify-start will-change-transform will-change-opacity">
             <AfterCode />
           </div>
-          {/* <div className="preview-after-label absolute bottom-0 left-0 p-5 flex items-center gap-2">
-            <span className="text-[15px] font-medium text-white/90">After</span>
-            <ArrowRight className="w-4 h-4 text-white/90" />
-          </div> */}
         </div>
 
       </div>
