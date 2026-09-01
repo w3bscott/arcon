@@ -13,16 +13,16 @@ export interface CardsProps {
 
 const defaultProps: CardsProps = {
   images: [
-    { src: "/arcon-hero.png", alt: "Placeholder 1" },
-    { src: "/arcon-hero.png", alt: "Placeholder 2" },
-    { src: "/arcon-hero.png", alt: "Placeholder 3" },
-    { src: "/arcon-hero.png", alt: "Placeholder 4" },
-    { src: "/arcon-hero.png", alt: "Placeholder 5" },
-    { src: "/arcon-hero.png", alt: "Placeholder 6" },
-    { src: "/arcon-hero.png", alt: "Placeholder 7" },
-    { src: "/arcon-hero.png", alt: "Placeholder 8" },
-    { src: "/arcon-hero.png", alt: "Placeholder 9" },
-  ],
+    { src: "/cards/completed.png", alt: "Placeholder 1" },
+    { src: "/cards/bento1.png", alt: "Placeholder 2" } ,
+    { src: "/cards/bento1.png", alt: "Placeholder 3" },
+    { src: "/cards/send.png", alt: "Placeholder 4" },
+    { src: "/cards/bento1.png", alt: "Placeholder 5" },
+    { src: "/cards/send-desktop.png", alt: "Placeholder 6" },
+    { src: "/cards/bento1.png", alt: "Placeholder 7" },
+    { src: "/cards/bento1.png", alt: "Placeholder 8" },
+    { src: "/cards/review.png", alt: "Placeholder 9" },
+  ], 
 };
 
 const mobileHeadline = "Reusable UI blocks and complete flows for Arc.";
@@ -101,7 +101,11 @@ const Cards = (props: Partial<CardsProps>) => {
                   alt={image.alt}
                   fill
                   sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-cover bg-gray-50/50 group-hover:bg-gray-100/50 transition-colors"
+                  className={`object-cover transition-colors ${
+                    image.src.includes('bento')
+                      ? 'invert mix-blend-multiply contrast-125 opacity-20 bg-contain'
+                      : 'bg-gray-50/50 group-hover:bg-gray-100/50'
+                  }`}
                 />
               </div>
             );

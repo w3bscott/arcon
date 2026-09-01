@@ -11,7 +11,7 @@ const defaultProps: FooterProps = {
   copyright: "©2026 ArcForge",
   disclaimer:
     "ArcForge is not officially affiliated with arc.io or shadcn/ui or Tailwind CSS.\nThis project wouldn't be possible without the open-source shadcn/ui project.",
-  email: "info@arcblocks.com",
+  email: "info@arcforge.com",
 };
 
 const Footer = (props: Partial<FooterProps>) => {
@@ -50,8 +50,8 @@ const Footer = (props: Partial<FooterProps>) => {
             ))}
           </p>
 
-          
-            <a href={`mailto:${email}`}
+
+          <a href={`mailto:${email}`}
             className="text-xs md:text-sm text-gray-400 hover:text-gray-600 transition-colors"
           >
             {email}

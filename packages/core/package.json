@@ -22,7 +22,7 @@
     "url": "https://github.com/arcforge/arcforge.git",
     "directory": "packages/core"
   },
-  "homepage": "https://arcblocks.com",
+  "homepage": "https://arcforge.com",
   "bugs": {
     "url": "https://github.com/arcforge/arcforge/issues"
   },

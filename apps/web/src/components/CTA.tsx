@@ -69,10 +69,10 @@ const CTA = (props: Partial<CTAProps>) => {
     <section className="w-full max-w-7xl mx-auto px-4 pb-12">
       <div className="relative">
         {/* 4 Corner Dots */}
-        <div className="absolute hidden md:block -top-[-10%] -left-3 w-6 h-6 rounded-full bg-black border border-7 border-background z-10" />
+        {/* <div className="absolute hidden md:block -top-[-10%] -left-3 w-6 h-6 rounded-full bg-black border border-7 border-background z-10" />
         <div className="absolute hidden md:block -top-[-10%] -right-3 w-6 h-6 rounded-full bg-black border border-7 border-background z-10" />
         <div className="absolute hidden md:block -bottom-[-42.8%] -left-3 w-6 h-6 rounded-full bg-black border border-7 border-background z-10" />
-        <div className="absolute hidden md:block -bottom-[-42.8%] -right-3 w-6 h-6 rounded-full bg-black border border-7 border-background z-10" />
+        <div className="absolute hidden md:block -bottom-[-42.8%] -right-3 w-6 h-6 rounded-full bg-black border border-7 border-background z-10" /> */}
 
         {/* Outer Border */}
         <div className="border border-gray-200 rounded-none overflow-hidden border-t-transparent">
